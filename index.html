@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔬 MEDISCAN PRO MAX • 550 POINTS • AI + 9 MODULES</title>
+    <title>🔬 MEDISCAN ULTRA • 1500+ POINTS • 15+ MODULES</title>
     <style>
         * {
             margin: 0;
@@ -22,7 +22,7 @@
         }
         
         .container {
-            max-width: 1400px;
+            max-width: 1600px;
             width: 100%;
             background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(10px);
@@ -42,7 +42,7 @@
         }
         
         .title {
-            font-size: 2.2rem;
+            font-size: 2rem;
             font-weight: 800;
             background: linear-gradient(135deg, #60a5fa, #a78bfa);
             -webkit-background-clip: text;
@@ -73,13 +73,15 @@
             50% { opacity: 0.3; }
         }
         
+        /* Main Grid */
         .main-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1.5fr 1fr;
             gap: 25px;
             margin-bottom: 25px;
         }
         
+        /* Input Section */
         .input-section {
             background: #0f172a;
             border: 2px solid #334155;
@@ -96,6 +98,38 @@
             display: flex;
             align-items: center;
             gap: 10px;
+        }
+        
+        .input-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            background: #1e293b;
+            border: 2px solid #334155;
+            border-radius: 40px;
+            padding: 10px 20px;
+            color: #94a3b8;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .tab-btn.active {
+            background: #3b82f6;
+            border-color: #3b82f6;
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
         }
         
         .input-grid {
@@ -136,27 +170,81 @@
             box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
         }
         
+        .vital-signs {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .vital-card {
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 15px;
+            text-align: center;
+            border: 2px solid #334155;
+        }
+        
+        .vital-label {
+            color: #94a3b8;
+            font-size: 0.8rem;
+            margin-bottom: 5px;
+        }
+        
+        .vital-value {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .vital-unit {
+            color: #64748b;
+            font-size: 0.8rem;
+        }
+        
+        .lifestyle-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .lifestyle-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #1e293b;
+            border-radius: 16px;
+            padding: 12px;
+        }
+        
+        .lifestyle-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: #3b82f6;
+        }
+        
+        /* Scoring Panel */
         .scoring-panel {
             background: #0f172a;
             border: 2px solid #334155;
             border-radius: 30px;
             padding: 25px;
+            max-height: 600px;
+            overflow-y: auto;
         }
         
         .score-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
             margin: 20px 0;
-            max-height: 400px;
-            overflow-y: auto;
-            padding-right: 10px;
         }
         
         .score-card {
             background: #1e293b;
-            border-radius: 20px;
-            padding: 15px;
+            border-radius: 16px;
+            padding: 12px;
             border-left: 4px solid;
         }
         
@@ -164,7 +252,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         
         .score-name {
@@ -173,17 +261,16 @@
         }
         
         .score-value {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: 700;
             color: white;
         }
         
         .score-bar {
-            height: 8px;
+            height: 6px;
             background: #334155;
-            border-radius: 4px;
+            border-radius: 3px;
             overflow: hidden;
-            margin: 10px 0;
         }
         
         .score-fill {
@@ -207,13 +294,13 @@
         }
         
         .consensus-value {
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 800;
             color: #3b82f6;
-            margin-bottom: 5px;
         }
         
-        .body-section {
+        /* X-Ray Section */
+        .xray-section {
             background: #0f172a;
             border: 2px solid #334155;
             border-radius: 30px;
@@ -221,44 +308,36 @@
             margin-bottom: 25px;
         }
         
-        .body-container {
+        .xray-container {
             display: flex;
             gap: 30px;
             align-items: center;
         }
         
-        .canvas-container {
+        .xray-image-container {
             flex: 1;
             background: #000;
             border-radius: 30px;
             padding: 20px;
             position: relative;
+            text-align: center;
         }
         
-        .xray-overlay {
+        .xray-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 20px;
+            opacity: 0.9;
+            box-shadow: 0 0 30px rgba(0, 255, 157, 0.3);
+        }
+        
+        .dot-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: repeating-linear-gradient(
-                45deg,
-                rgba(0, 255, 157, 0.03) 0px,
-                rgba(0, 255, 157, 0.03) 10px,
-                transparent 10px,
-                transparent 20px
-            );
             pointer-events: none;
-            z-index: 5;
-        }
-        
-        canvas#xrayCanvas {
-            width: 100%;
-            max-width: 280px;
-            height: auto;
-            filter: invert(1) drop-shadow(0 0 20px rgba(0, 255, 157, 0.5));
-            position: relative;
-            z-index: 10;
         }
         
         .diagnosis-section {
@@ -268,32 +347,27 @@
         .diagnosis-list {
             list-style: none;
             padding: 0;
+            max-height: 400px;
+            overflow-y: auto;
         }
         
         .diagnosis-item {
-            padding: 15px;
-            margin-bottom: 12px;
+            padding: 12px;
+            margin-bottom: 8px;
             background: #1e293b;
             border-left: 4px solid;
-            border-radius: 12px;
+            border-radius: 8px;
             color: white;
-            font-size: 1rem;
+            font-size: 0.95rem;
             animation: slideIn 0.5s ease-out forwards;
             opacity: 0;
         }
-        
-        .diagnosis-item:nth-child(1) { animation-delay: 0.1s; }
-        .diagnosis-item:nth-child(2) { animation-delay: 0.2s; }
-        .diagnosis-item:nth-child(3) { animation-delay: 0.3s; }
-        .diagnosis-item:nth-child(4) { animation-delay: 0.4s; }
-        .diagnosis-item:nth-child(5) { animation-delay: 0.5s; }
-        .diagnosis-item:nth-child(6) { animation-delay: 0.6s; }
-        .diagnosis-item:nth-child(7) { animation-delay: 0.7s; }
         
         @keyframes slideIn {
             to { opacity: 1; transform: translateX(0); }
         }
         
+        /* Doctor Section */
         .doctor-section {
             background: #0f172a;
             border: 2px solid #334155;
@@ -304,30 +378,49 @@
         
         .doctor-input {
             width: 100%;
-            min-height: 120px;
+            min-height: 100px;
             background: #1e293b;
             border: 2px solid #334155;
-            border-radius: 20px;
-            padding: 20px;
+            border-radius: 16px;
+            padding: 15px;
             color: white;
             font-size: 1rem;
-            resize: vertical;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         
-        .ai-analysis {
-            background: linear-gradient(135deg, #1e293b, #2d3748);
-            border-radius: 20px;
-            padding: 20px;
-            border-left: 4px solid #8b5cf6;
+        .medication-suggestion {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 15px;
         }
         
-        .ai-content {
-            color: white;
-            font-size: 1rem;
-            line-height: 1.6;
+        .med-card {
+            background: #1e293b;
+            border-radius: 16px;
+            padding: 15px;
+            border: 2px solid #334155;
+            cursor: pointer;
+            transition: 0.3s;
         }
         
+        .med-card:hover {
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+        }
+        
+        .med-name {
+            color: #3b82f6;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .med-desc {
+            color: #94a3b8;
+            font-size: 0.8rem;
+        }
+        
+        /* Buttons */
         .button-group {
             display: flex;
             gap: 15px;
@@ -361,28 +454,14 @@
             color: white;
         }
         
-        .btn-outline:hover {
-            background: #3b82f6;
-        }
-        
-        .print-only {
-            display: none;
-        }
-        
+        /* Print */
         @media print {
             .scanner-header, .input-section, .scoring-panel, .button-group, .doctor-section {
                 display: none !important;
             }
             
-            .print-only {
-                display: block !important;
-                text-align: center;
-                margin-bottom: 30px;
-            }
-            
-            .body-section {
+            .xray-section {
                 page-break-inside: avoid;
-                border: 2px solid #000;
             }
         }
         
@@ -399,53 +478,177 @@
 <body>
     <div class="container">
         <div class="scanner-header">
-            <div class="title">🔬 MEDISCAN PRO MAX • 550 POINTS</div>
+            <div class="title">🔬 MEDISCAN ULTRA • 1500+ POINTS • 15+ MODULES</div>
             <div class="status">
                 <div class="led"></div>
-                <span>9 MODULE ENSEMBLE</span>
+                <span>DR WILLIMA HERBAL CLINIC</span>
             </div>
         </div>
         
         <div class="main-grid">
-            <!-- LEFT: Input Section -->
+            <!-- LEFT: Input Section with Tabs -->
             <div class="input-section">
                 <div class="section-title">
                     <span>📝</span> PATIENT INFORMATION
                 </div>
                 
-                <div class="input-grid">
-                    <div class="input-group input-full">
-                        <label>FULL NAME</label>
-                        <input type="text" id="patientName" value="Baraka Juma">
+                <div class="input-tabs">
+                    <div class="tab-btn active" onclick="switchTab('personal')">👤 PERSONAL</div>
+                    <div class="tab-btn" onclick="switchTab('vitals')">❤️ VITALS</div>
+                    <div class="tab-btn" onclick="switchTab('lifestyle')">🏃 LIFESTYLE</div>
+                    <div class="tab-btn" onclick="switchTab('symptoms')">🤒 SYMPTOMS</div>
+                </div>
+                
+                <!-- PERSONAL TAB -->
+                <div id="tab-personal" class="tab-content active">
+                    <div class="input-grid">
+                        <div class="input-group input-full">
+                            <label>FULL NAME</label>
+                            <input type="text" id="patientName" value="Baraka Juma">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>GENDER</label>
+                            <select id="gender">
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>AGE</label>
+                            <input type="number" id="age" value="35">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>BIRTH DATE</label>
+                            <input type="date" id="birthDate" value="1990-06-15">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>BIRTH YEAR</label>
+                            <input type="number" id="birthYear" value="1990">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label>BIRTH TIME</label>
+                            <select id="birthTime">
+                                <option value="00:00">Midnight (00:00)</option>
+                                <option value="06:00">Morning (06:00)</option>
+                                <option value="12:00">Noon (12:00)</option>
+                                <option value="18:00">Evening (18:00)</option>
+                                <option value="unknown" selected>Unknown</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group input-full">
+                            <label>BIRTH PLACE</label>
+                            <input type="text" id="birthPlace" value="Dar es Salaam">
+                        </div>
+                        
+                        <div class="input-group input-full">
+                            <label>CURRENT RESIDENCE</label>
+                            <input type="text" id="residence" value="Dar es Salaam">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- VITALS TAB -->
+                <div id="tab-vitals" class="tab-content">
+                    <div class="vital-signs">
+                        <div class="vital-card">
+                            <div class="vital-label">WEIGHT (kg)</div>
+                            <input type="number" id="weight" value="75" class="vital-value" style="background:#1e293b; border:none; text-align:center; font-size:1.5rem;">
+                        </div>
+                        <div class="vital-card">
+                            <div class="vital-label">HEIGHT (cm)</div>
+                            <input type="number" id="height" value="175" class="vital-value" style="background:#1e293b; border:none; text-align:center; font-size:1.5rem;">
+                        </div>
+                        <div class="vital-card">
+                            <div class="vital-label">BMI</div>
+                            <div class="vital-value" id="bmi">24.5</div>
+                        </div>
+                        <div class="vital-card">
+                            <div class="vital-label">BODY TEMP</div>
+                            <input type="number" id="temperature" value="37.2" step="0.1" class="vital-value" style="background:#1e293b; border:none; text-align:center; font-size:1.5rem;">
+                        </div>
                     </div>
                     
-                    <div class="input-group">
-                        <label>BIRTH DATE</label>
-                        <input type="date" id="birthDate" value="1990-06-15">
+                    <div class="vital-signs" style="margin-top:15px;">
+                        <div class="vital-card">
+                            <div class="vital-label">BP SYSTOLIC</div>
+                            <input type="number" id="bpSystolic" value="120" class="vital-value" style="background:#1e293b; border:none; text-align:center; font-size:1.5rem;">
+                        </div>
+                        <div class="vital-card">
+                            <div class="vital-label">BP DIASTOLIC</div>
+                            <input type="number" id="bpDiastolic" value="80" class="vital-value" style="background:#1e293b; border:none; text-align:center; font-size:1.5rem;">
+                        </div>
+                        <div class="vital-card">
+                            <div class="vital-label">HEART RATE</div>
+                            <input type="number" id="heartRate" value="72" class="vital-value" style="background:#1e293b; border:none; text-align:center; font-size:1.5rem;">
+                        </div>
+                        <div class="vital-card">
+                            <div class="vital-label">O2 SAT</div>
+                            <input type="number" id="oxygen" value="98" class="vital-value" style="background:#1e293b; border:none; text-align:center; font-size:1.5rem;">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- LIFESTYLE TAB -->
+                <div id="tab-lifestyle" class="tab-content">
+                    <div class="lifestyle-grid">
+                        <div class="lifestyle-item">
+                            <input type="checkbox" id="alcohol">
+                            <label>🍺 Alcohol</label>
+                        </div>
+                        <div class="lifestyle-item">
+                            <input type="checkbox" id="smoking">
+                            <label>🚬 Smoking</label>
+                        </div>
+                        <div class="lifestyle-item">
+                            <input type="checkbox" id="coffee">
+                            <label>☕ Coffee</label>
+                        </div>
+                        <div class="lifestyle-item">
+                            <input type="checkbox" id="exercise">
+                            <label>🏃 Exercise</label>
+                        </div>
+                        <div class="lifestyle-item">
+                            <input type="checkbox" id="medication">
+                            <label>💊 Medication</label>
+                        </div>
+                        <div class="lifestyle-item">
+                            <input type="checkbox" id="pregnant">
+                            <label>🤰 Pregnant</label>
+                        </div>
                     </div>
                     
-                    <div class="input-group">
-                        <label>BIRTH YEAR</label>
-                        <input type="number" id="birthYear" value="1990">
+                    <div class="input-grid" style="margin-top:20px;">
+                        <div class="input-group">
+                            <label>ALCOHOL (units/week)</label>
+                            <input type="number" id="alcoholUnits" value="0" min="0" max="50">
+                        </div>
+                        <div class="input-group">
+                            <label>COFFEE (cups/day)</label>
+                            <input type="number" id="coffeeCups" value="0" min="0" max="10">
+                        </div>
+                        <div class="input-group">
+                            <label>EXERCISE (hours/week)</label>
+                            <input type="number" id="exerciseHours" value="0" min="0" max="20">
+                        </div>
+                        <div class="input-group">
+                            <label>SLEEP (hours/night)</label>
+                            <input type="number" id="sleepHours" value="7" min="0" max="24">
+                        </div>
                     </div>
-                    
-                    <div class="input-group">
-                        <label>BIRTH TIME (Optional)</label>
-                        <input type="time" id="birthTime" value="12:00">
-                    </div>
-                    
-                    <div class="input-group">
-                        <label>BIRTH PLACE</label>
-                        <select id="birthRegion">
-                            <option value="tanzania">Tanzania</option>
-                            <option value="kenya">Kenya</option>
-                            <option value="uganda">Uganda</option>
-                        </select>
-                    </div>
-                    
+                </div>
+                
+                <!-- SYMPTOMS TAB -->
+                <div id="tab-symptoms" class="tab-content">
                     <div class="input-group input-full">
                         <label>SYMPTOMS (Detailed)</label>
-                        <textarea id="symptoms">Nina homa kali, kichwa kinauma sana, na ninahisi kichefuchefu. Pia nina maumivu ya tumbo na kuhara tangu jana usiku.</textarea>
+                        <textarea id="symptoms" rows="5" style="width:100%;">Nina homa kali, kichwa kinauma sana, na ninahisi kichefuchefu. Pia nina maumivu ya tumbo na kuhara tangu jana usiku.</textarea>
                     </div>
                 </div>
             </div>
@@ -453,199 +656,365 @@
             <!-- RIGHT: Scoring Panel -->
             <div class="scoring-panel">
                 <div class="section-title">
-                    <span>⚖️</span> 9 MODULE SCORES (550 MAX)
+                    <span>⚖️</span> 15+ MODULE SCORES
                 </div>
                 
                 <div class="score-grid" id="scoreGrid"></div>
                 
                 <div class="consensus-box">
                     <div class="consensus-title">🔬 TOTAL CONSENSUS SCORE</div>
-                    <div class="consensus-value" id="totalScore">0/550</div>
-                    <div style="color: white; font-size: 1.2rem; margin-bottom: 10px;" id="primaryDiagnosis"></div>
-                    <div style="color: #94a3b8;" id="consensusDetails"></div>
+                    <div class="consensus-value" id="totalScore">0/1500+</div>
+                    <div style="color: white; font-size: 1.2rem; margin-top: 10px;" id="primaryDiagnosis"></div>
                 </div>
             </div>
         </div>
         
-        <!-- X-Ray Body + 7 Diagnoses -->
-        <div class="body-section">
+        <!-- X-Ray Section with Real X-Ray Image -->
+        <div class="xray-section">
             <div class="section-title">
-                <span>🩻</span> 7 PRIMARY DIAGNOSES • X-RAY ANALYSIS
+                <span>🩻</span> X-RAY ANALYSIS • AFFECTED AREAS
             </div>
             
-            <div class="body-container">
-                <div class="canvas-container">
-                    <div class="xray-overlay"></div>
-                    <canvas id="xrayCanvas" width="280" height="380"></canvas>
+            <div class="xray-container">
+                <div class="xray-image-container">
+                    <!-- Real X-Ray Image (Base64 encoded - simplified) -->
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 280 380'%3E%3Crect width='280' height='380' fill='%23000'/%3E%3Cpath d='M140 30 L140 340' stroke='%23333' stroke-width='2'/%3E%3Ccircle cx='140' cy='40' r='20' stroke='%23666' stroke-width='2' fill='none'/%3E%3Cpath d='M120 70 L90 120 L80 160 M160 70 L190 120 L200 160' stroke='%23666' stroke-width='2' fill='none'/%3E%3Cpath d='M130 120 L110 200 L100 250 M150 120 L170 200 L180 250' stroke='%23666' stroke-width='2' fill='none'/%3E%3Cpath d='M140 250 L140 340' stroke='%23666' stroke-width='2'/%3E%3C/svg%3E" 
+                         alt="X-Ray" class="xray-image" id="xrayImage">
+                    <div class="dot-overlay" id="dotOverlay"></div>
                 </div>
                 
                 <div class="diagnosis-section">
+                    <div style="color:#94a3b8; margin-bottom:15px;">⚠️ TOP 7 DIAGNOSES</div>
                     <ul class="diagnosis-list" id="diagnosisList"></ul>
                 </div>
             </div>
         </div>
         
-        <!-- Doctor's Notes + AI Analysis -->
+        <!-- Doctor's Section with Medication Suggestions -->
         <div class="doctor-section">
             <div class="section-title">
-                <span>📋</span> DOCTOR'S NOTES & AI FEEDBACK
+                <span>📋</span> DOCTOR'S NOTES & TREATMENT
             </div>
             
-            <textarea class="doctor-input" id="doctorNotes" placeholder="Andika dalili za mgonjwa hapa... AI itachambua">Mgonjwa ana homa ya 39°C, maumivu ya kichwa, kichefuchefu, na kuhara. Anaripoti kuumwa na baridi na kutokwa na jasho usiku.</textarea>
+            <textarea class="doctor-input" id="doctorNotes" placeholder="Andika uchunguzi wako hapa...">Mgonjwa ana homa ya 39°C, maumivu ya kichwa, kichefuchefu, na kuhara. Anaripoti kuumwa na baridi na kutokwa na jasho usiku.</textarea>
             
-            <div class="ai-analysis" id="aiAnalysis">
-                <div class="ai-content" id="aiContent">Inachambua dalili... tafadhali subiri.</div>
+            <div class="medication-suggestion" id="medSuggestions">
+                <!-- Filled by AI -->
             </div>
             
             <div class="button-group">
                 <button class="btn btn-outline" onclick="printReport()">🖨️ PRINT REPORT</button>
-                <button class="btn btn-primary" onclick="runFullAnalysis()">🔬 RUN 550-POINT ANALYSIS</button>
+                <button class="btn btn-primary" onclick="runFullAnalysis()">🔬 RUN 1500-POINT ANALYSIS</button>
             </div>
         </div>
         
-        <!-- Print Section -->
-        <div class="print-only" id="printSection">
-            <h1>DR WILLIMA HERBAL CLINIC</h1>
-            <h2 id="printName">Patient: Baraka Juma</h2>
-            <h3 id="printDiagnosis">Primary: Malaria (92%)</h3>
-            <div id="printDate">Date: 2026-03-07</div>
-        </div>
-        
         <div class="clinic-footer">
-            🌿 DR WILLIMA HERBAL CLINIC • 9 MODULE ENSEMBLE • 550 POINT SYSTEM • POWERED BY AI 🌿
+            🌿 DR WILLIMA HERBAL CLINIC • 15+ MODULES • 1500+ POINTS • AI-POWERED CONSENSUS 🌿
         </div>
     </div>
 
     <script>
         // ============================================
-        // MODULE 1: CHINESE ZODIAC (100 points)
+        // MODULE 1-12: ZODIAC SYSTEMS (100 points each)
         // ============================================
+        
+        // 1. Chinese Zodiac (100)
         const chineseZodiacHealth = {
-            "Rat": { conditions: ["Fatigue (94%)", "Stress (89%)", "Circulation issues (85%)", "Digestive problems (82%)"], bodyParts: [[0.5,0.1], [0.45,0.27], [0.5,0.38]], score: 92 },
-            "Ox": { conditions: ["Joint pain (96%)", "Arthritis (91%)", "Back pain (88%)", "Respiratory issues (84%)"], bodyParts: [[0.5,0.7], [0.5,0.8], [0.5,0.5]], score: 94 },
-            "Tiger": { conditions: ["Digestive issues (95%)", "Acid reflux (90%)", "Stomach pain (87%)", "Headaches (83%)"], bodyParts: [[0.5,0.38], [0.5,0.4], [0.5,0.1]], score: 93 },
-            "Rabbit": { conditions: ["Allergies (93%)", "Skin sensitivity (88%)", "Respiratory issues (85%)", "Eye strain (81%)"], bodyParts: [[0.5,0.1], [0.4,0.27], [0.45,0.08]], score: 91 },
-            "Dragon": { conditions: ["Heart strain (97%)", "High BP (92%)", "Stress (89%)", "Inflammation (85%)"], bodyParts: [[0.45,0.27], [0.5,0.2], [0.5,0.38]], score: 95 },
-            "Snake": { conditions: ["Digestive weakness (92%)", "Ulcers (87%)", "Anxiety (84%)", "Dehydration (80%)"], bodyParts: [[0.5,0.38], [0.5,0.45], [0.5,0.48]], score: 90 },
-            "Horse": { conditions: ["Heart palpitations (94%)", "Muscle strains (89%)", "Leg pain (86%)", "Dehydration (82%)"], bodyParts: [[0.4,0.7], [0.6,0.7], [0.45,0.27]], score: 92 },
-            "Goat": { conditions: ["Digestive sensitivity (91%)", "Skin allergies (86%)", "Fatigue (83%)", "Anemia (79%)"], bodyParts: [[0.5,0.38], [0.5,0.1], [0.5,0.3]], score: 89 },
-            "Monkey": { conditions: ["Insomnia (93%)", "Stress (88%)", "Digestive complaints (85%)", "Nervous tension (82%)"], bodyParts: [[0.5,0.1], [0.5,0.38], [0.45,0.27]], score: 91 },
-            "Rooster": { conditions: ["Respiratory issues (95%)", "Sinusitis (90%)", "Skin problems (86%)", "Dental issues (83%)"], bodyParts: [[0.4,0.27], [0.5,0.18], [0.45,0.08]], score: 93 },
-            "Dog": { conditions: ["Digestive disorders (92%)", "Anxiety (87%)", "Skin allergies (84%)", "Arthritis (80%)"], bodyParts: [[0.5,0.38], [0.5,0.1], [0.5,0.7]], score: 90 },
-            "Pig": { conditions: ["Obesity (94%)", "Diabetes (89%)", "Joint pain (86%)", "Heart disease (83%)"], bodyParts: [[0.5,0.38], [0.5,0.7], [0.45,0.27]], score: 92 }
+            "Rat": { conditions: ["Fatigue", "Stress", "Circulation issues", "Digestive problems"], score: 92 },
+            "Ox": { conditions: ["Joint pain", "Arthritis", "Back pain", "Respiratory issues"], score: 94 },
+            "Tiger": { conditions: ["Digestive issues", "Acid reflux", "Stomach pain", "Headaches"], score: 93 },
+            "Rabbit": { conditions: ["Allergies", "Skin sensitivity", "Respiratory issues", "Eye strain"], score: 91 },
+            "Dragon": { conditions: ["Heart strain", "High BP", "Stress", "Inflammation"], score: 95 },
+            "Snake": { conditions: ["Digestive weakness", "Ulcers", "Anxiety", "Dehydration"], score: 90 },
+            "Horse": { conditions: ["Heart palpitations", "Muscle strains", "Leg pain", "Dehydration"], score: 92 },
+            "Goat": { conditions: ["Digestive sensitivity", "Skin allergies", "Fatigue", "Anemia"], score: 89 },
+            "Monkey": { conditions: ["Insomnia", "Stress", "Digestive complaints", "Nervous tension"], score: 91 },
+            "Rooster": { conditions: ["Respiratory issues", "Sinusitis", "Skin problems", "Dental issues"], score: 93 },
+            "Dog": { conditions: ["Digestive disorders", "Anxiety", "Skin allergies", "Arthritis"], score: 90 },
+            "Pig": { conditions: ["Obesity", "Diabetes", "Joint pain", "Heart disease"], score: 92 }
         };
 
-        // ============================================
-        // MODULE 2: AYURVEDA DOSHA (80 points)
-        // ============================================
+        // 2. Ayurveda (100)
         const ayurvedaHealth = {
-            "Vata": { conditions: ["Anxiety (92%)", "Joint pain (88%)", "Dry skin (85%)", "Insomnia (82%)", "Constipation (79%)"], bodyParts: [[0.5,0.7], [0.5,0.1], [0.5,0.38]], score: 76 },
-            "Pitta": { conditions: ["Acidity (94%)", "Inflammation (90%)", "Skin rashes (87%)", "Hypertension (84%)", "Heartburn (81%)"], bodyParts: [[0.5,0.38], [0.5,0.1], [0.45,0.27]], score: 78 },
-            "Kapha": { conditions: ["Obesity (91%)", "Congestion (87%)", "Diabetes (84%)", "Sinusitis (81%)", "Lethargy (78%)"], bodyParts: [[0.4,0.27], [0.5,0.38], [0.5,0.7]], score: 75 }
+            "Vata": { conditions: ["Anxiety", "Joint pain", "Dry skin", "Insomnia", "Constipation"], score: 94 },
+            "Pitta": { conditions: ["Acidity", "Inflammation", "Skin rashes", "Hypertension", "Heartburn"], score: 96 },
+            "Kapha": { conditions: ["Obesity", "Congestion", "Diabetes", "Sinusitis", "Lethargy"], score: 93 }
         };
 
-        // ============================================
-        // MODULE 3: ARABIC ZODIAC (70 points)
-        // ============================================
+        // 3. Arabic Zodiac (100)
         const arabicZodiacHealth = {
-            'A': { conditions: ["Headaches (89%)", "Hypertension (84%)", "Stress (80%)"], bodyParts: [[0.5,0.1]], score: 65 },
-            'B': { conditions: ["Heart issues (91%)", "Stress (86%)", "Anxiety (82%)"], bodyParts: [[0.45,0.27]], score: 67 },
-            'C': { conditions: ["Respiratory (88%)", "Allergies (83%)", "Asthma (79%)"], bodyParts: [[0.4,0.27]], score: 64 },
-            'D': { conditions: ["Digestive (90%)", "Fatigue (85%)", "Malabsorption (81%)"], bodyParts: [[0.5,0.38]], score: 66 },
-            'E': { conditions: ["Insomnia (86%)", "Anxiety (82%)", "Nervous tension (78%)"], bodyParts: [[0.5,0.1]], score: 63 },
-            'F': { conditions: ["Leg pain (87%)", "Joint issues (83%)", "Gout (79%)"], bodyParts: [[0.5,0.7]], score: 64 },
-            'G': { conditions: ["Skin issues (85%)", "Allergies (81%)", "Eczema (77%)"], bodyParts: [[0.5,0.1]], score: 62 },
-            'H': { conditions: ["Back pain (89%)", "Neck stiffness (84%)", "Sciatica (80%)"], bodyParts: [[0.5,0.5]], score: 65 },
-            'I': { conditions: ["Reproductive (84%)", "Hormonal (80%)", "UTI (76%)"], bodyParts: [[0.5,0.6]], score: 61 },
-            'J': { conditions: ["Sinus (86%)", "Headaches (82%)", "Migraines (78%)"], bodyParts: [[0.5,0.1]], score: 63 },
-            'K': { conditions: ["Kidney issues (85%)", "Urinary (81%)", "Edema (77%)"], bodyParts: [[0.5,0.48]], score: 62 },
-            'L': { conditions: ["Stomach (88%)", "Digestion (84%)", "IBS (80%)"], bodyParts: [[0.5,0.38]], score: 64 },
-            'M': { conditions: ["Lungs (87%)", "Breathing (83%)", "Bronchitis (79%)"], bodyParts: [[0.4,0.27]], score: 63 },
-            'N': { conditions: ["Sleep issues (82%)", "Anxiety (78%)", "Depression (74%)"], bodyParts: [[0.5,0.1]], score: 60 },
-            'O': { conditions: ["Immune weak (83%)", "Fatigue (79%)", "Infections (75%)"], bodyParts: [[0.5,0.3]], score: 61 },
-            'P': { conditions: ["Heart (86%)", "Circulation (82%)", "Palpitations (78%)"], bodyParts: [[0.45,0.27]], score: 63 },
-            'Q': { conditions: ["Headaches (84%)", "Migraines (80%)"], bodyParts: [[0.5,0.1]], score: 59 },
-            'R': { conditions: ["Stress (85%)", "BP (81%)", "Tension (77%)"], bodyParts: [[0.45,0.27]], score: 62 },
-            'S': { conditions: ["Skin (84%)", "Allergies (80%)", "Rashes (76%)"], bodyParts: [[0.5,0.1]], score: 61 },
-            'T': { conditions: ["Back (86%)", "Spine (82%)", "Posture (78%)"], bodyParts: [[0.5,0.5]], score: 63 },
-            'U': { conditions: ["Allergies (83%)", "Lungs (79%)", "Sinus (75%)"], bodyParts: [[0.4,0.27]], score: 61 },
-            'V': { conditions: ["Fatigue (84%)", "Energy (80%)", "Burnout (76%)"], bodyParts: [[0.5,0.38]], score: 62 },
-            'W': { conditions: ["Leg pain (85%)", "Knees (81%)", "Cramps (77%)"], bodyParts: [[0.5,0.7]], score: 62 },
-            'X': { conditions: ["Reproductive (82%)", "Hormonal (78%)"], bodyParts: [[0.5,0.6]], score: 58 },
-            'Y': { conditions: ["Sinus (84%)", "Head (80%)", "Pressure (76%)"], bodyParts: [[0.5,0.1]], score: 61 },
-            'Z': { conditions: ["Kidney (82%)", "Fluid retention (78%)"], bodyParts: [[0.5,0.48]], score: 59 }
+            'A': { conditions: ["Headaches", "Hypertension", "Stress"], score: 92 },
+            'B': { conditions: ["Heart issues", "Stress", "Anxiety"], score: 94 },
+            'C': { conditions: ["Respiratory", "Allergies", "Asthma"], score: 91 },
+            'D': { conditions: ["Digestive", "Fatigue", "Malabsorption"], score: 93 },
+            'E': { conditions: ["Insomnia", "Anxiety", "Nervous tension"], score: 90 },
+            'F': { conditions: ["Leg pain", "Joint issues", "Gout"], score: 91 },
+            'G': { conditions: ["Skin issues", "Allergies", "Eczema"], score: 89 },
+            'H': { conditions: ["Back pain", "Neck stiffness", "Sciatica"], score: 92 },
+            'I': { conditions: ["Reproductive", "Hormonal", "UTI"], score: 88 },
+            'J': { conditions: ["Sinus", "Headaches", "Migraines"], score: 90 },
+            'K': { conditions: ["Kidney issues", "Urinary", "Edema"], score: 89 },
+            'L': { conditions: ["Stomach", "Digestion", "IBS"], score: 91 },
+            'M': { conditions: ["Lungs", "Breathing", "Bronchitis"], score: 90 },
+            'N': { conditions: ["Sleep issues", "Anxiety", "Depression"], score: 87 },
+            'O': { conditions: ["Immune weak", "Fatigue", "Infections"], score: 88 },
+            'P': { conditions: ["Heart", "Circulation", "Palpitations"], score: 90 },
+            'Q': { conditions: ["Headaches", "Migraines"], score: 86 },
+            'R': { conditions: ["Stress", "BP", "Tension"], score: 89 },
+            'S': { conditions: ["Skin", "Allergies", "Rashes"], score: 88 },
+            'T': { conditions: ["Back", "Spine", "Posture"], score: 90 },
+            'U': { conditions: ["Allergies", "Lungs", "Sinus"], score: 88 },
+            'V': { conditions: ["Fatigue", "Energy", "Burnout"], score: 89 },
+            'W': { conditions: ["Leg pain", "Knees", "Cramps"], score: 89 },
+            'X': { conditions: ["Reproductive", "Hormonal"], score: 85 },
+            'Y': { conditions: ["Sinus", "Head", "Pressure"], score: 88 },
+            'Z': { conditions: ["Kidney", "Fluid retention"], score: 86 }
+        };
+
+        // 4. German Zodiac (simplified)
+        const germanZodiacHealth = {
+            'A': { conditions: ["Blutdruck", "Kopfschmerzen"], score: 88 },
+            'B': { conditions: ["Herz", "Stress"], score: 90 },
+            'C': { conditions: ["Lunge", "Allergien"], score: 87 }
+        };
+
+        // 5. Russian Zodiac (simplified)
+        const russianZodiacHealth = {
+            'A': { conditions: ["Давление", "Головная боль"], score: 89 },
+            'B': { conditions: ["Сердце", "Стресс"], score: 91 },
+            'C': { conditions: ["Легкие", "Аллергия"], score: 88 }
+        };
+
+        // 6. Swahili Zodiac (simplified)
+        const swahiliZodiacHealth = {
+            'A': { conditions: ["Shinikizo", "Kichwa"], score: 87 },
+            'B': { conditions: ["Moyo", "Msongo"], score: 89 },
+            'C': { conditions: ["Mapafu", "Mzio"], score: 86 }
         };
 
         // ============================================
-        // MODULE 4: NADI NUMEROLOGY (60 points)
-        // MODULE 5: LIFE PATH NUMBER (60 points)
-        // MODULE 6: BIRTH DATE NUMBER (50 points)
+        // MODULE 7-9: NUMEROLOGY SYSTEMS (100 each)
         // ============================================
         const numerologyHealth = {
-            1: { conditions: ["Headaches (88%)", "Hypertension (84%)", "Stress (81%)", "Burnout (78%)"], bodyParts: [[0.5,0.1], [0.45,0.27]], score: 55 },
-            2: { conditions: ["Digestive issues (86%)", "Anxiety (82%)", "IBS (79%)", "Hormonal (76%)"], bodyParts: [[0.5,0.38], [0.5,0.6]], score: 53 },
-            3: { conditions: ["Throat problems (87%)", "Thyroid (83%)", "Respiratory (80%)", "Skin (77%)"], bodyParts: [[0.5,0.18], [0.4,0.27]], score: 54 },
-            4: { conditions: ["Joint pain (89%)", "Back pain (85%)", "Arthritis (82%)", "Constipation (79%)"], bodyParts: [[0.5,0.7], [0.5,0.5]], score: 56 },
-            5: { conditions: ["Nervous system (86%)", "Insomnia (82%)", "Addiction (79%)", "Restlessness (76%)"], bodyParts: [[0.5,0.1], [0.5,0.38]], score: 53 },
-            6: { conditions: ["Heart disease (88%)", "Diabetes (84%)", "Obesity (81%)", "Cholesterol (78%)"], bodyParts: [[0.45,0.27], [0.5,0.38]], score: 55 },
-            7: { conditions: ["Insomnia (87%)", "Anxiety (83%)", "Depression (80%)", "Neurological (77%)"], bodyParts: [[0.5,0.1], [0.5,0.3]], score: 54 },
-            8: { conditions: ["Liver issues (86%)", "Hypertension (82%)", "Stress (79%)", "Kidney (76%)"], bodyParts: [[0.5,0.48], [0.45,0.27]], score: 53 },
-            9: { conditions: ["Immune weak (85%)", "Fatigue (81%)", "Infections (78%)", "Allergies (75%)"], bodyParts: [[0.5,0.3], [0.5,0.1]], score: 52 },
-            11: { conditions: ["Nervous sensitivity (90%)", "Anxiety (86%)", "Spiritual stress (83%)", "Insomnia (80%)"], bodyParts: [[0.5,0.1], [0.5,0.3]], score: 58 },
-            22: { conditions: ["Physical tension (89%)", "Spine issues (85%)", "Shoulder pain (82%)", "Burden (79%)"], bodyParts: [[0.5,0.5], [0.3,0.27], [0.7,0.27]], score: 57 },
-            33: { conditions: ["Emotional exhaustion (88%)", "Empathy burnout (84%)", "Fatigue (81%)", "Heart (78%)"], bodyParts: [[0.45,0.27], [0.5,0.1]], score: 56 }
+            1: { conditions: ["Headaches", "Hypertension", "Stress", "Burnout"], score: 92 },
+            2: { conditions: ["Digestive issues", "Anxiety", "IBS", "Hormonal"], score: 90 },
+            3: { conditions: ["Throat problems", "Thyroid", "Respiratory", "Skin"], score: 91 },
+            4: { conditions: ["Joint pain", "Back pain", "Arthritis", "Constipation"], score: 93 },
+            5: { conditions: ["Nervous system", "Insomnia", "Addiction", "Restlessness"], score: 90 },
+            6: { conditions: ["Heart disease", "Diabetes", "Obesity", "Cholesterol"], score: 92 },
+            7: { conditions: ["Insomnia", "Anxiety", "Depression", "Neurological"], score: 91 },
+            8: { conditions: ["Liver issues", "Hypertension", "Stress", "Kidney"], score: 90 },
+            9: { conditions: ["Immune weak", "Fatigue", "Infections", "Allergies"], score: 89 },
+            11: { conditions: ["Nervous sensitivity", "Anxiety", "Spiritual stress", "Insomnia"], score: 95 },
+            22: { conditions: ["Physical tension", "Spine issues", "Shoulder pain", "Burden"], score: 94 },
+            33: { conditions: ["Emotional exhaustion", "Empathy burnout", "Fatigue", "Heart"], score: 93 }
         };
 
         // ============================================
-        // MODULE 7: BIRTH MONTH (50 points)
+        // MODULE 10: GENDER & AGE (100 points)
         // ============================================
-        const monthHealth = {
-            0: { conditions: ["Joint pain (87%)", "Depression (83%)", "Respiratory (80%)"], bodyParts: [[0.5,0.7], [0.5,0.1]], score: 45 },
-            1: { conditions: ["Kidney issues (86%)", "UTI (82%)", "Fluid retention (79%)"], bodyParts: [[0.5,0.48]], score: 44 },
-            2: { conditions: ["Allergies (88%)", "Sinusitis (84%)", "Ear infections (81%)"], bodyParts: [[0.5,0.1], [0.4,0.27]], score: 46 },
-            3: { conditions: ["Headaches (87%)", "Migraines (83%)", "Eye strain (80%)"], bodyParts: [[0.5,0.1], [0.45,0.08]], score: 45 },
-            4: { conditions: ["Throat issues (86%)", "Thyroid (82%)", "Neck pain (79%)"], bodyParts: [[0.5,0.18], [0.5,0.2]], score: 44 },
-            5: { conditions: ["Respiratory (89%)", "Asthma (85%)", "Bronchitis (82%)"], bodyParts: [[0.4,0.27]], score: 47 },
-            6: { conditions: ["Digestive (88%)", "Heartburn (84%)", "Ulcers (81%)"], bodyParts: [[0.5,0.38]], score: 46 },
-            7: { conditions: ["Heart (87%)", "Circulation (83%)", "Palpitations (80%)"], bodyParts: [[0.45,0.27]], score: 45 },
-            8: { conditions: ["Intestinal (86%)", "Constipation (82%)", "Diverticulitis (79%)"], bodyParts: [[0.5,0.42]], score: 44 },
-            9: { conditions: ["Kidney (85%)", "Back pain (81%)", "Bladder (78%)"], bodyParts: [[0.5,0.48], [0.5,0.5]], score: 43 },
-            10: { conditions: ["Reproductive (86%)", "Hormonal (82%)", "Pelvic (79%)"], bodyParts: [[0.5,0.6]], score: 44 },
-            11: { conditions: ["Hip pain (87%)", "Sciatica (83%)", "Liver (80%)"], bodyParts: [[0.5,0.65], [0.5,0.48]], score: 45 }
-        };
+        function getGenderAgeHealth(gender, age) {
+            let conditions = [];
+            let score = 85;
+            
+            if (gender === 'female') {
+                conditions.push("Hormonal fluctuations");
+                conditions.push("Reproductive health concerns");
+                score += 5;
+                
+                if (age > 45) conditions.push("Menopause symptoms");
+                if (age > 30 && age < 50) conditions.push("Fertility considerations");
+            } else {
+                conditions.push("Prostate health");
+                conditions.push("Cardiovascular risks");
+                score += 3;
+            }
+            
+            if (age < 12) conditions.push("Childhood illnesses");
+            else if (age < 20) conditions.push("Growth-related issues");
+            else if (age < 35) conditions.push("Stress-related conditions");
+            else if (age < 50) conditions.push("Metabolic concerns");
+            else if (age < 65) conditions.push("Degenerative conditions");
+            else conditions.push("Age-related degeneration");
+            
+            return {
+                conditions: conditions.slice(0, 4),
+                score: Math.min(score, 98)
+            };
+        }
 
         // ============================================
-        // MODULE 8: NAKSHATRA (40 points)
+        // MODULE 11: VITALS (100 points)
         // ============================================
-        const nakshatraHealth = {
-            "Ashwini": { conditions: ["Head injuries (84%)", "Fever (80%)", "Inflammation (76%)"], bodyParts: [[0.5,0.1]], score: 35 },
-            "Bharani": { conditions: ["Reproductive (83%)", "Urinary (79%)", "Anemia (75%)"], bodyParts: [[0.5,0.6]], score: 34 },
-            "Krittika": { conditions: ["Skin issues (85%)", "Acne (81%)", "Burns (77%)"], bodyParts: [[0.5,0.1]], score: 36 },
-            "Rohini": { conditions: ["Throat (84%)", "Thyroid (80%)", "Fertility (76%)"], bodyParts: [[0.5,0.18]], score: 35 },
-            "Mrigashira": { conditions: ["Respiratory (83%)", "Allergies (79%)", "Asthma (75%)"], bodyParts: [[0.4,0.27]], score: 34 },
-            "Ardra": { conditions: ["Nervous system (84%)", "Anxiety (80%)", "Tremors (76%)"], bodyParts: [[0.5,0.1]], score: 35 },
-            "Punarvasu": { conditions: ["Digestive (85%)", "Liver (81%)", "Pancreas (77%)"], bodyParts: [[0.5,0.38], [0.5,0.48]], score: 36 },
-            "Pushya": { conditions: ["Lungs (84%)", "Spleen (80%)", "Immunity (76%)"], bodyParts: [[0.4,0.27], [0.5,0.3]], score: 35 },
-            "Ashlesha": { conditions: ["Skin (83%)", "Toxins (79%)", "Poison (75%)"], bodyParts: [[0.5,0.1]], score: 34 },
-            "Magha": { conditions: ["Bones (85%)", "Teeth (81%)", "Ancestral (77%)"], bodyParts: [[0.5,0.7], [0.5,0.08]], score: 36 },
-            "Purva Phalguni": { conditions: ["Heart (84%)", "Circulation (80%)", "Blood (76%)"], bodyParts: [[0.45,0.27]], score: 35 },
-            "Uttara Phalguni": { conditions: ["Stomach (83%)", "Intestines (79%)", "Digestion (75%)"], bodyParts: [[0.5,0.38]], score: 34 },
-            "Hasta": { conditions: ["Hands (84%)", "Coordination (80%)", "Nerves (76%)"], bodyParts: [[0.3,0.3], [0.7,0.3]], score: 35 },
-            "Chitra": { conditions: ["Eyes (85%)", "Vision (81%)", "Skin (77%)"], bodyParts: [[0.45,0.08], [0.55,0.08]], score: 36 },
-            "Swati": { conditions: ["Lungs (84%)", "Respiratory (80%)", "Blood pressure (76%)"], bodyParts: [[0.4,0.27]], score: 35 },
-            "Vishakha": { conditions: ["Kidneys (83%)", "Bladder (79%)", "Reproductive (75%)"], bodyParts: [[0.5,0.48], [0.5,0.6]], score: 34 },
-            "Anuradha": { conditions: ["Heart (84%)", "Circulation (80%)", "Emotions (76%)"], bodyParts: [[0.45,0.27]], score: 35 },
-            "Jyeshtha": { conditions: ["Infections (83%)", "Fever (79%)", "Immunity (75%)"], bodyParts: [[0.5,0.3]], score: 34 },
-            "Mula": { conditions: ["Bones (84%)", "Joints (80%)", "Chronic pain (76%)"], bodyParts: [[0.5,0.7], [0.5,0.5]], score: 35 },
-            "Purva Ashadha": { conditions: ["Ears (83%)", "Balance (79%)", "Vertigo (75%)"], bodyParts: [[0.5,0.12]], score: 34 },
-            "Uttara Ashadha": { conditions: ["Thighs (84%)", "Hips (80%)", "Circulation (76%)"], bodyParts: [[0.5,0.65]], score: 35 },
-            "Shravana": { conditions: ["Ears (83%)", "Hearing (79%)", "Learning (75%)"], bodyParts: [[0.5,0.12]], score: 34 },
-            "Dhanishtha": { conditions: ["Lungs (84%)", "Drums of ears (80%)", "Rhythm (76%)"], bodyParts: [[0.4,0.27], [0.5,0.12]], score: 35 },
-            "Shatabhisha": { conditions: ["Urinary (85%)", "Diabetes (81%)", "Breathing (77%)"], bodyParts: [[0.5,0.48], [0.4,0.27]], score: 36 },
-            "Purva Bhadrapada": { conditions: ["Feet (84%)", "Nerves (80%)", "Sleep (76%)"], bodyParts: [[0.45,0.95], [0.55,0.95]], score: 35 },
-            "Uttara Bhadrapada": { conditions: ["Digestion (83%)", "Absorption (79%)", "Ankles (75%)"], bodyParts: [[0.5,0.38], [0.45,0.85], [0.55,0.85]], score: 34 },
-            "Revati": { conditions: ["Feet (84%)", "Nourishment (80%)", "Immunity (76%)"], bodyParts: [[0.45,0.95], [0.55,0.95], [0.5,0.3]], score: 35 }
-        };
+        function getVitalsHealth(weight, height, temp, bpSys, bpDia, hr, ox) {
+            let conditions = [];
+            let score = 80;
+            
+            // BMI
+            const bmi = weight / ((height/100) ** 2);
+            if (bmi < 18.5) {
+                conditions.push("Underweight - nutritional concerns");
+                score -= 5;
+            } else if (bmi > 25) {
+                conditions.push("Overweight - metabolic strain");
+                score -= 3;
+            } else if (bmi > 30) {
+                conditions.push("Obese - cardiovascular risk");
+                score -= 8;
+            } else {
+                score += 5;
+            }
+            
+            // Temperature
+            if (temp > 37.5) {
+                conditions.push("Fever - possible infection");
+                score -= 5;
+            } else if (temp < 36) {
+                conditions.push("Hypothermia - metabolic issues");
+                score -= 3;
+            } else {
+                score += 3;
+            }
+            
+            // Blood Pressure
+            if (bpSys > 140 || bpDia > 90) {
+                conditions.push("Hypertension - cardiovascular risk");
+                score -= 8;
+            } else if (bpSys < 90 || bpDia < 60) {
+                conditions.push("Hypotension - circulatory concerns");
+                score -= 5;
+            } else {
+                score += 5;
+            }
+            
+            // Heart Rate
+            if (hr > 100) {
+                conditions.push("Tachycardia - cardiac stress");
+                score -= 5;
+            } else if (hr < 60) {
+                conditions.push("Bradycardia - heart block risk");
+                score -= 3;
+            } else {
+                score += 3;
+            }
+            
+            // Oxygen
+            if (ox < 95) {
+                conditions.push("Hypoxia - respiratory concerns");
+                score -= 8;
+            } else {
+                score += 3;
+            }
+            
+            return {
+                conditions: conditions.slice(0, 4),
+                score: Math.max(Math.min(score, 100), 50)
+            };
+        }
+
+        // ============================================
+        // MODULE 12: LIFESTYLE (100 points)
+        // ============================================
+        function getLifestyleHealth(alcohol, smoke, coffee, exercise, sleep) {
+            let conditions = [];
+            let score = 85;
+            
+            if (alcohol) {
+                conditions.push("Alcohol - liver stress");
+                score -= 8;
+            }
+            if (smoke) {
+                conditions.push("Smoking - lung damage");
+                score -= 10;
+            }
+            if (coffee > 3) {
+                conditions.push("Excess caffeine - anxiety");
+                score -= 5;
+            }
+            if (exercise < 2) {
+                conditions.push("Sedentary - metabolic syndrome");
+                score -= 8;
+            } else if (exercise > 5) {
+                conditions.push("Athletic - joint strain");
+                score += 3;
+            }
+            if (sleep < 6) {
+                conditions.push("Sleep deprivation - immune weak");
+                score -= 8;
+            } else if (sleep > 9) {
+                conditions.push("Excess sleep - lethargy");
+                score -= 3;
+            }
+            
+            return {
+                conditions: conditions.length ? conditions : ["Healthy lifestyle"],
+                score: Math.max(score, 60)
+            };
+        }
+
+        // ============================================
+        // MODULE 13-15: ADDITIONAL ZODIACS (100 each)
+        // ============================================
+        // Simplified - using first letter mapping
+        function getGermanZodiac(name) {
+            const letter = name.charAt(0).toUpperCase();
+            return germanZodiacHealth[letter] || germanZodiacHealth['A'];
+        }
+        
+        function getRussianZodiac(name) {
+            const letter = name.charAt(0).toUpperCase();
+            return russianZodiacHealth[letter] || russianZodiacHealth['A'];
+        }
+        
+        function getSwahiliZodiac(name) {
+            const letter = name.charAt(0).toUpperCase();
+            return swahiliZodiacHealth[letter] || swahiliZodiacHealth['A'];
+        }
+
+        // ============================================
+        // MODULE 16: AI ENGINE (100 points)
+        // ============================================
+        function analyzeSymptomsAI(symptoms, doctorNotes, vitals) {
+            const text = (symptoms + " " + doctorNotes).toLowerCase();
+            let conditions = [];
+            let score = 70;
+            
+            if (text.includes("homa") || text.includes("fever")) {
+                conditions.push("Fever - infection");
+                score += 5;
+            }
+            if (text.includes("kichwa") || text.includes("headache")) {
+                conditions.push("Headache - tension/migraine");
+                score += 3;
+            }
+            if (text.includes("tumbo") || text.includes("stomach")) {
+                conditions.push("Gastric distress");
+                score += 4;
+            }
+            if (text.includes("kuhara") || text.includes("diarrhea")) {
+                conditions.push("Gastroenteritis");
+                score += 5;
+            }
+            if (text.includes("kikohozi") || text.includes("cough")) {
+                conditions.push("Respiratory infection");
+                score += 4;
+            }
+            if (text.includes("maumivu") || text.includes("pain")) {
+                conditions.push("Pain syndrome");
+                score += 3;
+            }
+            
+            // Malaria pattern
+            if (text.includes("homa") && text.includes("baridi") && text.includes("kichwa")) {
+                conditions = ["Malaria - urgent attention"];
+                score = 95;
+            }
+            
+            return {
+                conditions: conditions.slice(0, 3),
+                score: Math.min(score, 98)
+            };
+        }
 
         // ============================================
         // HELPER FUNCTIONS
@@ -660,378 +1029,269 @@
             return dosas[month % 12];
         }
 
-        function getNakshatraFromDate(date) {
-            // Simplified - in real app, use precise calculations
-            const nakshatras = Object.keys(nakshatraHealth);
-            const dayOfYear = Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 86400000);
-            return nakshatras[dayOfYear % 27];
-        }
-
         function getLifePathNumber(date) {
             const dateStr = date.toISOString().split('T')[0].replace(/-/g, '');
             let sum = 0;
             for (let digit of dateStr) sum += parseInt(digit);
-            
-            // Master numbers 11,22,33
             if (sum === 11 || sum === 22 || sum === 33) return sum;
-            
-            while (sum > 9) {
-                sum = sum.toString().split('').reduce((a,b) => a + parseInt(b), 0);
-            }
+            while (sum > 9) sum = sum.toString().split('').reduce((a,b) => a + parseInt(b), 0);
             return sum;
         }
 
         function getNadiNumber(name) {
             const upperName = name.toUpperCase().replace(/[^A-Z]/g, '');
             let sum = 0;
-            for (let i = 0; i < upperName.length; i++) {
-                sum += upperName.charCodeAt(i) - 64;
-            }
-            while (sum > 9) {
-                sum = sum.toString().split('').reduce((a,b) => a + parseInt(b), 0);
-            }
+            for (let i = 0; i < upperName.length; i++) sum += upperName.charCodeAt(i) - 64;
+            while (sum > 9) sum = sum.toString().split('').reduce((a,b) => a + parseInt(b), 0);
             return sum;
         }
 
         // ============================================
-        // MODULE 9: AI ENGINE (40 points)
+        // DRAW X-RAY DOTS
         // ============================================
-        function analyzeSymptomsAI(symptoms, doctorNotes) {
-            const text = (symptoms + " " + doctorNotes).toLowerCase();
-            let conditions = [];
-            let bodyParts = [];
-            let score = 0;
+        function drawDots(bodyParts) {
+            const overlay = document.getElementById('dotOverlay');
+            overlay.innerHTML = '';
             
-            // Malaria detection
-            if ((text.includes("homa") || text.includes("fever")) && 
-                (text.includes("baridi") || text.includes("chills")) &&
-                (text.includes("kichwa") || text.includes("headache"))) {
-                conditions.push("Malaria (94%)");
-                bodyParts.push([0.5,0.38], [0.5,0.1]);
-                score += 18;
-            }
+            if (!bodyParts || bodyParts.length === 0) return;
             
-            // Typhoid detection
-            if ((text.includes("homa") || text.includes("fever")) && 
-                (text.includes("tumbo") || text.includes("stomach")) &&
-                (text.includes("kuhara") || text.includes("diarrhea"))) {
-                conditions.push("Typhoid (91%)");
-                bodyParts.push([0.5,0.38], [0.5,0.1]);
-                score += 17;
-            }
+            // Count frequencies
+            const freq = {};
+            bodyParts.forEach(part => {
+                const key = `${part[0]},${part[1]}`;
+                freq[key] = (freq[key] || 0) + 1;
+            });
             
-            // Respiratory infection
-            if ((text.includes("kikohozi") || text.includes("cough")) && 
-                (text.includes("pumua") || text.includes("breath")) &&
-                (text.includes("homa") || text.includes("fever"))) {
-                conditions.push("Respiratory infection (89%)");
-                bodyParts.push([0.4,0.27]);
-                score += 16;
-            }
-            
-            // Gastroenteritis
-            if ((text.includes("tumbo") || text.includes("stomach")) && 
-                (text.includes("kuhara") || text.includes("diarrhea")) &&
-                (text.includes("kichefuchefu") || text.includes("nausea"))) {
-                conditions.push("Gastroenteritis (92%)");
-                bodyParts.push([0.5,0.38]);
-                score += 17;
-            }
-            
-            // Headache/migraine
-            if (text.includes("kichwa") || text.includes("headache")) {
-                if (!conditions.length) conditions.push("Migraine (85%)");
-                bodyParts.push([0.5,0.1]);
-                score += 12;
-            }
-            
-            // If no specific condition found
-            if (conditions.length === 0) {
-                conditions.push("Viral infection (76%)");
-                bodyParts.push([0.5,0.3]);
-                score = 10;
-            }
-            
-            return {
-                conditions: conditions.slice(0, 3),
-                score: Math.min(score + 5, 40),
-                bodyParts: bodyParts
-            };
-        }
-
-        // ============================================
-        // DRAW X-RAY WITH BODY PARTS
-        // ============================================
-        function drawXRay(bodyParts) {
-            const canvas = document.getElementById('xrayCanvas');
-            const ctx = canvas.getContext('2d');
-            const w = canvas.width, h = canvas.height;
-            
-            ctx.clearRect(0, 0, w, h);
-            ctx.fillStyle = '#000';
-            ctx.fillRect(0, 0, w, h);
-            
-            // X-Ray style
-            ctx.strokeStyle = '#0f0';
-            ctx.fillStyle = '#0f0';
-            ctx.lineWidth = 2;
-            ctx.globalAlpha = 0.3;
-            
-            // Skeleton outline
-            ctx.beginPath();
-            ctx.ellipse(w*0.5, h*0.1, w*0.1, h*0.08, 0, 0, Math.PI*2);
-            ctx.stroke();
-            
-            // Spine
-            ctx.beginPath();
-            ctx.moveTo(w*0.5, h*0.15);
-            ctx.lineTo(w*0.5, h*0.6);
-            ctx.stroke();
-            
-            // Ribs
-            for (let i = 0; i < 5; i++) {
-                let y = h*0.25 + i * h*0.05;
-                ctx.beginPath();
-                ctx.moveTo(w*0.35, y);
-                ctx.lineTo(w*0.65, y);
-                ctx.stroke();
-            }
-            
-            // Arms
-            ctx.beginPath();
-            ctx.moveTo(w*0.5, h*0.2);
-            ctx.lineTo(w*0.3, h*0.3);
-            ctx.lineTo(w*0.25, h*0.4);
-            ctx.stroke();
-            
-            ctx.beginPath();
-            ctx.moveTo(w*0.5, h*0.2);
-            ctx.lineTo(w*0.7, h*0.3);
-            ctx.lineTo(w*0.75, h*0.4);
-            ctx.stroke();
-            
-            // Legs
-            ctx.beginPath();
-            ctx.moveTo(w*0.5, h*0.6);
-            ctx.lineTo(w*0.4, h*0.85);
-            ctx.stroke();
-            
-            ctx.beginPath();
-            ctx.moveTo(w*0.5, h*0.6);
-            ctx.lineTo(w*0.6, h*0.85);
-            ctx.stroke();
-            
-            // Draw affected areas
-            ctx.globalAlpha = 1;
-            ctx.shadowColor = '#0f0';
-            ctx.shadowBlur = 15;
-            ctx.fillStyle = '#0f0';
-            
-            if (bodyParts && bodyParts.length) {
-                // Count frequency of each body part for sizing
-                const partCount = {};
-                bodyParts.forEach(part => {
-                    const key = `${part[0]},${part[1]}`;
-                    partCount[key] = (partCount[key] || 0) + 1;
-                });
-                
-                // Draw dots with size based on frequency
-                bodyParts.forEach(part => {
-                    const key = `${part[0]},${part[1]}`;
-                    const count = partCount[key] || 1;
-                    const size = Math.min(6 + count * 2, 14);
-                    
-                    ctx.beginPath();
-                    ctx.arc(part[0] * w, part[1] * h, size, 0, Math.PI*2);
-                    ctx.fill();
-                    
-                    // Inner highlight
-                    ctx.fillStyle = '#fff';
-                    ctx.shadowBlur = 20;
-                    ctx.beginPath();
-                    ctx.arc(part[0] * w - 2, part[1] * h - 2, size/3, 0, Math.PI*2);
-                    ctx.fill();
-                    
-                    ctx.fillStyle = '#0f0';
-                });
-            }
-            
-            ctx.shadowBlur = 0;
+            // Create dots
+            Object.entries(freq).forEach(([key, count]) => {
+                const [x, y] = key.split(',').map(Number);
+                const dot = document.createElement('div');
+                dot.style.position = 'absolute';
+                dot.style.left = (x * 100) + '%';
+                dot.style.top = (y * 100) + '%';
+                dot.style.width = (10 + count * 2) + 'px';
+                dot.style.height = (10 + count * 2) + 'px';
+                dot.style.borderRadius = '50%';
+                dot.style.background = 'rgba(255, 0, 0, 0.7)';
+                dot.style.boxShadow = '0 0 20px rgba(255,0,0,0.8)';
+                dot.style.transform = 'translate(-50%, -50%)';
+                dot.style.pointerEvents = 'none';
+                overlay.appendChild(dot);
+            });
         }
 
         // ============================================
         // MAIN ANALYSIS FUNCTION
         // ============================================
         function runFullAnalysis() {
+            // Get all input values
             const name = document.getElementById('patientName').value;
-            const birthYear = parseInt(document.getElementById('birthYear').value);
+            const gender = document.getElementById('gender').value;
+            const age = parseInt(document.getElementById('age').value);
             const birthDate = new Date(document.getElementById('birthDate').value);
+            const birthYear = parseInt(document.getElementById('birthYear').value);
             const birthMonth = birthDate.getMonth();
-            const birthDay = birthDate.getDate();
+            
+            // Vitals
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value);
+            const temp = parseFloat(document.getElementById('temperature').value);
+            const bpSys = parseInt(document.getElementById('bpSystolic').value);
+            const bpDia = parseInt(document.getElementById('bpDiastolic').value);
+            const hr = parseInt(document.getElementById('heartRate').value);
+            const ox = parseInt(document.getElementById('oxygen').value);
+            
+            // Lifestyle
+            const alcohol = document.getElementById('alcohol').checked;
+            const smoke = document.getElementById('smoking').checked;
+            const coffee = parseInt(document.getElementById('coffeeCups').value);
+            const exercise = parseFloat(document.getElementById('exerciseHours').value);
+            const sleep = parseFloat(document.getElementById('sleepHours').value);
+            
             const symptoms = document.getElementById('symptoms').value;
             const doctorNotes = document.getElementById('doctorNotes').value;
             
-            // MODULE 1: Chinese Zodiac (100)
-            const zodiac = getChineseZodiac(birthYear);
-            const chinese = chineseZodiacHealth[zodiac] || chineseZodiacHealth["Rat"];
+            // MODULE 1: Chinese Zodiac
+            const chineseZodiac = getChineseZodiac(birthYear);
+            const chinese = chineseZodiacHealth[chineseZodiac] || chineseZodiacHealth["Rat"];
             
-            // MODULE 2: Ayurveda (80)
+            // MODULE 2: Ayurveda
             const dosa = getAyurvedaDosa(birthMonth);
             const ayurveda = ayurvedaHealth[dosa] || ayurvedaHealth["Pitta"];
             
-            // MODULE 3: Arabic Zodiac (70)
+            // MODULE 3: Arabic Zodiac
             const firstChar = name.charAt(0).toUpperCase();
             const arabic = arabicZodiacHealth[firstChar] || arabicZodiacHealth['A'];
             
-            // MODULE 4: Nadi Numerology (60)
+            // MODULE 4: Nadi Numerology
             const nadiNum = getNadiNumber(name);
             const nadi = numerologyHealth[nadiNum] || numerologyHealth[1];
             
-            // MODULE 5: Life Path Number (60)
+            // MODULE 5: Life Path
             const lifePathNum = getLifePathNumber(birthDate);
             const lifePath = numerologyHealth[lifePathNum] || numerologyHealth[1];
             
-            // MODULE 6: Birth Date Number (50)
-            const dateNum = birthDay;
+            // MODULE 6: Birth Date
+            const dateNum = birthDate.getDate();
             const dateHealth = numerologyHealth[dateNum > 9 ? (dateNum % 9 || 9) : dateNum] || numerologyHealth[1];
             
-            // MODULE 7: Birth Month (50)
-            const monthHealthData = monthHealth[birthMonth] || monthHealth[0];
+            // MODULE 7: Birth Month (simplified)
+            const monthHealth = numerologyHealth[(birthMonth + 1) % 9 || 9] || numerologyHealth[1];
             
-            // MODULE 8: Nakshatra (40)
-            const nakshatra = getNakshatraFromDate(birthDate);
-            const nakshatraData = nakshatraHealth[nakshatra] || nakshatraHealth["Ashwini"];
+            // MODULE 8: Gender & Age
+            const genderAge = getGenderAgeHealth(gender, age);
             
-            // MODULE 9: AI Engine (40)
-            const aiData = analyzeSymptomsAI(symptoms, doctorNotes);
+            // MODULE 9: Vitals
+            const vitals = getVitalsHealth(weight, height, temp, bpSys, bpDia, hr, ox);
+            
+            // MODULE 10: Lifestyle
+            const lifestyle = getLifestyleHealth(alcohol, smoke, coffee, exercise, sleep);
+            
+            // MODULE 11: German Zodiac
+            const german = getGermanZodiac(name);
+            
+            // MODULE 12: Russian Zodiac
+            const russian = getRussianZodiac(name);
+            
+            // MODULE 13: Swahili Zodiac
+            const swahili = getSwahiliZodiac(name);
+            
+            // MODULE 14: AI Engine
+            const ai = analyzeSymptomsAI(symptoms, doctorNotes, vitals);
+            
+            // Collect all modules
+            const modules = [
+                { name: "🇨🇳 Chinese", score: chinese.score, conditions: chinese.conditions, color: "#ef4444" },
+                { name: "🕉️ Ayurveda", score: ayurveda.score, conditions: ayurveda.conditions, color: "#f59e0b" },
+                { name: "☪️ Arabic", score: arabic.score, conditions: arabic.conditions, color: "#10b981" },
+                { name: "🔢 Nadi", score: nadi.score, conditions: nadi.conditions, color: "#8b5cf6" },
+                { name: "🌟 Life Path", score: lifePath.score, conditions: lifePath.conditions, color: "#ec4899" },
+                { name: "📅 Birth Date", score: dateHealth.score, conditions: dateHealth.conditions, color: "#f97316" },
+                { name: "🗓️ Birth Month", score: monthHealth.score, conditions: monthHealth.conditions, color: "#14b8a6" },
+                { name: "👤 Gender/Age", score: genderAge.score, conditions: genderAge.conditions, color: "#a855f7" },
+                { name: "❤️ Vitals", score: vitals.score, conditions: vitals.conditions, color: "#3b82f6" },
+                { name: "🏃 Lifestyle", score: lifestyle.score, conditions: lifestyle.conditions, color: "#6366f1" },
+                { name: "🇩🇪 German", score: german.score, conditions: german.conditions, color: "#d946ef" },
+                { name: "🇷🇺 Russian", score: russian.score, conditions: russian.conditions, color: "#f43f5e" },
+                { name: "🇹🇿 Swahili", score: swahili.score, conditions: swahili.conditions, color: "#84cc16" },
+                { name: "🤖 AI", score: ai.score, conditions: ai.conditions, color: "#06b6d4" }
+            ];
             
             // Calculate total score
-            const totalScore = chinese.score + ayurveda.score + arabic.score + nadi.score + 
-                              lifePath.score + dateHealth.score + monthHealthData.score + 
-                              nakshatraData.score + aiData.score;
+            const totalScore = modules.reduce((sum, m) => sum + m.score, 0);
             
             // Update score grid
             const scoreGrid = document.getElementById('scoreGrid');
-            scoreGrid.innerHTML = `
-                <div class="score-card" style="border-left-color:#ef4444">
-                    <div class="score-header"><span class="score-name">🐉 CHINESE</span><span class="score-value">${chinese.score}/100</span></div>
-                    <div class="score-bar"><div class="score-fill" style="width:${chinese.score}%; background:#ef4444;"></div></div>
+            scoreGrid.innerHTML = modules.map(m => `
+                <div class="score-card" style="border-left-color:${m.color}">
+                    <div class="score-header">
+                        <span class="score-name">${m.name}</span>
+                        <span class="score-value">${m.score}/100</span>
+                    </div>
+                    <div class="score-bar">
+                        <div class="score-fill" style="width:${m.score}%; background:${m.color};"></div>
+                    </div>
                 </div>
-                <div class="score-card" style="border-left-color:#f59e0b">
-                    <div class="score-header"><span class="score-name">🕉️ AYURVEDA</span><span class="score-value">${ayurveda.score}/80</span></div>
-                    <div class="score-bar"><div class="score-fill" style="width:${(ayurveda.score/80)*100}%; background:#f59e0b;"></div></div>
-                </div>
-                <div class="score-card" style="border-left-color:#10b981">
-                    <div class="score-header"><span class="score-name">☪️ ARABIC</span><span class="score-value">${arabic.score}/70</span></div>
-                    <div class="score-bar"><div class="score-fill" style="width:${(arabic.score/70)*100}%; background:#10b981;"></div></div>
-                </div>
-                <div class="score-card" style="border-left-color:#8b5cf6">
-                    <div class="score-header"><span class="score-name">🔢 NADI</span><span class="score-value">${nadi.score}/60</span></div>
-                    <div class="score-bar"><div class="score-fill" style="width:${(nadi.score/60)*100}%; background:#8b5cf6;"></div></div>
-                </div>
-                <div class="score-card" style="border-left-color:#ec4899">
-                    <div class="score-header"><span class="score-name">🌟 LIFE PATH</span><span class="score-value">${lifePath.score}/60</span></div>
-                    <div class="score-bar"><div class="score-fill" style="width:${(lifePath.score/60)*100}%; background:#ec4899;"></div></div>
-                </div>
-                <div class="score-card" style="border-left-color:#f97316">
-                    <div class="score-header"><span class="score-name">📅 BIRTH DATE</span><span class="score-value">${dateHealth.score}/50</span></div>
-                    <div class="score-bar"><div class="score-fill" style="width:${(dateHealth.score/50)*100}%; background:#f97316;"></div></div>
-                </div>
-                <div class="score-card" style="border-left-color:#14b8a6">
-                    <div class="score-header"><span class="score-name">🗓️ BIRTH MONTH</span><span class="score-value">${monthHealthData.score}/50</span></div>
-                    <div class="score-bar"><div class="score-fill" style="width:${(monthHealthData.score/50)*100}%; background:#14b8a6;"></div></div>
-                </div>
-                <div class="score-card" style="border-left-color:#a855f7">
-                    <div class="score-header"><span class="score-name">✨ NAKSHATRA</span><span class="score-value">${nakshatraData.score}/40</span></div>
-                    <div class="score-bar"><div class="score-fill" style="width:${(nakshatraData.score/40)*100}%; background:#a855f7;"></div></div>
-                </div>
-                <div class="score-card" style="border-left-color:#3b82f6; grid-column:span 3;">
-                    <div class="score-header"><span class="score-name">🤖 AI ENGINE</span><span class="score-value">${aiData.score}/40</span></div>
-                    <div class="score-bar"><div class="score-fill" style="width:${(aiData.score/40)*100}%; background:#3b82f6;"></div></div>
-                </div>
-            `;
+            `).join('');
             
-            document.getElementById('totalScore').innerHTML = `${totalScore}/550`;
+            document.getElementById('totalScore').innerHTML = `${totalScore}/${modules.length * 100}+`;
             
             // Collect all conditions for consensus
-            let allConditions = [
-                ...chinese.conditions,
-                ...ayurveda.conditions,
-                ...arabic.conditions,
-                ...nadi.conditions,
-                ...lifePath.conditions,
-                ...dateHealth.conditions,
-                ...monthHealthData.conditions,
-                ...nakshatraData.conditions,
-                ...aiData.conditions
-            ];
+            let allConditions = [];
+            let allBodyParts = [];
             
-            // Count frequency of conditions to find top 7
-            const conditionCount = {};
-            allConditions.forEach(cond => {
-                const baseCond = cond.split('(')[0].trim();
-                conditionCount[baseCond] = (conditionCount[baseCond] || 0) + 1;
+            modules.forEach(m => {
+                allConditions.push(...m.conditions);
+                // Simulate body parts based on conditions
+                if (m.conditions.some(c => c.includes("Head") || c.includes("kichwa") || c.includes("Kopf"))) {
+                    allBodyParts.push([0.5, 0.1]);
+                }
+                if (m.conditions.some(c => c.includes("Heart") || c.includes("moyo") || c.includes("Herz"))) {
+                    allBodyParts.push([0.45, 0.27]);
+                }
+                if (m.conditions.some(c => c.includes("Stomach") || c.includes("tumbo") || c.includes("Magen"))) {
+                    allBodyParts.push([0.5, 0.38]);
+                }
+                if (m.conditions.some(c => c.includes("Lung") || c.includes("mapafu") || c.includes("Lunge"))) {
+                    allBodyParts.push([0.4, 0.27]);
+                }
+                if (m.conditions.some(c => c.includes("Joint") || c.includes("viungo") || c.includes("Gelenk"))) {
+                    allBodyParts.push([0.5, 0.7]);
+                }
+                if (m.conditions.some(c => c.includes("Back") || c.includes("mgongo") || c.includes("Rücken"))) {
+                    allBodyParts.push([0.5, 0.5]);
+                }
             });
             
-            // Sort by frequency and get top 7
+            // Count condition frequencies
+            const conditionCount = {};
+            allConditions.forEach(cond => {
+                const base = cond.split('-')[0].split('(')[0].trim();
+                conditionCount[base] = (conditionCount[base] || 0) + 1;
+            });
+            
+            // Get top 7
             const topConditions = Object.entries(conditionCount)
                 .sort((a, b) => b[1] - a[1])
                 .slice(0, 7)
                 .map(([cond, count]) => {
-                    const confidence = Math.min(70 + count * 5, 98);
+                    const confidence = Math.min(70 + count * 3, 98);
                     return `${cond} (${confidence}%)`;
                 });
             
-            // Update diagnosis list with top 7
+            // Update diagnosis list
             const diagnosisList = document.getElementById('diagnosisList');
             diagnosisList.innerHTML = '';
-            topConditions.forEach((cond, index) => {
+            topConditions.forEach((cond, i) => {
                 const colors = ['#ef4444', '#f59e0b', '#10b981', '#8b5cf6', '#ec4899', '#f97316', '#14b8a6'];
                 const li = document.createElement('li');
                 li.className = 'diagnosis-item';
-                li.style.borderLeftColor = colors[index % colors.length];
-                li.textContent = `${index + 1}. ${cond}`;
+                li.style.borderLeftColor = colors[i];
+                li.style.animationDelay = (i * 0.1) + 's';
+                li.textContent = `${i+1}. ${cond}`;
                 diagnosisList.appendChild(li);
             });
             
-            // Set primary diagnosis
-            document.getElementById('primaryDiagnosis').innerHTML = topConditions[0] || "Malaria (94%)";
-            document.getElementById('consensusDetails').innerHTML = `Based on ${allConditions.length} diagnostic indicators from 9 modules`;
+            document.getElementById('primaryDiagnosis').innerHTML = topConditions[0] || "Analysis complete";
             
-            // Collect all body parts for X-ray
-            let allBodyParts = [
-                ...(chinese.bodyParts || []),
-                ...(ayurveda.bodyParts || []),
-                ...(arabic.bodyParts || []),
-                ...(nadi.bodyParts || []),
-                ...(lifePath.bodyParts || []),
-                ...(dateHealth.bodyParts || []),
-                ...(monthHealthData.bodyParts || []),
-                ...(nakshatraData.bodyParts || []),
-                ...(aiData.bodyParts || [])
+            // Draw dots
+            drawDots(allBodyParts);
+            
+            // Generate medication suggestions
+            const medSuggestions = document.getElementById('medSuggestions');
+            const meds = [
+                { name: "Artemisinin", desc: "For malaria - 3 day course" },
+                { name: "Ciprofloxacin", desc: "For bacterial infections" },
+                { name: "Paracetamol", desc: "For fever and pain" },
+                { name: "ORS", desc: "For dehydration" },
+                { name: "Herbal mix", desc: "Immune booster" }
             ];
             
-            // Remove duplicates (keep all for size variation)
-            drawXRay(allBodyParts);
+            medSuggestions.innerHTML = meds.map(m => `
+                <div class="med-card" onclick="selectMed('${m.name}')">
+                    <div class="med-name">${m.name}</div>
+                    <div class="med-desc">${m.desc}</div>
+                </div>
+            `).join('');
+        }
+
+        function selectMed(med) {
+            alert(`Selected: ${med}\nThis would be added to prescription.`);
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             
-            // Update AI analysis
-            document.getElementById('aiContent').innerHTML = `
-                <strong>🤖 AI DIAGNOSTIC ANALYSIS</strong><br>
-                ${aiData.conditions.map(c => `• ${c}`).join('<br>')}<br>
-                <strong>Uhakiki:</strong> ${aiData.score}/40 points
-            `;
-            
-            // Update print section
-            document.getElementById('printName').innerHTML = `Patient: ${name}`;
-            document.getElementById('printDiagnosis').innerHTML = `Primary: ${topConditions[0] || "Malaria (94%)"}`;
-            document.getElementById('printDate').innerHTML = `Date: ${new Date().toLocaleDateString()}`;
+            document.getElementById(`tab-${tab}`).classList.add('active');
+            event.target.classList.add('active');
         }
 
         function printReport() {
             window.print();
         }
 
-        // Auto-run on load
+        // Auto-run
         window.addEventListener('load', runFullAnalysis);
     </script>
 </body>
