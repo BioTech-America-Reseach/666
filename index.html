@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔬 MEDISCAN PRO • AI + ZODIAC + AYURVEDA</title>
+    <title>🔬 MEDISCAN PRO MAX • 550 POINTS • AI + 9 MODULES</title>
     <style>
         * {
             margin: 0;
@@ -29,10 +29,9 @@
             border: 2px solid #3b82f6;
             border-radius: 40px;
             padding: 30px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5), 0 0 50px rgba(59,130,246,0.3);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
         }
         
-        /* Scanner Header */
         .scanner-header {
             display: flex;
             justify-content: space-between;
@@ -48,7 +47,6 @@
             background: linear-gradient(135deg, #60a5fa, #a78bfa);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            letter-spacing: 2px;
         }
         
         .status {
@@ -75,15 +73,13 @@
             50% { opacity: 0.3; }
         }
         
-        /* Main Grid */
         .main-grid {
             display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
+            grid-template-columns: 1fr 1fr;
             gap: 25px;
             margin-bottom: 25px;
         }
         
-        /* Input Section */
         .input-section {
             background: #0f172a;
             border: 2px solid #334155;
@@ -140,13 +136,11 @@
             box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
         }
         
-        /* Scoring Panel */
         .scoring-panel {
             background: #0f172a;
             border: 2px solid #334155;
             border-radius: 30px;
             padding: 25px;
-            margin-bottom: 25px;
         }
         
         .score-grid {
@@ -154,6 +148,9 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 15px;
             margin: 20px 0;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 10px;
         }
         
         .score-card {
@@ -162,11 +159,6 @@
             padding: 15px;
             border-left: 4px solid;
         }
-        
-        .score-card.chinese { border-left-color: #ef4444; }
-        .score-card.ayurveda { border-left-color: #f59e0b; }
-        .score-card.arabic { border-left-color: #10b981; }
-        .score-card.numerology { border-left-color: #8b5cf6; }
         
         .score-header {
             display: flex;
@@ -177,11 +169,11 @@
         
         .score-name {
             color: #94a3b8;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
         
         .score-value {
-            font-size: 1.8rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: white;
         }
@@ -215,20 +207,13 @@
         }
         
         .consensus-value {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 800;
             color: #3b82f6;
             margin-bottom: 5px;
         }
         
-        .consensus-diagnosis {
-            font-size: 1.3rem;
-            color: white;
-            margin-bottom: 10px;
-        }
-        
-        /* X-Ray Style Canvas */
-        .xray-section {
+        .body-section {
             background: #0f172a;
             border: 2px solid #334155;
             border-radius: 30px;
@@ -236,7 +221,7 @@
             margin-bottom: 25px;
         }
         
-        .xray-container {
+        .body-container {
             display: flex;
             gap: 30px;
             align-items: center;
@@ -248,7 +233,6 @@
             border-radius: 30px;
             padding: 20px;
             position: relative;
-            overflow: hidden;
         }
         
         .xray-overlay {
@@ -277,8 +261,11 @@
             z-index: 10;
         }
         
-        .diagnosis-list {
+        .diagnosis-section {
             flex: 1;
+        }
+        
+        .diagnosis-list {
             list-style: none;
             padding: 0;
         }
@@ -295,59 +282,50 @@
             opacity: 0;
         }
         
-        /* Print Styles - Only show essential info */
-        @media print {
-            body {
-                background: white;
-                padding: 0;
-            }
-            
-            .container {
-                box-shadow: none;
-                border: none;
-                padding: 20px;
-            }
-            
-            .scanner-header, .input-section, .scoring-panel, .button-group, .doctor-section {
-                display: none !important;
-            }
-            
-            .print-only {
-                display: block !important;
-            }
-            
-            .xray-section {
-                border: 2px solid #000;
-                page-break-inside: avoid;
-            }
-            
-            canvas#xrayCanvas {
-                filter: none;
-                max-width: 200px;
-            }
-            
-            .diagnosis-item {
-                color: black;
-                background: #f0f0f0;
-                border-left: 4px solid #000;
-            }
+        .diagnosis-item:nth-child(1) { animation-delay: 0.1s; }
+        .diagnosis-item:nth-child(2) { animation-delay: 0.2s; }
+        .diagnosis-item:nth-child(3) { animation-delay: 0.3s; }
+        .diagnosis-item:nth-child(4) { animation-delay: 0.4s; }
+        .diagnosis-item:nth-child(5) { animation-delay: 0.5s; }
+        .diagnosis-item:nth-child(6) { animation-delay: 0.6s; }
+        .diagnosis-item:nth-child(7) { animation-delay: 0.7s; }
+        
+        @keyframes slideIn {
+            to { opacity: 1; transform: translateX(0); }
         }
         
-        .print-only {
-            display: none;
-            text-align: center;
-            margin-bottom: 30px;
+        .doctor-section {
+            background: #0f172a;
+            border: 2px solid #334155;
+            border-radius: 30px;
+            padding: 25px;
+            margin-bottom: 25px;
         }
         
-        .print-header {
-            font-size: 1.8rem;
-            font-weight: 800;
+        .doctor-input {
+            width: 100%;
+            min-height: 120px;
+            background: #1e293b;
+            border: 2px solid #334155;
+            border-radius: 20px;
+            padding: 20px;
+            color: white;
+            font-size: 1rem;
+            resize: vertical;
             margin-bottom: 20px;
         }
         
-        .print-patient {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
+        .ai-analysis {
+            background: linear-gradient(135deg, #1e293b, #2d3748);
+            border-radius: 20px;
+            padding: 20px;
+            border-left: 4px solid #8b5cf6;
+        }
+        
+        .ai-content {
+            color: white;
+            font-size: 1rem;
+            line-height: 1.6;
         }
         
         .button-group {
@@ -387,6 +365,27 @@
             background: #3b82f6;
         }
         
+        .print-only {
+            display: none;
+        }
+        
+        @media print {
+            .scanner-header, .input-section, .scoring-panel, .button-group, .doctor-section {
+                display: none !important;
+            }
+            
+            .print-only {
+                display: block !important;
+                text-align: center;
+                margin-bottom: 30px;
+            }
+            
+            .body-section {
+                page-break-inside: avoid;
+                border: 2px solid #000;
+            }
+        }
+        
         .clinic-footer {
             text-align: center;
             margin-top: 30px;
@@ -399,16 +398,14 @@
 </head>
 <body>
     <div class="container">
-        <!-- Scanner Header -->
         <div class="scanner-header">
-            <div class="title">🔬 MEDISCAN PRO • DR WILLIMA CLINIC</div>
+            <div class="title">🔬 MEDISCAN PRO MAX • 550 POINTS</div>
             <div class="status">
                 <div class="led"></div>
-                <span style="color: #94a3b8;">MULTI-MODAL DIAGNOSTIC SYSTEM</span>
+                <span>9 MODULE ENSEMBLE</span>
             </div>
         </div>
         
-        <!-- Main Grid -->
         <div class="main-grid">
             <!-- LEFT: Input Section -->
             <div class="input-section">
@@ -419,7 +416,7 @@
                 <div class="input-grid">
                     <div class="input-group input-full">
                         <label>FULL NAME</label>
-                        <input type="text" id="patientName" placeholder="e.g. Baraka Juma" value="Baraka Juma">
+                        <input type="text" id="patientName" value="Baraka Juma">
                     </div>
                     
                     <div class="input-group">
@@ -429,7 +426,12 @@
                     
                     <div class="input-group">
                         <label>BIRTH YEAR</label>
-                        <input type="number" id="birthYear" placeholder="e.g. 1990" value="1990">
+                        <input type="number" id="birthYear" value="1990">
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>BIRTH TIME (Optional)</label>
+                        <input type="time" id="birthTime" value="12:00">
                     </div>
                     
                     <div class="input-group">
@@ -442,8 +444,8 @@
                     </div>
                     
                     <div class="input-group input-full">
-                        <label>SYMPTOMS</label>
-                        <textarea id="symptoms" placeholder="Describe symptoms...">Nina homa kali, kichwa kinauma, na ninahisi kichefuchefu.</textarea>
+                        <label>SYMPTOMS (Detailed)</label>
+                        <textarea id="symptoms">Nina homa kali, kichwa kinauma sana, na ninahisi kichefuchefu. Pia nina maumivu ya tumbo na kuhara tangu jana usiku.</textarea>
                     </div>
                 </div>
             </div>
@@ -451,278 +453,314 @@
             <!-- RIGHT: Scoring Panel -->
             <div class="scoring-panel">
                 <div class="section-title">
-                    <span>⚖️</span> WEIGHTED SCORING SYSTEM
+                    <span>⚖️</span> 9 MODULE SCORES (550 MAX)
                 </div>
                 
-                <div class="score-grid" id="scoreGrid">
-                    <!-- Dynamically filled -->
-                </div>
+                <div class="score-grid" id="scoreGrid"></div>
                 
-                <div class="consensus-box" id="consensusBox">
-                    <div class="consensus-title">🔬 CONSENSUS DIAGNOSIS (120 POINTS MAX)</div>
-                    <div class="consensus-value" id="consensusScore">0/120</div>
-                    <div class="consensus-diagnosis" id="consensusDiagnosis">Inachambua...</div>
-                    <div style="color: #94a3b8; font-size: 0.9rem;" id="consensusDetails"></div>
+                <div class="consensus-box">
+                    <div class="consensus-title">🔬 TOTAL CONSENSUS SCORE</div>
+                    <div class="consensus-value" id="totalScore">0/550</div>
+                    <div style="color: white; font-size: 1.2rem; margin-bottom: 10px;" id="primaryDiagnosis"></div>
+                    <div style="color: #94a3b8;" id="consensusDetails"></div>
                 </div>
             </div>
         </div>
         
-        <!-- X-Ray Body Visualization -->
-        <div class="xray-section">
+        <!-- X-Ray Body + 7 Diagnoses -->
+        <div class="body-section">
             <div class="section-title">
-                <span>🩻</span> X-RAY ANALYSIS • AFFECTED AREAS
+                <span>🩻</span> 7 PRIMARY DIAGNOSES • X-RAY ANALYSIS
             </div>
             
-            <div class="xray-container">
+            <div class="body-container">
                 <div class="canvas-container">
                     <div class="xray-overlay"></div>
                     <canvas id="xrayCanvas" width="280" height="380"></canvas>
                 </div>
                 
-                <ul class="diagnosis-list" id="diagnosisList">
-                    <!-- Filled by JavaScript -->
-                </ul>
+                <div class="diagnosis-section">
+                    <ul class="diagnosis-list" id="diagnosisList"></ul>
+                </div>
             </div>
         </div>
         
-        <!-- Doctor's Notes -->
-        <div class="doctor-section" style="background: #0f172a; border: 2px solid #334155; border-radius: 30px; padding: 25px; margin-bottom: 25px;">
+        <!-- Doctor's Notes + AI Analysis -->
+        <div class="doctor-section">
             <div class="section-title">
-                <span>📋</span> DOCTOR'S NOTES
+                <span>📋</span> DOCTOR'S NOTES & AI FEEDBACK
             </div>
             
-            <textarea id="doctorNotes" class="doctor-input" style="width: 100%; min-height: 100px; background: #1e293b; border: 2px solid #334155; border-radius: 16px; padding: 15px; color: white; margin-bottom: 20px;" placeholder="Add clinical observations..."></textarea>
+            <textarea class="doctor-input" id="doctorNotes" placeholder="Andika dalili za mgonjwa hapa... AI itachambua">Mgonjwa ana homa ya 39°C, maumivu ya kichwa, kichefuchefu, na kuhara. Anaripoti kuumwa na baridi na kutokwa na jasho usiku.</textarea>
+            
+            <div class="ai-analysis" id="aiAnalysis">
+                <div class="ai-content" id="aiContent">Inachambua dalili... tafadhali subiri.</div>
+            </div>
+            
+            <div class="button-group">
+                <button class="btn btn-outline" onclick="printReport()">🖨️ PRINT REPORT</button>
+                <button class="btn btn-primary" onclick="runFullAnalysis()">🔬 RUN 550-POINT ANALYSIS</button>
+            </div>
         </div>
         
-        <!-- Print Section (Hidden normally, shows when printing) -->
+        <!-- Print Section -->
         <div class="print-only" id="printSection">
-            <div class="print-header">🏥 DR WILLIMA HERBAL CLINIC</div>
-            <div class="print-patient" id="printName">Patient: Baraka Juma</div>
-            <div class="print-patient" id="printDiagnosis">Diagnosis: Malaria (92% probability)</div>
-            <div class="print-patient" id="printDate">Date: 2026-03-07</div>
-        </div>
-        
-        <!-- Buttons -->
-        <div class="button-group">
-            <button class="btn btn-outline" onclick="printReport()">🖨️ PRINT REPORT</button>
-            <button class="btn btn-primary" onclick="runFullAnalysis()">🔬 RUN COMPLETE ANALYSIS</button>
+            <h1>DR WILLIMA HERBAL CLINIC</h1>
+            <h2 id="printName">Patient: Baraka Juma</h2>
+            <h3 id="printDiagnosis">Primary: Malaria (92%)</h3>
+            <div id="printDate">Date: 2026-03-07</div>
         </div>
         
         <div class="clinic-footer">
-            🌿 DR WILLIMA HERBAL CLINIC • OFFICIAL DIAGNOSTIC SYSTEM • POWERED BY ENSEMBLE AI 🌿
+            🌿 DR WILLIMA HERBAL CLINIC • 9 MODULE ENSEMBLE • 550 POINT SYSTEM • POWERED BY AI 🌿
         </div>
     </div>
 
     <script>
         // ============================================
-        // DATA ZA ZODIAC KICHINA (30 POINTS)
+        // MODULE 1: CHINESE ZODIAC (100 points)
         // ============================================
-        const chineseZodiacData = {
-            "Rat": { 
-                conditions: ["Malaria (90%)", "Digestive issues (85%)", "Fatigue (80%)"], 
-                bodyParts: [[0.5,0.38], [0.5,0.1]],
-                score: 28
-            },
-            "Ox": { 
-                conditions: ["Joint pain (88%)", "Arthritis (82%)", "Back pain (75%)"], 
-                bodyParts: [[0.5,0.7], [0.5,0.5]],
-                score: 25
-            },
-            "Tiger": { 
-                conditions: ["Respiratory issues (92%)", "Allergies (78%)", "Stress (70%)"], 
-                bodyParts: [[0.4,0.27], [0.5,0.1]],
-                score: 27
-            },
-            "Rabbit": { 
-                conditions: ["Skin allergies (85%)", "Eye strain (80%)", "Anxiety (75%)"], 
-                bodyParts: [[0.5,0.1], [0.45,0.08]],
-                score: 24
-            },
-            "Dragon": { 
-                conditions: ["Heart strain (89%)", "High BP (84%)", "Headaches (72%)"], 
-                bodyParts: [[0.45,0.27], [0.5,0.1]],
-                score: 26
-            },
-            "Snake": { 
-                conditions: ["Digestive weakness (87%)", "Ulcers (79%)", "Dehydration (68%)"], 
-                bodyParts: [[0.5,0.38], [0.5,0.45]],
-                score: 23
-            },
-            "Horse": { 
-                conditions: ["Heart palpitations (86%)", "Muscle strains (81%)", "Leg pain (77%)"], 
-                bodyParts: [[0.4,0.7], [0.6,0.7]],
-                score: 25
-            },
-            "Goat": { 
-                conditions: ["Digestive sensitivity (84%)", "Fatigue (79%)", "Low immunity (73%)"], 
-                bodyParts: [[0.5,0.38], [0.5,0.1]],
-                score: 22
-            },
-            "Monkey": { 
-                conditions: ["Insomnia (88%)", "Stress (83%)", "Digestive complaints (76%)"], 
-                bodyParts: [[0.5,0.1], [0.5,0.38]],
-                score: 24
-            },
-            "Rooster": { 
-                conditions: ["Respiratory issues (91%)", "Sinusitis (85%)", "Skin problems (70%)"], 
-                bodyParts: [[0.4,0.27], [0.5,0.18]],
-                score: 26
-            },
-            "Dog": { 
-                conditions: ["Digestive disorders (87%)", "Anxiety (82%)", "Skin allergies (74%)"], 
-                bodyParts: [[0.5,0.38], [0.5,0.1]],
-                score: 24
-            },
-            "Pig": { 
-                conditions: ["Obesity (89%)", "Diabetes (84%)", "Joint pain (78%)"], 
-                bodyParts: [[0.5,0.38], [0.5,0.7]],
-                score: 27
-            }
+        const chineseZodiacHealth = {
+            "Rat": { conditions: ["Fatigue (94%)", "Stress (89%)", "Circulation issues (85%)", "Digestive problems (82%)"], bodyParts: [[0.5,0.1], [0.45,0.27], [0.5,0.38]], score: 92 },
+            "Ox": { conditions: ["Joint pain (96%)", "Arthritis (91%)", "Back pain (88%)", "Respiratory issues (84%)"], bodyParts: [[0.5,0.7], [0.5,0.8], [0.5,0.5]], score: 94 },
+            "Tiger": { conditions: ["Digestive issues (95%)", "Acid reflux (90%)", "Stomach pain (87%)", "Headaches (83%)"], bodyParts: [[0.5,0.38], [0.5,0.4], [0.5,0.1]], score: 93 },
+            "Rabbit": { conditions: ["Allergies (93%)", "Skin sensitivity (88%)", "Respiratory issues (85%)", "Eye strain (81%)"], bodyParts: [[0.5,0.1], [0.4,0.27], [0.45,0.08]], score: 91 },
+            "Dragon": { conditions: ["Heart strain (97%)", "High BP (92%)", "Stress (89%)", "Inflammation (85%)"], bodyParts: [[0.45,0.27], [0.5,0.2], [0.5,0.38]], score: 95 },
+            "Snake": { conditions: ["Digestive weakness (92%)", "Ulcers (87%)", "Anxiety (84%)", "Dehydration (80%)"], bodyParts: [[0.5,0.38], [0.5,0.45], [0.5,0.48]], score: 90 },
+            "Horse": { conditions: ["Heart palpitations (94%)", "Muscle strains (89%)", "Leg pain (86%)", "Dehydration (82%)"], bodyParts: [[0.4,0.7], [0.6,0.7], [0.45,0.27]], score: 92 },
+            "Goat": { conditions: ["Digestive sensitivity (91%)", "Skin allergies (86%)", "Fatigue (83%)", "Anemia (79%)"], bodyParts: [[0.5,0.38], [0.5,0.1], [0.5,0.3]], score: 89 },
+            "Monkey": { conditions: ["Insomnia (93%)", "Stress (88%)", "Digestive complaints (85%)", "Nervous tension (82%)"], bodyParts: [[0.5,0.1], [0.5,0.38], [0.45,0.27]], score: 91 },
+            "Rooster": { conditions: ["Respiratory issues (95%)", "Sinusitis (90%)", "Skin problems (86%)", "Dental issues (83%)"], bodyParts: [[0.4,0.27], [0.5,0.18], [0.45,0.08]], score: 93 },
+            "Dog": { conditions: ["Digestive disorders (92%)", "Anxiety (87%)", "Skin allergies (84%)", "Arthritis (80%)"], bodyParts: [[0.5,0.38], [0.5,0.1], [0.5,0.7]], score: 90 },
+            "Pig": { conditions: ["Obesity (94%)", "Diabetes (89%)", "Joint pain (86%)", "Heart disease (83%)"], bodyParts: [[0.5,0.38], [0.5,0.7], [0.45,0.27]], score: 92 }
         };
 
         // ============================================
-        // AYURVEDA DOSHA DATA (30 POINTS)
+        // MODULE 2: AYURVEDA DOSHA (80 points)
         // ============================================
-        const ayurvedaData = {
-            "Vata": {
-                conditions: ["Arthritis (87%)", "Dry skin (82%)", "Anxiety (79%)"],
-                bodyParts: [[0.5,0.7], [0.5,0.1]],
-                score: 26
-            },
-            "Pitta": {
-                conditions: ["Acidity (92%)", "Inflammation (88%)", "Skin rashes (81%)"],
-                bodyParts: [[0.5,0.38], [0.5,0.1]],
-                score: 28
-            },
-            "Kapha": {
-                conditions: ["Obesity (89%)", "Congestion (85%)", "Diabetes (80%)"],
-                bodyParts: [[0.4,0.27], [0.5,0.38]],
-                score: 27
-            }
+        const ayurvedaHealth = {
+            "Vata": { conditions: ["Anxiety (92%)", "Joint pain (88%)", "Dry skin (85%)", "Insomnia (82%)", "Constipation (79%)"], bodyParts: [[0.5,0.7], [0.5,0.1], [0.5,0.38]], score: 76 },
+            "Pitta": { conditions: ["Acidity (94%)", "Inflammation (90%)", "Skin rashes (87%)", "Hypertension (84%)", "Heartburn (81%)"], bodyParts: [[0.5,0.38], [0.5,0.1], [0.45,0.27]], score: 78 },
+            "Kapha": { conditions: ["Obesity (91%)", "Congestion (87%)", "Diabetes (84%)", "Sinusitis (81%)", "Lethargy (78%)"], bodyParts: [[0.4,0.27], [0.5,0.38], [0.5,0.7]], score: 75 }
         };
 
         // ============================================
-        // ARABIC ZODIAC DATA (25 POINTS)
+        // MODULE 3: ARABIC ZODIAC (70 points)
         // ============================================
-        const arabicZodiacData = {
-            'A': { conditions: ["Headaches (86%)", "High BP (79%)"], bodyParts: [[0.5,0.1]], score: 22 },
-            'B': { conditions: ["Heart issues (88%)", "Stress (84%)"], bodyParts: [[0.45,0.27]], score: 24 },
-            'C': { conditions: ["Respiratory (85%)", "Allergies (77%)"], bodyParts: [[0.4,0.27]], score: 21 },
-            'D': { conditions: ["Digestive (87%)", "Fatigue (80%)"], bodyParts: [[0.5,0.38]], score: 23 },
-            'E': { conditions: ["Insomnia (82%)", "Anxiety (78%)"], bodyParts: [[0.5,0.1]], score: 20 },
-            'F': { conditions: ["Leg pain (84%)", "Joint issues (79%)"], bodyParts: [[0.5,0.7]], score: 21 },
-            'G': { conditions: ["Skin issues (83%)", "Allergies (76%)"], bodyParts: [[0.5,0.1]], score: 20 },
-            'H': { conditions: ["Back pain (86%)", "Neck stiffness (81%)"], bodyParts: [[0.5,0.5]], score: 23 },
-            'I': { conditions: ["Reproductive (81%)", "Hormonal (75%)"], bodyParts: [[0.5,0.6]], score: 19 },
-            'J': { conditions: ["Sinus (84%)", "Headaches (79%)"], bodyParts: [[0.5,0.1]], score: 21 },
-            'K': { conditions: ["Kidney issues (82%)", "Urinary (76%)"], bodyParts: [[0.5,0.48]], score: 20 },
-            'L': { conditions: ["Stomach (85%)", "Digestion (80%)"], bodyParts: [[0.5,0.38]], score: 22 },
-            'M': { conditions: ["Lungs (86%)", "Breathing (81%)"], bodyParts: [[0.4,0.27]], score: 23 },
-            'N': { conditions: ["Sleep issues (79%)", "Anxiety (74%)"], bodyParts: [[0.5,0.1]], score: 18 },
-            'O': { conditions: ["Immune weak (80%)", "Fatigue (75%)"], bodyParts: [[0.5,0.3]], score: 19 },
-            'P': { conditions: ["Heart (85%)", "Circulation (79%)"], bodyParts: [[0.45,0.27]], score: 22 },
-            'Q': { conditions: ["Headaches (81%)"], bodyParts: [[0.5,0.1]], score: 17 },
-            'R': { conditions: ["Stress (83%)", "BP (78%)"], bodyParts: [[0.45,0.27]], score: 21 },
-            'S': { conditions: ["Skin (82%)", "Allergies (75%)"], bodyParts: [[0.5,0.1]], score: 20 },
-            'T': { conditions: ["Back (84%)", "Spine (79%)"], bodyParts: [[0.5,0.5]], score: 22 },
-            'U': { conditions: ["Allergies (80%)", "Lungs (74%)"], bodyParts: [[0.4,0.27]], score: 19 },
-            'V': { conditions: ["Fatigue (81%)", "Energy (76%)"], bodyParts: [[0.5,0.38]], score: 20 },
-            'W': { conditions: ["Leg pain (83%)", "Knees (78%)"], bodyParts: [[0.5,0.7]], score: 21 },
-            'X': { conditions: ["Reproductive (79%)"], bodyParts: [[0.5,0.6]], score: 16 },
-            'Y': { conditions: ["Sinus (82%)", "Head (76%)"], bodyParts: [[0.5,0.1]], score: 20 },
-            'Z': { conditions: ["Kidney (80%)"], bodyParts: [[0.5,0.48]], score: 17 }
+        const arabicZodiacHealth = {
+            'A': { conditions: ["Headaches (89%)", "Hypertension (84%)", "Stress (80%)"], bodyParts: [[0.5,0.1]], score: 65 },
+            'B': { conditions: ["Heart issues (91%)", "Stress (86%)", "Anxiety (82%)"], bodyParts: [[0.45,0.27]], score: 67 },
+            'C': { conditions: ["Respiratory (88%)", "Allergies (83%)", "Asthma (79%)"], bodyParts: [[0.4,0.27]], score: 64 },
+            'D': { conditions: ["Digestive (90%)", "Fatigue (85%)", "Malabsorption (81%)"], bodyParts: [[0.5,0.38]], score: 66 },
+            'E': { conditions: ["Insomnia (86%)", "Anxiety (82%)", "Nervous tension (78%)"], bodyParts: [[0.5,0.1]], score: 63 },
+            'F': { conditions: ["Leg pain (87%)", "Joint issues (83%)", "Gout (79%)"], bodyParts: [[0.5,0.7]], score: 64 },
+            'G': { conditions: ["Skin issues (85%)", "Allergies (81%)", "Eczema (77%)"], bodyParts: [[0.5,0.1]], score: 62 },
+            'H': { conditions: ["Back pain (89%)", "Neck stiffness (84%)", "Sciatica (80%)"], bodyParts: [[0.5,0.5]], score: 65 },
+            'I': { conditions: ["Reproductive (84%)", "Hormonal (80%)", "UTI (76%)"], bodyParts: [[0.5,0.6]], score: 61 },
+            'J': { conditions: ["Sinus (86%)", "Headaches (82%)", "Migraines (78%)"], bodyParts: [[0.5,0.1]], score: 63 },
+            'K': { conditions: ["Kidney issues (85%)", "Urinary (81%)", "Edema (77%)"], bodyParts: [[0.5,0.48]], score: 62 },
+            'L': { conditions: ["Stomach (88%)", "Digestion (84%)", "IBS (80%)"], bodyParts: [[0.5,0.38]], score: 64 },
+            'M': { conditions: ["Lungs (87%)", "Breathing (83%)", "Bronchitis (79%)"], bodyParts: [[0.4,0.27]], score: 63 },
+            'N': { conditions: ["Sleep issues (82%)", "Anxiety (78%)", "Depression (74%)"], bodyParts: [[0.5,0.1]], score: 60 },
+            'O': { conditions: ["Immune weak (83%)", "Fatigue (79%)", "Infections (75%)"], bodyParts: [[0.5,0.3]], score: 61 },
+            'P': { conditions: ["Heart (86%)", "Circulation (82%)", "Palpitations (78%)"], bodyParts: [[0.45,0.27]], score: 63 },
+            'Q': { conditions: ["Headaches (84%)", "Migraines (80%)"], bodyParts: [[0.5,0.1]], score: 59 },
+            'R': { conditions: ["Stress (85%)", "BP (81%)", "Tension (77%)"], bodyParts: [[0.45,0.27]], score: 62 },
+            'S': { conditions: ["Skin (84%)", "Allergies (80%)", "Rashes (76%)"], bodyParts: [[0.5,0.1]], score: 61 },
+            'T': { conditions: ["Back (86%)", "Spine (82%)", "Posture (78%)"], bodyParts: [[0.5,0.5]], score: 63 },
+            'U': { conditions: ["Allergies (83%)", "Lungs (79%)", "Sinus (75%)"], bodyParts: [[0.4,0.27]], score: 61 },
+            'V': { conditions: ["Fatigue (84%)", "Energy (80%)", "Burnout (76%)"], bodyParts: [[0.5,0.38]], score: 62 },
+            'W': { conditions: ["Leg pain (85%)", "Knees (81%)", "Cramps (77%)"], bodyParts: [[0.5,0.7]], score: 62 },
+            'X': { conditions: ["Reproductive (82%)", "Hormonal (78%)"], bodyParts: [[0.5,0.6]], score: 58 },
+            'Y': { conditions: ["Sinus (84%)", "Head (80%)", "Pressure (76%)"], bodyParts: [[0.5,0.1]], score: 61 },
+            'Z': { conditions: ["Kidney (82%)", "Fluid retention (78%)"], bodyParts: [[0.5,0.48]], score: 59 }
         };
 
         // ============================================
-        // NUMEROLOGY DATA (15 POINTS)
+        // MODULE 4: NADI NUMEROLOGY (60 points)
+        // MODULE 5: LIFE PATH NUMBER (60 points)
+        // MODULE 6: BIRTH DATE NUMBER (50 points)
         // ============================================
-        function getNumerologyScore(name) {
-            const sum = name.toUpperCase().replace(/[^A-Z]/g, '').split('').reduce((a, c) => a + (c.charCodeAt(0) - 64), 0);
-            const num = sum % 9 || 9;
-            
-            const numerologyMap = {
-                1: { conditions: ["Immune weak (75%)"], bodyParts: [[0.5,0.1]], score: 12 },
-                2: { conditions: ["Stomach issues (78%)"], bodyParts: [[0.5,0.38]], score: 13 },
-                3: { conditions: ["Respiratory (74%)"], bodyParts: [[0.4,0.27]], score: 11 },
-                4: { conditions: ["Back pain (76%)"], bodyParts: [[0.5,0.5]], score: 12 },
-                5: { conditions: ["Skin issues (73%)"], bodyParts: [[0.5,0.1]], score: 10 },
-                6: { conditions: ["Digestive (77%)"], bodyParts: [[0.5,0.38]], score: 13 },
-                7: { conditions: ["Insomnia (72%)"], bodyParts: [[0.5,0.1]], score: 11 },
-                8: { conditions: ["Joint pain (75%)"], bodyParts: [[0.5,0.7]], score: 12 },
-                9: { conditions: ["Fatigue (74%)"], bodyParts: [[0.5,0.3]], score: 11 }
-            };
-            return numerologyMap[num] || numerologyMap[1];
-        }
+        const numerologyHealth = {
+            1: { conditions: ["Headaches (88%)", "Hypertension (84%)", "Stress (81%)", "Burnout (78%)"], bodyParts: [[0.5,0.1], [0.45,0.27]], score: 55 },
+            2: { conditions: ["Digestive issues (86%)", "Anxiety (82%)", "IBS (79%)", "Hormonal (76%)"], bodyParts: [[0.5,0.38], [0.5,0.6]], score: 53 },
+            3: { conditions: ["Throat problems (87%)", "Thyroid (83%)", "Respiratory (80%)", "Skin (77%)"], bodyParts: [[0.5,0.18], [0.4,0.27]], score: 54 },
+            4: { conditions: ["Joint pain (89%)", "Back pain (85%)", "Arthritis (82%)", "Constipation (79%)"], bodyParts: [[0.5,0.7], [0.5,0.5]], score: 56 },
+            5: { conditions: ["Nervous system (86%)", "Insomnia (82%)", "Addiction (79%)", "Restlessness (76%)"], bodyParts: [[0.5,0.1], [0.5,0.38]], score: 53 },
+            6: { conditions: ["Heart disease (88%)", "Diabetes (84%)", "Obesity (81%)", "Cholesterol (78%)"], bodyParts: [[0.45,0.27], [0.5,0.38]], score: 55 },
+            7: { conditions: ["Insomnia (87%)", "Anxiety (83%)", "Depression (80%)", "Neurological (77%)"], bodyParts: [[0.5,0.1], [0.5,0.3]], score: 54 },
+            8: { conditions: ["Liver issues (86%)", "Hypertension (82%)", "Stress (79%)", "Kidney (76%)"], bodyParts: [[0.5,0.48], [0.45,0.27]], score: 53 },
+            9: { conditions: ["Immune weak (85%)", "Fatigue (81%)", "Infections (78%)", "Allergies (75%)"], bodyParts: [[0.5,0.3], [0.5,0.1]], score: 52 },
+            11: { conditions: ["Nervous sensitivity (90%)", "Anxiety (86%)", "Spiritual stress (83%)", "Insomnia (80%)"], bodyParts: [[0.5,0.1], [0.5,0.3]], score: 58 },
+            22: { conditions: ["Physical tension (89%)", "Spine issues (85%)", "Shoulder pain (82%)", "Burden (79%)"], bodyParts: [[0.5,0.5], [0.3,0.27], [0.7,0.27]], score: 57 },
+            33: { conditions: ["Emotional exhaustion (88%)", "Empathy burnout (84%)", "Fatigue (81%)", "Heart (78%)"], bodyParts: [[0.45,0.27], [0.5,0.1]], score: 56 }
+        };
 
         // ============================================
-        // AI ENGINE (20 POINTS BONUS)
+        // MODULE 7: BIRTH MONTH (50 points)
         // ============================================
-        function analyzeSymptomsAI(symptoms) {
-            const text = symptoms.toLowerCase();
-            let aiScore = 0;
-            let aiConditions = [];
-            let bodyParts = [];
-            
-            if (text.includes("homa") || text.includes("fever")) {
-                aiScore += 8;
-                aiConditions.push("Fever (92%)");
-            }
-            if (text.includes("kichwa") || text.includes("headache")) {
-                aiScore += 6;
-                aiConditions.push("Headache (85%)");
-                bodyParts.push([0.5,0.1]);
-            }
-            if (text.includes("tumbo") || text.includes("stomach")) {
-                aiScore += 7;
-                aiConditions.push("Stomach issues (88%)");
-                bodyParts.push([0.5,0.38]);
-            }
-            if (text.includes("kuhara") || text.includes("diarrhea")) {
-                aiScore += 7;
-                aiConditions.push("Gastroenteritis (86%)");
-                bodyParts.push([0.5,0.38]);
-            }
-            if (text.includes("kikohozi") || text.includes("cough")) {
-                aiScore += 6;
-                aiConditions.push("Respiratory infection (84%)");
-                bodyParts.push([0.4,0.27]);
-            }
-            if (text.includes("maumivu") || text.includes("pain")) {
-                aiScore += 5;
-            }
-            
-            // Malaria detection (high probability)
-            if (text.includes("homa") && (text.includes("baridi") || text.includes("chills"))) {
-                aiConditions = ["Malaria (94%)"];
-                aiScore = 18;
-                bodyParts = [[0.5,0.38], [0.5,0.1]];
-            }
-            
-            return {
-                conditions: aiConditions.length ? aiConditions : ["Common cold (70%)"],
-                score: Math.min(aiScore + 5, 20),
-                bodyParts: bodyParts.length ? bodyParts : [[0.5,0.3]]
-            };
-        }
+        const monthHealth = {
+            0: { conditions: ["Joint pain (87%)", "Depression (83%)", "Respiratory (80%)"], bodyParts: [[0.5,0.7], [0.5,0.1]], score: 45 },
+            1: { conditions: ["Kidney issues (86%)", "UTI (82%)", "Fluid retention (79%)"], bodyParts: [[0.5,0.48]], score: 44 },
+            2: { conditions: ["Allergies (88%)", "Sinusitis (84%)", "Ear infections (81%)"], bodyParts: [[0.5,0.1], [0.4,0.27]], score: 46 },
+            3: { conditions: ["Headaches (87%)", "Migraines (83%)", "Eye strain (80%)"], bodyParts: [[0.5,0.1], [0.45,0.08]], score: 45 },
+            4: { conditions: ["Throat issues (86%)", "Thyroid (82%)", "Neck pain (79%)"], bodyParts: [[0.5,0.18], [0.5,0.2]], score: 44 },
+            5: { conditions: ["Respiratory (89%)", "Asthma (85%)", "Bronchitis (82%)"], bodyParts: [[0.4,0.27]], score: 47 },
+            6: { conditions: ["Digestive (88%)", "Heartburn (84%)", "Ulcers (81%)"], bodyParts: [[0.5,0.38]], score: 46 },
+            7: { conditions: ["Heart (87%)", "Circulation (83%)", "Palpitations (80%)"], bodyParts: [[0.45,0.27]], score: 45 },
+            8: { conditions: ["Intestinal (86%)", "Constipation (82%)", "Diverticulitis (79%)"], bodyParts: [[0.5,0.42]], score: 44 },
+            9: { conditions: ["Kidney (85%)", "Back pain (81%)", "Bladder (78%)"], bodyParts: [[0.5,0.48], [0.5,0.5]], score: 43 },
+            10: { conditions: ["Reproductive (86%)", "Hormonal (82%)", "Pelvic (79%)"], bodyParts: [[0.5,0.6]], score: 44 },
+            11: { conditions: ["Hip pain (87%)", "Sciatica (83%)", "Liver (80%)"], bodyParts: [[0.5,0.65], [0.5,0.48]], score: 45 }
+        };
 
         // ============================================
-        // KUPATA ZODIAC KUTOKA MWAKA
+        // MODULE 8: NAKSHATRA (40 points)
+        // ============================================
+        const nakshatraHealth = {
+            "Ashwini": { conditions: ["Head injuries (84%)", "Fever (80%)", "Inflammation (76%)"], bodyParts: [[0.5,0.1]], score: 35 },
+            "Bharani": { conditions: ["Reproductive (83%)", "Urinary (79%)", "Anemia (75%)"], bodyParts: [[0.5,0.6]], score: 34 },
+            "Krittika": { conditions: ["Skin issues (85%)", "Acne (81%)", "Burns (77%)"], bodyParts: [[0.5,0.1]], score: 36 },
+            "Rohini": { conditions: ["Throat (84%)", "Thyroid (80%)", "Fertility (76%)"], bodyParts: [[0.5,0.18]], score: 35 },
+            "Mrigashira": { conditions: ["Respiratory (83%)", "Allergies (79%)", "Asthma (75%)"], bodyParts: [[0.4,0.27]], score: 34 },
+            "Ardra": { conditions: ["Nervous system (84%)", "Anxiety (80%)", "Tremors (76%)"], bodyParts: [[0.5,0.1]], score: 35 },
+            "Punarvasu": { conditions: ["Digestive (85%)", "Liver (81%)", "Pancreas (77%)"], bodyParts: [[0.5,0.38], [0.5,0.48]], score: 36 },
+            "Pushya": { conditions: ["Lungs (84%)", "Spleen (80%)", "Immunity (76%)"], bodyParts: [[0.4,0.27], [0.5,0.3]], score: 35 },
+            "Ashlesha": { conditions: ["Skin (83%)", "Toxins (79%)", "Poison (75%)"], bodyParts: [[0.5,0.1]], score: 34 },
+            "Magha": { conditions: ["Bones (85%)", "Teeth (81%)", "Ancestral (77%)"], bodyParts: [[0.5,0.7], [0.5,0.08]], score: 36 },
+            "Purva Phalguni": { conditions: ["Heart (84%)", "Circulation (80%)", "Blood (76%)"], bodyParts: [[0.45,0.27]], score: 35 },
+            "Uttara Phalguni": { conditions: ["Stomach (83%)", "Intestines (79%)", "Digestion (75%)"], bodyParts: [[0.5,0.38]], score: 34 },
+            "Hasta": { conditions: ["Hands (84%)", "Coordination (80%)", "Nerves (76%)"], bodyParts: [[0.3,0.3], [0.7,0.3]], score: 35 },
+            "Chitra": { conditions: ["Eyes (85%)", "Vision (81%)", "Skin (77%)"], bodyParts: [[0.45,0.08], [0.55,0.08]], score: 36 },
+            "Swati": { conditions: ["Lungs (84%)", "Respiratory (80%)", "Blood pressure (76%)"], bodyParts: [[0.4,0.27]], score: 35 },
+            "Vishakha": { conditions: ["Kidneys (83%)", "Bladder (79%)", "Reproductive (75%)"], bodyParts: [[0.5,0.48], [0.5,0.6]], score: 34 },
+            "Anuradha": { conditions: ["Heart (84%)", "Circulation (80%)", "Emotions (76%)"], bodyParts: [[0.45,0.27]], score: 35 },
+            "Jyeshtha": { conditions: ["Infections (83%)", "Fever (79%)", "Immunity (75%)"], bodyParts: [[0.5,0.3]], score: 34 },
+            "Mula": { conditions: ["Bones (84%)", "Joints (80%)", "Chronic pain (76%)"], bodyParts: [[0.5,0.7], [0.5,0.5]], score: 35 },
+            "Purva Ashadha": { conditions: ["Ears (83%)", "Balance (79%)", "Vertigo (75%)"], bodyParts: [[0.5,0.12]], score: 34 },
+            "Uttara Ashadha": { conditions: ["Thighs (84%)", "Hips (80%)", "Circulation (76%)"], bodyParts: [[0.5,0.65]], score: 35 },
+            "Shravana": { conditions: ["Ears (83%)", "Hearing (79%)", "Learning (75%)"], bodyParts: [[0.5,0.12]], score: 34 },
+            "Dhanishtha": { conditions: ["Lungs (84%)", "Drums of ears (80%)", "Rhythm (76%)"], bodyParts: [[0.4,0.27], [0.5,0.12]], score: 35 },
+            "Shatabhisha": { conditions: ["Urinary (85%)", "Diabetes (81%)", "Breathing (77%)"], bodyParts: [[0.5,0.48], [0.4,0.27]], score: 36 },
+            "Purva Bhadrapada": { conditions: ["Feet (84%)", "Nerves (80%)", "Sleep (76%)"], bodyParts: [[0.45,0.95], [0.55,0.95]], score: 35 },
+            "Uttara Bhadrapada": { conditions: ["Digestion (83%)", "Absorption (79%)", "Ankles (75%)"], bodyParts: [[0.5,0.38], [0.45,0.85], [0.55,0.85]], score: 34 },
+            "Revati": { conditions: ["Feet (84%)", "Nourishment (80%)", "Immunity (76%)"], bodyParts: [[0.45,0.95], [0.55,0.95], [0.5,0.3]], score: 35 }
+        };
+
+        // ============================================
+        // HELPER FUNCTIONS
         // ============================================
         function getChineseZodiac(year) {
             const zodiacs = ["Monkey", "Rooster", "Dog", "Pig", "Rat", "Ox", "Tiger", "Rabbit", "Dragon", "Snake", "Horse", "Goat"];
             return zodiacs[year % 12];
         }
 
-        // ============================================
-        // KUPATA AYURVEDA DOSHA (KUTOKA MWEZI)
-        // ============================================
         function getAyurvedaDosa(month) {
             const dosas = ["Vata", "Pitta", "Kapha", "Vata", "Pitta", "Kapha", "Vata", "Pitta", "Kapha", "Vata", "Pitta", "Kapha"];
             return dosas[month % 12];
         }
 
+        function getNakshatraFromDate(date) {
+            // Simplified - in real app, use precise calculations
+            const nakshatras = Object.keys(nakshatraHealth);
+            const dayOfYear = Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 86400000);
+            return nakshatras[dayOfYear % 27];
+        }
+
+        function getLifePathNumber(date) {
+            const dateStr = date.toISOString().split('T')[0].replace(/-/g, '');
+            let sum = 0;
+            for (let digit of dateStr) sum += parseInt(digit);
+            
+            // Master numbers 11,22,33
+            if (sum === 11 || sum === 22 || sum === 33) return sum;
+            
+            while (sum > 9) {
+                sum = sum.toString().split('').reduce((a,b) => a + parseInt(b), 0);
+            }
+            return sum;
+        }
+
+        function getNadiNumber(name) {
+            const upperName = name.toUpperCase().replace(/[^A-Z]/g, '');
+            let sum = 0;
+            for (let i = 0; i < upperName.length; i++) {
+                sum += upperName.charCodeAt(i) - 64;
+            }
+            while (sum > 9) {
+                sum = sum.toString().split('').reduce((a,b) => a + parseInt(b), 0);
+            }
+            return sum;
+        }
+
         // ============================================
-        // KUCHORA X-RAY STYLE BODY
+        // MODULE 9: AI ENGINE (40 points)
+        // ============================================
+        function analyzeSymptomsAI(symptoms, doctorNotes) {
+            const text = (symptoms + " " + doctorNotes).toLowerCase();
+            let conditions = [];
+            let bodyParts = [];
+            let score = 0;
+            
+            // Malaria detection
+            if ((text.includes("homa") || text.includes("fever")) && 
+                (text.includes("baridi") || text.includes("chills")) &&
+                (text.includes("kichwa") || text.includes("headache"))) {
+                conditions.push("Malaria (94%)");
+                bodyParts.push([0.5,0.38], [0.5,0.1]);
+                score += 18;
+            }
+            
+            // Typhoid detection
+            if ((text.includes("homa") || text.includes("fever")) && 
+                (text.includes("tumbo") || text.includes("stomach")) &&
+                (text.includes("kuhara") || text.includes("diarrhea"))) {
+                conditions.push("Typhoid (91%)");
+                bodyParts.push([0.5,0.38], [0.5,0.1]);
+                score += 17;
+            }
+            
+            // Respiratory infection
+            if ((text.includes("kikohozi") || text.includes("cough")) && 
+                (text.includes("pumua") || text.includes("breath")) &&
+                (text.includes("homa") || text.includes("fever"))) {
+                conditions.push("Respiratory infection (89%)");
+                bodyParts.push([0.4,0.27]);
+                score += 16;
+            }
+            
+            // Gastroenteritis
+            if ((text.includes("tumbo") || text.includes("stomach")) && 
+                (text.includes("kuhara") || text.includes("diarrhea")) &&
+                (text.includes("kichefuchefu") || text.includes("nausea"))) {
+                conditions.push("Gastroenteritis (92%)");
+                bodyParts.push([0.5,0.38]);
+                score += 17;
+            }
+            
+            // Headache/migraine
+            if (text.includes("kichwa") || text.includes("headache")) {
+                if (!conditions.length) conditions.push("Migraine (85%)");
+                bodyParts.push([0.5,0.1]);
+                score += 12;
+            }
+            
+            // If no specific condition found
+            if (conditions.length === 0) {
+                conditions.push("Viral infection (76%)");
+                bodyParts.push([0.5,0.3]);
+                score = 10;
+            }
+            
+            return {
+                conditions: conditions.slice(0, 3),
+                score: Math.min(score + 5, 40),
+                bodyParts: bodyParts
+            };
+        }
+
+        // ============================================
+        // DRAW X-RAY WITH BODY PARTS
         // ============================================
         function drawXRay(bodyParts) {
             const canvas = document.getElementById('xrayCanvas');
@@ -733,13 +771,13 @@
             ctx.fillStyle = '#000';
             ctx.fillRect(0, 0, w, h);
             
-            // X-Ray style (white on black)
+            // X-Ray style
             ctx.strokeStyle = '#0f0';
             ctx.fillStyle = '#0f0';
             ctx.lineWidth = 2;
             ctx.globalAlpha = 0.3;
             
-            // Draw skeleton outline
+            // Skeleton outline
             ctx.beginPath();
             ctx.ellipse(w*0.5, h*0.1, w*0.1, h*0.08, 0, 0, Math.PI*2);
             ctx.stroke();
@@ -783,28 +821,38 @@
             ctx.lineTo(w*0.6, h*0.85);
             ctx.stroke();
             
-            // Draw affected areas (glowing dots)
+            // Draw affected areas
             ctx.globalAlpha = 1;
             ctx.shadowColor = '#0f0';
             ctx.shadowBlur = 15;
             ctx.fillStyle = '#0f0';
             
             if (bodyParts && bodyParts.length) {
+                // Count frequency of each body part for sizing
+                const partCount = {};
                 bodyParts.forEach(part => {
-                    if (part && part.length === 2) {
-                        ctx.beginPath();
-                        ctx.arc(part[0] * w, part[1] * h, 6, 0, Math.PI*2);
-                        ctx.fill();
-                        
-                        // Inner brighter dot
-                        ctx.fillStyle = '#fff';
-                        ctx.shadowBlur = 20;
-                        ctx.beginPath();
-                        ctx.arc(part[0] * w - 2, part[1] * h - 2, 2, 0, Math.PI*2);
-                        ctx.fill();
-                        
-                        ctx.fillStyle = '#0f0';
-                    }
+                    const key = `${part[0]},${part[1]}`;
+                    partCount[key] = (partCount[key] || 0) + 1;
+                });
+                
+                // Draw dots with size based on frequency
+                bodyParts.forEach(part => {
+                    const key = `${part[0]},${part[1]}`;
+                    const count = partCount[key] || 1;
+                    const size = Math.min(6 + count * 2, 14);
+                    
+                    ctx.beginPath();
+                    ctx.arc(part[0] * w, part[1] * h, size, 0, Math.PI*2);
+                    ctx.fill();
+                    
+                    // Inner highlight
+                    ctx.fillStyle = '#fff';
+                    ctx.shadowBlur = 20;
+                    ctx.beginPath();
+                    ctx.arc(part[0] * w - 2, part[1] * h - 2, size/3, 0, Math.PI*2);
+                    ctx.fill();
+                    
+                    ctx.fillStyle = '#0f0';
                 });
             }
             
@@ -812,157 +860,178 @@
         }
 
         // ============================================
-        // KUFANYA ANALYSIS KAMILI
+        // MAIN ANALYSIS FUNCTION
         // ============================================
         function runFullAnalysis() {
             const name = document.getElementById('patientName').value;
             const birthYear = parseInt(document.getElementById('birthYear').value);
             const birthDate = new Date(document.getElementById('birthDate').value);
             const birthMonth = birthDate.getMonth();
+            const birthDay = birthDate.getDate();
             const symptoms = document.getElementById('symptoms').value;
+            const doctorNotes = document.getElementById('doctorNotes').value;
             
-            // 1. Chinese Zodiac (30 points)
+            // MODULE 1: Chinese Zodiac (100)
             const zodiac = getChineseZodiac(birthYear);
-            const chinese = chineseZodiacData[zodiac] || chineseZodiacData["Rat"];
+            const chinese = chineseZodiacHealth[zodiac] || chineseZodiacHealth["Rat"];
             
-            // 2. Ayurveda (30 points)
+            // MODULE 2: Ayurveda (80)
             const dosa = getAyurvedaDosa(birthMonth);
-            const ayurveda = ayurvedaData[dosa] || ayurvedaData["Pitta"];
+            const ayurveda = ayurvedaHealth[dosa] || ayurvedaHealth["Pitta"];
             
-            // 3. Arabic Zodiac (25 points)
+            // MODULE 3: Arabic Zodiac (70)
             const firstChar = name.charAt(0).toUpperCase();
-            const arabic = arabicZodiacData[firstChar] || arabicZodiacData['A'];
+            const arabic = arabicZodiacHealth[firstChar] || arabicZodiacHealth['A'];
             
-            // 4. Numerology (15 points)
-            const numerology = getNumerologyScore(name);
+            // MODULE 4: Nadi Numerology (60)
+            const nadiNum = getNadiNumber(name);
+            const nadi = numerologyHealth[nadiNum] || numerologyHealth[1];
             
-            // 5. AI Analysis (20 points bonus)
-            const ai = analyzeSymptomsAI(symptoms);
+            // MODULE 5: Life Path Number (60)
+            const lifePathNum = getLifePathNumber(birthDate);
+            const lifePath = numerologyHealth[lifePathNum] || numerologyHealth[1];
+            
+            // MODULE 6: Birth Date Number (50)
+            const dateNum = birthDay;
+            const dateHealth = numerologyHealth[dateNum > 9 ? (dateNum % 9 || 9) : dateNum] || numerologyHealth[1];
+            
+            // MODULE 7: Birth Month (50)
+            const monthHealthData = monthHealth[birthMonth] || monthHealth[0];
+            
+            // MODULE 8: Nakshatra (40)
+            const nakshatra = getNakshatraFromDate(birthDate);
+            const nakshatraData = nakshatraHealth[nakshatra] || nakshatraHealth["Ashwini"];
+            
+            // MODULE 9: AI Engine (40)
+            const aiData = analyzeSymptomsAI(symptoms, doctorNotes);
             
             // Calculate total score
-            const totalScore = chinese.score + ayurveda.score + arabic.score + numerology.score + ai.score;
+            const totalScore = chinese.score + ayurveda.score + arabic.score + nadi.score + 
+                              lifePath.score + dateHealth.score + monthHealthData.score + 
+                              nakshatraData.score + aiData.score;
             
-            // Find consensus conditions
-            let allConditions = [];
-            chinese.conditions.forEach(c => allConditions.push(c));
-            ayurveda.conditions.forEach(c => allConditions.push(c));
-            arabic.conditions.forEach(c => allConditions.push(c));
-            numerology.conditions.forEach(c => allConditions.push(c));
-            ai.conditions.forEach(c => allConditions.push(c));
-            
-            // Get most mentioned body parts
-            let allBodyParts = [];
-            chinese.bodyParts.forEach(p => allBodyParts.push(p));
-            ayurveda.bodyParts.forEach(p => allBodyParts.push(p));
-            arabic.bodyParts.forEach(p => allBodyParts.push(p));
-            numerology.bodyParts.forEach(p => allBodyParts.push(p));
-            ai.bodyParts.forEach(p => allBodyParts.push(p));
-            
-            // Remove duplicates
-            const uniqueParts = [];
-            allBodyParts.forEach(part => {
-                const exists = uniqueParts.some(p => p[0] === part[0] && p[1] === part[1]);
-                if (!exists) uniqueParts.push(part);
-            });
-            
-            // Update scoring display
+            // Update score grid
             const scoreGrid = document.getElementById('scoreGrid');
             scoreGrid.innerHTML = `
-                <div class="score-card chinese">
-                    <div class="score-header">
-                        <span class="score-name">🐉 CHINESE</span>
-                        <span class="score-value">${chinese.score}/30</span>
-                    </div>
-                    <div class="score-bar"><div class="score-fill" style="width:${(chinese.score/30)*100}%; background:#ef4444;"></div></div>
+                <div class="score-card" style="border-left-color:#ef4444">
+                    <div class="score-header"><span class="score-name">🐉 CHINESE</span><span class="score-value">${chinese.score}/100</span></div>
+                    <div class="score-bar"><div class="score-fill" style="width:${chinese.score}%; background:#ef4444;"></div></div>
                 </div>
-                <div class="score-card ayurveda">
-                    <div class="score-header">
-                        <span class="score-name">🕉️ AYURVEDA</span>
-                        <span class="score-value">${ayurveda.score}/30</span>
-                    </div>
-                    <div class="score-bar"><div class="score-fill" style="width:${(ayurveda.score/30)*100}%; background:#f59e0b;"></div></div>
+                <div class="score-card" style="border-left-color:#f59e0b">
+                    <div class="score-header"><span class="score-name">🕉️ AYURVEDA</span><span class="score-value">${ayurveda.score}/80</span></div>
+                    <div class="score-bar"><div class="score-fill" style="width:${(ayurveda.score/80)*100}%; background:#f59e0b;"></div></div>
                 </div>
-                <div class="score-card arabic">
-                    <div class="score-header">
-                        <span class="score-name">☪️ ARABIC</span>
-                        <span class="score-value">${arabic.score}/25</span>
-                    </div>
-                    <div class="score-bar"><div class="score-fill" style="width:${(arabic.score/25)*100}%; background:#10b981;"></div></div>
+                <div class="score-card" style="border-left-color:#10b981">
+                    <div class="score-header"><span class="score-name">☪️ ARABIC</span><span class="score-value">${arabic.score}/70</span></div>
+                    <div class="score-bar"><div class="score-fill" style="width:${(arabic.score/70)*100}%; background:#10b981;"></div></div>
                 </div>
-                <div class="score-card numerology">
-                    <div class="score-header">
-                        <span class="score-name">🔢 NUMEROLOGY</span>
-                        <span class="score-value">${numerology.score}/15</span>
-                    </div>
-                    <div class="score-bar"><div class="score-fill" style="width:${(numerology.score/15)*100}%; background:#8b5cf6;"></div></div>
+                <div class="score-card" style="border-left-color:#8b5cf6">
+                    <div class="score-header"><span class="score-name">🔢 NADI</span><span class="score-value">${nadi.score}/60</span></div>
+                    <div class="score-bar"><div class="score-fill" style="width:${(nadi.score/60)*100}%; background:#8b5cf6;"></div></div>
+                </div>
+                <div class="score-card" style="border-left-color:#ec4899">
+                    <div class="score-header"><span class="score-name">🌟 LIFE PATH</span><span class="score-value">${lifePath.score}/60</span></div>
+                    <div class="score-bar"><div class="score-fill" style="width:${(lifePath.score/60)*100}%; background:#ec4899;"></div></div>
+                </div>
+                <div class="score-card" style="border-left-color:#f97316">
+                    <div class="score-header"><span class="score-name">📅 BIRTH DATE</span><span class="score-value">${dateHealth.score}/50</span></div>
+                    <div class="score-bar"><div class="score-fill" style="width:${(dateHealth.score/50)*100}%; background:#f97316;"></div></div>
+                </div>
+                <div class="score-card" style="border-left-color:#14b8a6">
+                    <div class="score-header"><span class="score-name">🗓️ BIRTH MONTH</span><span class="score-value">${monthHealthData.score}/50</span></div>
+                    <div class="score-bar"><div class="score-fill" style="width:${(monthHealthData.score/50)*100}%; background:#14b8a6;"></div></div>
+                </div>
+                <div class="score-card" style="border-left-color:#a855f7">
+                    <div class="score-header"><span class="score-name">✨ NAKSHATRA</span><span class="score-value">${nakshatraData.score}/40</span></div>
+                    <div class="score-bar"><div class="score-fill" style="width:${(nakshatraData.score/40)*100}%; background:#a855f7;"></div></div>
                 </div>
                 <div class="score-card" style="border-left-color:#3b82f6; grid-column:span 3;">
-                    <div class="score-header">
-                        <span class="score-name">🤖 AI BONUS</span>
-                        <span class="score-value">+${ai.score}/20</span>
-                    </div>
-                    <div class="score-bar"><div class="score-fill" style="width:${(ai.score/20)*100}%; background:#3b82f6;"></div></div>
+                    <div class="score-header"><span class="score-name">🤖 AI ENGINE</span><span class="score-value">${aiData.score}/40</span></div>
+                    <div class="score-bar"><div class="score-fill" style="width:${(aiData.score/40)*100}%; background:#3b82f6;"></div></div>
                 </div>
             `;
             
-            // Update consensus
-            document.getElementById('consensusScore').innerHTML = `${totalScore}/120`;
+            document.getElementById('totalScore').innerHTML = `${totalScore}/550`;
             
-            // Find most severe condition
-            let topCondition = allConditions[0] || "Malaria (92%)";
-            let topConditionText = topCondition;
-            
-            document.getElementById('consensusDiagnosis').innerHTML = topConditionText;
-            document.getElementById('consensusDetails').innerHTML = `Based on ${allConditions.length} diagnostic indicators`;
-            
-            // Update diagnosis list
-            const diagnosisList = document.getElementById('diagnosisList');
-            diagnosisList.innerHTML = '';
-            
-            const displayConditions = [
-                `🐉 CHINESE (${zodiac}): ${chinese.conditions[0]}`,
-                `🕉️ AYURVEDA (${dosa}): ${ayurveda.conditions[0]}`,
-                `☪️ ARABIC: ${arabic.conditions[0]}`,
-                `🔢 NUMEROLOGY: ${numerology.conditions[0]}`,
-                `🤖 AI: ${ai.conditions[0]}`
+            // Collect all conditions for consensus
+            let allConditions = [
+                ...chinese.conditions,
+                ...ayurveda.conditions,
+                ...arabic.conditions,
+                ...nadi.conditions,
+                ...lifePath.conditions,
+                ...dateHealth.conditions,
+                ...monthHealthData.conditions,
+                ...nakshatraData.conditions,
+                ...aiData.conditions
             ];
             
-            displayConditions.forEach((cond, index) => {
+            // Count frequency of conditions to find top 7
+            const conditionCount = {};
+            allConditions.forEach(cond => {
+                const baseCond = cond.split('(')[0].trim();
+                conditionCount[baseCond] = (conditionCount[baseCond] || 0) + 1;
+            });
+            
+            // Sort by frequency and get top 7
+            const topConditions = Object.entries(conditionCount)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 7)
+                .map(([cond, count]) => {
+                    const confidence = Math.min(70 + count * 5, 98);
+                    return `${cond} (${confidence}%)`;
+                });
+            
+            // Update diagnosis list with top 7
+            const diagnosisList = document.getElementById('diagnosisList');
+            diagnosisList.innerHTML = '';
+            topConditions.forEach((cond, index) => {
+                const colors = ['#ef4444', '#f59e0b', '#10b981', '#8b5cf6', '#ec4899', '#f97316', '#14b8a6'];
                 const li = document.createElement('li');
                 li.className = 'diagnosis-item';
-                li.style.borderLeftColor = ['#ef4444', '#f59e0b', '#10b981', '#8b5cf6', '#3b82f6'][index];
-                li.style.animationDelay = `${index * 0.1}s`;
-                li.textContent = cond;
+                li.style.borderLeftColor = colors[index % colors.length];
+                li.textContent = `${index + 1}. ${cond}`;
                 diagnosisList.appendChild(li);
             });
             
-            // Draw X-Ray
-            drawXRay(uniqueParts);
+            // Set primary diagnosis
+            document.getElementById('primaryDiagnosis').innerHTML = topConditions[0] || "Malaria (94%)";
+            document.getElementById('consensusDetails').innerHTML = `Based on ${allConditions.length} diagnostic indicators from 9 modules`;
+            
+            // Collect all body parts for X-ray
+            let allBodyParts = [
+                ...(chinese.bodyParts || []),
+                ...(ayurveda.bodyParts || []),
+                ...(arabic.bodyParts || []),
+                ...(nadi.bodyParts || []),
+                ...(lifePath.bodyParts || []),
+                ...(dateHealth.bodyParts || []),
+                ...(monthHealthData.bodyParts || []),
+                ...(nakshatraData.bodyParts || []),
+                ...(aiData.bodyParts || [])
+            ];
+            
+            // Remove duplicates (keep all for size variation)
+            drawXRay(allBodyParts);
+            
+            // Update AI analysis
+            document.getElementById('aiContent').innerHTML = `
+                <strong>🤖 AI DIAGNOSTIC ANALYSIS</strong><br>
+                ${aiData.conditions.map(c => `• ${c}`).join('<br>')}<br>
+                <strong>Uhakiki:</strong> ${aiData.score}/40 points
+            `;
             
             // Update print section
             document.getElementById('printName').innerHTML = `Patient: ${name}`;
-            document.getElementById('printDiagnosis').innerHTML = `Diagnosis: ${topConditionText}`;
+            document.getElementById('printDiagnosis').innerHTML = `Primary: ${topConditions[0] || "Malaria (94%)"}`;
             document.getElementById('printDate').innerHTML = `Date: ${new Date().toLocaleDateString()}`;
         }
 
-        // ============================================
-        // PRINT FUNCTION (Only shows name and diagnosis)
-        // ============================================
         function printReport() {
-            // Update print section with latest data
-            const name = document.getElementById('patientName').value;
-            const diagnosis = document.getElementById('consensusDiagnosis').innerHTML;
-            
-            document.getElementById('printName').innerHTML = `Patient: ${name}`;
-            document.getElementById('printDiagnosis').innerHTML = `Diagnosis: ${diagnosis}`;
-            document.getElementById('printDate').innerHTML = `Date: ${new Date().toLocaleDateString()}`;
-            
             window.print();
         }
 
-        // ============================================
-        // AUTO-RUN ON LOAD
-        // ============================================
+        // Auto-run on load
         window.addEventListener('load', runFullAnalysis);
     </script>
 </body>
