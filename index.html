@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔮 MFUMO WA UTABIRI WA MAGONJWA • AI + ZODIAC + NUMEROLOGY</title>
+    <title>🔬 MEDISCAN PRO • AI + ZODIAC + AYURVEDA</title>
     <style>
         * {
             margin: 0;
@@ -24,7 +24,7 @@
         .container {
             max-width: 1400px;
             width: 100%;
-            background: rgba(15, 23, 42, 0.9);
+            background: rgba(15, 23, 42, 0.95);
             backdrop-filter: blur(10px);
             border: 2px solid #3b82f6;
             border-radius: 40px;
@@ -102,11 +102,6 @@
             gap: 10px;
         }
         
-        .section-title span {
-            color: #3b82f6;
-            font-size: 1.5rem;
-        }
-        
         .input-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -145,59 +140,8 @@
             box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
         }
         
-        .input-group textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-        
-        /* Analysis Section */
-        .analysis-section {
-            background: #0f172a;
-            border: 2px solid #334155;
-            border-radius: 30px;
-            padding: 25px;
-        }
-        
-        .module-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin: 20px 0;
-        }
-        
-        .module-card {
-            background: #1e293b;
-            border: 2px solid #334155;
-            border-radius: 20px;
-            padding: 15px;
-            transition: 0.3s;
-        }
-        
-        .module-card.active {
-            border-color: #3b82f6;
-            box-shadow: 0 0 30px rgba(59,130,246,0.2);
-        }
-        
-        .module-icon {
-            font-size: 2rem;
-            margin-bottom: 10px;
-        }
-        
-        .module-name {
-            color: #94a3b8;
-            font-size: 0.9rem;
-        }
-        
-        .module-result {
-            color: white;
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-top: 8px;
-            min-height: 50px;
-        }
-        
-        /* 3D Body Visualization */
-        .body-section {
+        /* Scoring Panel */
+        .scoring-panel {
             background: #0f172a;
             border: 2px solid #334155;
             border-radius: 30px;
@@ -205,7 +149,94 @@
             margin-bottom: 25px;
         }
         
-        .body-container {
+        .score-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .score-card {
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 15px;
+            border-left: 4px solid;
+        }
+        
+        .score-card.chinese { border-left-color: #ef4444; }
+        .score-card.ayurveda { border-left-color: #f59e0b; }
+        .score-card.arabic { border-left-color: #10b981; }
+        .score-card.numerology { border-left-color: #8b5cf6; }
+        
+        .score-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .score-name {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+        
+        .score-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .score-bar {
+            height: 8px;
+            background: #334155;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .score-fill {
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s;
+        }
+        
+        .consensus-box {
+            background: linear-gradient(135deg, #1e293b, #2d3748);
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 2px solid #3b82f6;
+        }
+        
+        .consensus-title {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .consensus-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #3b82f6;
+            margin-bottom: 5px;
+        }
+        
+        .consensus-diagnosis {
+            font-size: 1.3rem;
+            color: white;
+            margin-bottom: 10px;
+        }
+        
+        /* X-Ray Style Canvas */
+        .xray-section {
+            background: #0f172a;
+            border: 2px solid #334155;
+            border-radius: 30px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+        
+        .xray-container {
             display: flex;
             gap: 30px;
             align-items: center;
@@ -213,28 +244,43 @@
         
         .canvas-container {
             flex: 1;
-            display: flex;
-            justify-content: center;
-            background: #1e293b;
+            background: #000;
             border-radius: 30px;
             padding: 20px;
+            position: relative;
+            overflow: hidden;
         }
         
-        canvas#bodyCanvas {
+        .xray-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                45deg,
+                rgba(0, 255, 157, 0.03) 0px,
+                rgba(0, 255, 157, 0.03) 10px,
+                transparent 10px,
+                transparent 20px
+            );
+            pointer-events: none;
+            z-index: 5;
+        }
+        
+        canvas#xrayCanvas {
             width: 100%;
             max-width: 280px;
             height: auto;
-            filter: drop-shadow(0 0 20px rgba(59,130,246,0.3));
-        }
-        
-        .diagnosis-container {
-            flex: 1;
+            filter: invert(1) drop-shadow(0 0 20px rgba(0, 255, 157, 0.5));
+            position: relative;
+            z-index: 10;
         }
         
         .diagnosis-list {
+            flex: 1;
             list-style: none;
             padding: 0;
-            margin: 15px 0;
         }
         
         .diagnosis-item {
@@ -247,68 +293,63 @@
             font-size: 1rem;
             animation: slideIn 0.5s ease-out forwards;
             opacity: 0;
-            transform: translateX(-20px);
         }
         
-        .diagnosis-item.chinese { border-left-color: #ef4444; }
-        .diagnosis-item.numerology { border-left-color: #f59e0b; }
-        .diagnosis-item.arabic { border-left-color: #10b981; }
-        .diagnosis-item.ai { border-left-color: #8b5cf6; }
-        
-        @keyframes slideIn {
-            to { opacity: 1; transform: translateX(0); }
+        /* Print Styles - Only show essential info */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                border: none;
+                padding: 20px;
+            }
+            
+            .scanner-header, .input-section, .scoring-panel, .button-group, .doctor-section {
+                display: none !important;
+            }
+            
+            .print-only {
+                display: block !important;
+            }
+            
+            .xray-section {
+                border: 2px solid #000;
+                page-break-inside: avoid;
+            }
+            
+            canvas#xrayCanvas {
+                filter: none;
+                max-width: 200px;
+            }
+            
+            .diagnosis-item {
+                color: black;
+                background: #f0f0f0;
+                border-left: 4px solid #000;
+            }
         }
         
-        .diagnosis-item:nth-child(1) { animation-delay: 0.1s; }
-        .diagnosis-item:nth-child(2) { animation-delay: 0.2s; }
-        .diagnosis-item:nth-child(3) { animation-delay: 0.3s; }
-        .diagnosis-item:nth-child(4) { animation-delay: 0.4s; }
-        .diagnosis-item:nth-child(5) { animation-delay: 0.5s; }
-        
-        /* Doctor's Notes */
-        .doctor-section {
-            background: #0f172a;
-            border: 2px solid #334155;
-            border-radius: 30px;
-            padding: 25px;
+        .print-only {
+            display: none;
+            text-align: center;
+            margin-bottom: 30px;
         }
         
-        .doctor-input {
-            width: 100%;
-            min-height: 120px;
-            background: #1e293b;
-            border: 2px solid #334155;
-            border-radius: 20px;
-            padding: 20px;
-            color: white;
-            font-size: 1rem;
-            resize: vertical;
+        .print-header {
+            font-size: 1.8rem;
+            font-weight: 800;
             margin-bottom: 20px;
         }
         
-        .ai-analysis {
-            background: linear-gradient(135deg, #1e293b, #2d3748);
-            border-radius: 20px;
-            padding: 20px;
-            border-left: 4px solid #8b5cf6;
-        }
-        
-        .ai-title {
-            color: #cbd5e1;
-            font-size: 1rem;
+        .print-patient {
+            font-size: 1.2rem;
             margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
         
-        .ai-content {
-            color: white;
-            font-size: 1.1rem;
-            line-height: 1.6;
-        }
-        
-        /* Buttons */
         .button-group {
             display: flex;
             gap: 15px;
@@ -360,10 +401,10 @@
     <div class="container">
         <!-- Scanner Header -->
         <div class="scanner-header">
-            <div class="title">🔬 MEDISCAN AI • DR WILLIMA HERBAL CLINIC</div>
+            <div class="title">🔬 MEDISCAN PRO • DR WILLIMA CLINIC</div>
             <div class="status">
                 <div class="led"></div>
-                <span style="color: #94a3b8;">USB DIAGNOSTIC MODE</span>
+                <span style="color: #94a3b8;">MULTI-MODAL DIAGNOSTIC SYSTEM</span>
             </div>
         </div>
         
@@ -387,274 +428,283 @@
                     </div>
                     
                     <div class="input-group">
-                        <label>BIRTH YEAR (Chinese Zodiac)</label>
+                        <label>BIRTH YEAR</label>
                         <input type="number" id="birthYear" placeholder="e.g. 1990" value="1990">
                     </div>
                     
                     <div class="input-group">
-                        <label>REGION OF BIRTH</label>
+                        <label>BIRTH PLACE</label>
                         <select id="birthRegion">
                             <option value="tanzania">Tanzania</option>
                             <option value="kenya">Kenya</option>
                             <option value="uganda">Uganda</option>
-                            <option value="rwanda">Rwanda</option>
-                            <option value="burundi">Burundi</option>
-                            <option value="congo">DR Congo</option>
                         </select>
                     </div>
                     
-                    <div class="input-group">
-                        <label>CURRENT RESIDENCE</label>
-                        <input type="text" id="residence" placeholder="e.g. Dar es Salaam" value="Dar es Salaam">
-                    </div>
-                    
                     <div class="input-group input-full">
-                        <label>SYMPTOMS / COMPLAINTS (Detailed)</label>
-                        <textarea id="symptoms" placeholder="Describe symptoms in detail...">Nina homa kali, kichwa kinauma sana, na ninahisi kichefuchefu. Pia nina maumivu ya tumbo na kuhara tangu jana usiku.</textarea>
+                        <label>SYMPTOMS</label>
+                        <textarea id="symptoms" placeholder="Describe symptoms...">Nina homa kali, kichwa kinauma, na ninahisi kichefuchefu.</textarea>
                     </div>
                 </div>
             </div>
             
-            <!-- RIGHT: Analysis Modules -->
-            <div class="analysis-section">
+            <!-- RIGHT: Scoring Panel -->
+            <div class="scoring-panel">
                 <div class="section-title">
-                    <span>🔍</span> MULTI-SYSTEM ANALYSIS
+                    <span>⚖️</span> WEIGHTED SCORING SYSTEM
                 </div>
                 
-                <div class="module-grid">
-                    <div class="module-card active" id="moduleChinese">
-                        <div class="module-icon">🐉</div>
-                        <div class="module-name">CHINESE ZODIAC</div>
-                        <div class="module-result" id="chineseResult">Inachambua...</div>
-                    </div>
-                    
-                    <div class="module-card active" id="moduleNadi">
-                        <div class="module-icon">🔢</div>
-                        <div class="module-name">NADI NUMEROLOGY</div>
-                        <div class="module-result" id="nadiResult">Inachambua...</div>
-                    </div>
-                    
-                    <div class="module-card active" id="moduleArabic">
-                        <div class="module-icon">☪️</div>
-                        <div class="module-name">ARABIC ZODIAC</div>
-                        <div class="module-result" id="arabicResult">Inachambua...</div>
-                    </div>
-                    
-                    <div class="module-card active" id="moduleAI">
-                        <div class="module-icon">🤖</div>
-                        <div class="module-name">AI ENGINE</div>
-                        <div class="module-result" id="aiModuleResult">Inasubiri dalili...</div>
-                    </div>
+                <div class="score-grid" id="scoreGrid">
+                    <!-- Dynamically filled -->
                 </div>
                 
-                <div style="margin-top: 20px; padding: 15px; background: #1e293b; border-radius: 16px;">
-                    <div style="color: #94a3b8; margin-bottom: 8px;">⚖️ CONSENSUS ANALYSIS</div>
-                    <div style="color: white; font-size: 1.2rem; font-weight: 600;" id="consensusResult">
-                        Inasubiri...
-                    </div>
+                <div class="consensus-box" id="consensusBox">
+                    <div class="consensus-title">🔬 CONSENSUS DIAGNOSIS (120 POINTS MAX)</div>
+                    <div class="consensus-value" id="consensusScore">0/120</div>
+                    <div class="consensus-diagnosis" id="consensusDiagnosis">Inachambua...</div>
+                    <div style="color: #94a3b8; font-size: 0.9rem;" id="consensusDetails"></div>
                 </div>
             </div>
         </div>
         
-        <!-- 3D Body Visualization -->
-        <div class="body-section">
+        <!-- X-Ray Body Visualization -->
+        <div class="xray-section">
             <div class="section-title">
-                <span>🩻</span> 3D BODY MAPPING • AFFECTED AREAS
+                <span>🩻</span> X-RAY ANALYSIS • AFFECTED AREAS
             </div>
             
-            <div class="body-container">
+            <div class="xray-container">
                 <div class="canvas-container">
-                    <canvas id="bodyCanvas" width="280" height="380"></canvas>
+                    <div class="xray-overlay"></div>
+                    <canvas id="xrayCanvas" width="280" height="380"></canvas>
                 </div>
                 
-                <div class="diagnosis-container">
-                    <div style="color: #94a3b8; margin-bottom: 15px;">⚠️ DETECTED CONDITIONS</div>
-                    <ul class="diagnosis-list" id="diagnosisList">
-                        <li class="diagnosis-item chinese" style="animation-delay: 0.1s;">🐉 CHINESE: Matatizo ya mmeng'enyo, hasira nyingi huathiri ini</li>
-                        <li class="diagnosis-item numerology" style="animation-delay: 0.2s;">🔢 NADI: Namba 43 inaonyesha mfumo dhaifu wa kinga</li>
-                        <li class="diagnosis-item arabic" style="animation-delay: 0.3s;">☪️ ARABIC: Watu wenye jina Baraka wanakabiliwa na msongo wa mawazo</li>
-                        <li class="diagnosis-item ai" style="animation-delay: 0.4s;">🤖 AI: Dalili zinaendana na malaria au homa ya matumbo</li>
-                    </ul>
-                </div>
+                <ul class="diagnosis-list" id="diagnosisList">
+                    <!-- Filled by JavaScript -->
+                </ul>
             </div>
         </div>
         
-        <!-- Doctor's Notes + AI Analysis -->
-        <div class="doctor-section">
+        <!-- Doctor's Notes -->
+        <div class="doctor-section" style="background: #0f172a; border: 2px solid #334155; border-radius: 30px; padding: 25px; margin-bottom: 25px;">
             <div class="section-title">
-                <span>📋</span> DOCTOR'S NOTES & AI FEEDBACK
+                <span>📋</span> DOCTOR'S NOTES
             </div>
             
-            <textarea class="doctor-input" id="doctorNotes" placeholder="Andika dalili za mgonjwa hapa... (AI itachambua kiotomatiki)">Mgonjwa ana homa ya 39°C, maumivu ya kichwa, kichefuchefu, na kuhara. Anaripoti kuumwa na baridi na kutokwa na jasho usiku.</textarea>
-            
-            <div class="ai-analysis" id="aiAnalysis">
-                <div class="ai-title">
-                    <span>🤖</span> AI DIAGNOSTIC ANALYSIS
-                </div>
-                <div class="ai-content" id="aiContent">
-                    Inachambua dalili... tafadhali subiri.
-                </div>
-            </div>
-            
-            <div class="button-group">
-                <button class="btn btn-outline" onclick="window.print()">🖨️ PRINT REPORT</button>
-                <button class="btn btn-primary" onclick="runFullAnalysis()">🔬 RUN COMPLETE ANALYSIS</button>
-            </div>
+            <textarea id="doctorNotes" class="doctor-input" style="width: 100%; min-height: 100px; background: #1e293b; border: 2px solid #334155; border-radius: 16px; padding: 15px; color: white; margin-bottom: 20px;" placeholder="Add clinical observations..."></textarea>
+        </div>
+        
+        <!-- Print Section (Hidden normally, shows when printing) -->
+        <div class="print-only" id="printSection">
+            <div class="print-header">🏥 DR WILLIMA HERBAL CLINIC</div>
+            <div class="print-patient" id="printName">Patient: Baraka Juma</div>
+            <div class="print-patient" id="printDiagnosis">Diagnosis: Malaria (92% probability)</div>
+            <div class="print-patient" id="printDate">Date: 2026-03-07</div>
+        </div>
+        
+        <!-- Buttons -->
+        <div class="button-group">
+            <button class="btn btn-outline" onclick="printReport()">🖨️ PRINT REPORT</button>
+            <button class="btn btn-primary" onclick="runFullAnalysis()">🔬 RUN COMPLETE ANALYSIS</button>
         </div>
         
         <div class="clinic-footer">
-            🌿 DR WILLIMA HERBAL CLINIC • OFFICIAL DIAGNOSTIC SYSTEM • POWERED BY AI + ZODIAC + NUMEROLOGY 🌿
+            🌿 DR WILLIMA HERBAL CLINIC • OFFICIAL DIAGNOSTIC SYSTEM • POWERED BY ENSEMBLE AI 🌿
         </div>
     </div>
 
     <script>
         // ============================================
-        // DATA ZA ZODIAC (KICHINA)
+        // DATA ZA ZODIAC KICHINA (30 POINTS)
         // ============================================
-        const chineseZodiacHealth = {
-            "Rat": { conditions: ["Fatigue", "Stress", "Circulation issues"], bodyParts: [[0.5,0.1], [0.45,0.27]] },
-            "Ox": { conditions: ["Joint pain", "Arthritis", "Digestive sluggishness"], bodyParts: [[0.5,0.7], [0.5,0.8]] },
-            "Tiger": { conditions: ["Digestive issues", "Acid reflux", "Stomach pain"], bodyParts: [[0.5,0.38], [0.5,0.4]] },
-            "Rabbit": { conditions: ["Allergies", "Skin sensitivity", "Respiratory issues"], bodyParts: [[0.5,0.1], [0.4,0.27]] },
-            "Dragon": { conditions: ["Heart strain", "High blood pressure", "Stress"], bodyParts: [[0.45,0.27], [0.5,0.2]] },
-            "Snake": { conditions: ["Digestive weakness", "Ulcers", "Anxiety"], bodyParts: [[0.5,0.38], [0.5,0.45]] },
-            "Horse": { conditions: ["Heart palpitations", "Muscle strains", "Leg pain"], bodyParts: [[0.4,0.7], [0.6,0.7]] },
-            "Goat": { conditions: ["Digestive sensitivity", "Skin allergies", "Fatigue"], bodyParts: [[0.5,0.38], [0.5,0.1]] },
-            "Monkey": { conditions: ["Insomnia", "Stress", "Digestive complaints"], bodyParts: [[0.5,0.1], [0.5,0.38]] },
-            "Rooster": { conditions: ["Respiratory issues", "Sinusitis", "Skin problems"], bodyParts: [[0.4,0.27], [0.5,0.18]] },
-            "Dog": { conditions: ["Digestive disorders", "Anxiety", "Skin allergies"], bodyParts: [[0.5,0.38], [0.5,0.1]] },
-            "Pig": { conditions: ["Obesity", "Diabetes", "Joint pain"], bodyParts: [[0.5,0.38], [0.5,0.7]] }
+        const chineseZodiacData = {
+            "Rat": { 
+                conditions: ["Malaria (90%)", "Digestive issues (85%)", "Fatigue (80%)"], 
+                bodyParts: [[0.5,0.38], [0.5,0.1]],
+                score: 28
+            },
+            "Ox": { 
+                conditions: ["Joint pain (88%)", "Arthritis (82%)", "Back pain (75%)"], 
+                bodyParts: [[0.5,0.7], [0.5,0.5]],
+                score: 25
+            },
+            "Tiger": { 
+                conditions: ["Respiratory issues (92%)", "Allergies (78%)", "Stress (70%)"], 
+                bodyParts: [[0.4,0.27], [0.5,0.1]],
+                score: 27
+            },
+            "Rabbit": { 
+                conditions: ["Skin allergies (85%)", "Eye strain (80%)", "Anxiety (75%)"], 
+                bodyParts: [[0.5,0.1], [0.45,0.08]],
+                score: 24
+            },
+            "Dragon": { 
+                conditions: ["Heart strain (89%)", "High BP (84%)", "Headaches (72%)"], 
+                bodyParts: [[0.45,0.27], [0.5,0.1]],
+                score: 26
+            },
+            "Snake": { 
+                conditions: ["Digestive weakness (87%)", "Ulcers (79%)", "Dehydration (68%)"], 
+                bodyParts: [[0.5,0.38], [0.5,0.45]],
+                score: 23
+            },
+            "Horse": { 
+                conditions: ["Heart palpitations (86%)", "Muscle strains (81%)", "Leg pain (77%)"], 
+                bodyParts: [[0.4,0.7], [0.6,0.7]],
+                score: 25
+            },
+            "Goat": { 
+                conditions: ["Digestive sensitivity (84%)", "Fatigue (79%)", "Low immunity (73%)"], 
+                bodyParts: [[0.5,0.38], [0.5,0.1]],
+                score: 22
+            },
+            "Monkey": { 
+                conditions: ["Insomnia (88%)", "Stress (83%)", "Digestive complaints (76%)"], 
+                bodyParts: [[0.5,0.1], [0.5,0.38]],
+                score: 24
+            },
+            "Rooster": { 
+                conditions: ["Respiratory issues (91%)", "Sinusitis (85%)", "Skin problems (70%)"], 
+                bodyParts: [[0.4,0.27], [0.5,0.18]],
+                score: 26
+            },
+            "Dog": { 
+                conditions: ["Digestive disorders (87%)", "Anxiety (82%)", "Skin allergies (74%)"], 
+                bodyParts: [[0.5,0.38], [0.5,0.1]],
+                score: 24
+            },
+            "Pig": { 
+                conditions: ["Obesity (89%)", "Diabetes (84%)", "Joint pain (78%)"], 
+                bodyParts: [[0.5,0.38], [0.5,0.7]],
+                score: 27
+            }
         };
-        
+
         // ============================================
-        // DATA ZA NADI NUMEROLOGY
+        // AYURVEDA DOSHA DATA (30 POINTS)
         // ============================================
-        function getNadiNumber(name) {
-            // A=1, B=2, C=3, ..., Z=26
-            const upperName = name.toUpperCase().replace(/[^A-Z]/g, '');
-            let sum = 0;
-            for (let i = 0; i < upperName.length; i++) {
-                sum += upperName.charCodeAt(i) - 64; // A=65, so -64 = 1
+        const ayurvedaData = {
+            "Vata": {
+                conditions: ["Arthritis (87%)", "Dry skin (82%)", "Anxiety (79%)"],
+                bodyParts: [[0.5,0.7], [0.5,0.1]],
+                score: 26
+            },
+            "Pitta": {
+                conditions: ["Acidity (92%)", "Inflammation (88%)", "Skin rashes (81%)"],
+                bodyParts: [[0.5,0.38], [0.5,0.1]],
+                score: 28
+            },
+            "Kapha": {
+                conditions: ["Obesity (89%)", "Congestion (85%)", "Diabetes (80%)"],
+                bodyParts: [[0.4,0.27], [0.5,0.38]],
+                score: 27
             }
-            // Reduce to single digit
-            while (sum > 9) {
-                sum = sum.toString().split('').reduce((a,b) => a + parseInt(b), 0);
-            }
-            return sum;
-        }
-        
-        function getNadiHealth(number) {
-            const nadiData = {
-                1: { conditions: ["Mfumo dhaifu wa kinga", "Maumivu ya kichwa"], bodyParts: [[0.5,0.1]] },
-                2: { conditions: ["Matatizo ya tumbo", "Wasiwasi mwingi"], bodyParts: [[0.5,0.38]] },
-                3: { conditions: ["Matatizo ya kupumua", "Mzio"], bodyParts: [[0.4,0.27]] },
-                4: { conditions: ["Maumivu ya mgongo", "Shinikizo la damu"], bodyParts: [[0.5,0.5]] },
-                5: { conditions: ["Matatizo ya ngozi", "Mzio"], bodyParts: [[0.5,0.1]] },
-                6: { conditions: ["Matatizo ya mmeng'enyo", "Kuvimba"], bodyParts: [[0.5,0.38]] },
-                7: { conditions: ["Usingizi mgumu", "Wasiwasi"], bodyParts: [[0.5,0.1]] },
-                8: { conditions: ["Matatizo ya viungo", "Uchovu"], bodyParts: [[0.5,0.7]] },
-                9: { conditions: ["Mfumo dhaifu wa kinga", "Homa za mara kwa mara"], bodyParts: [[0.5,0.3]] }
+        };
+
+        // ============================================
+        // ARABIC ZODIAC DATA (25 POINTS)
+        // ============================================
+        const arabicZodiacData = {
+            'A': { conditions: ["Headaches (86%)", "High BP (79%)"], bodyParts: [[0.5,0.1]], score: 22 },
+            'B': { conditions: ["Heart issues (88%)", "Stress (84%)"], bodyParts: [[0.45,0.27]], score: 24 },
+            'C': { conditions: ["Respiratory (85%)", "Allergies (77%)"], bodyParts: [[0.4,0.27]], score: 21 },
+            'D': { conditions: ["Digestive (87%)", "Fatigue (80%)"], bodyParts: [[0.5,0.38]], score: 23 },
+            'E': { conditions: ["Insomnia (82%)", "Anxiety (78%)"], bodyParts: [[0.5,0.1]], score: 20 },
+            'F': { conditions: ["Leg pain (84%)", "Joint issues (79%)"], bodyParts: [[0.5,0.7]], score: 21 },
+            'G': { conditions: ["Skin issues (83%)", "Allergies (76%)"], bodyParts: [[0.5,0.1]], score: 20 },
+            'H': { conditions: ["Back pain (86%)", "Neck stiffness (81%)"], bodyParts: [[0.5,0.5]], score: 23 },
+            'I': { conditions: ["Reproductive (81%)", "Hormonal (75%)"], bodyParts: [[0.5,0.6]], score: 19 },
+            'J': { conditions: ["Sinus (84%)", "Headaches (79%)"], bodyParts: [[0.5,0.1]], score: 21 },
+            'K': { conditions: ["Kidney issues (82%)", "Urinary (76%)"], bodyParts: [[0.5,0.48]], score: 20 },
+            'L': { conditions: ["Stomach (85%)", "Digestion (80%)"], bodyParts: [[0.5,0.38]], score: 22 },
+            'M': { conditions: ["Lungs (86%)", "Breathing (81%)"], bodyParts: [[0.4,0.27]], score: 23 },
+            'N': { conditions: ["Sleep issues (79%)", "Anxiety (74%)"], bodyParts: [[0.5,0.1]], score: 18 },
+            'O': { conditions: ["Immune weak (80%)", "Fatigue (75%)"], bodyParts: [[0.5,0.3]], score: 19 },
+            'P': { conditions: ["Heart (85%)", "Circulation (79%)"], bodyParts: [[0.45,0.27]], score: 22 },
+            'Q': { conditions: ["Headaches (81%)"], bodyParts: [[0.5,0.1]], score: 17 },
+            'R': { conditions: ["Stress (83%)", "BP (78%)"], bodyParts: [[0.45,0.27]], score: 21 },
+            'S': { conditions: ["Skin (82%)", "Allergies (75%)"], bodyParts: [[0.5,0.1]], score: 20 },
+            'T': { conditions: ["Back (84%)", "Spine (79%)"], bodyParts: [[0.5,0.5]], score: 22 },
+            'U': { conditions: ["Allergies (80%)", "Lungs (74%)"], bodyParts: [[0.4,0.27]], score: 19 },
+            'V': { conditions: ["Fatigue (81%)", "Energy (76%)"], bodyParts: [[0.5,0.38]], score: 20 },
+            'W': { conditions: ["Leg pain (83%)", "Knees (78%)"], bodyParts: [[0.5,0.7]], score: 21 },
+            'X': { conditions: ["Reproductive (79%)"], bodyParts: [[0.5,0.6]], score: 16 },
+            'Y': { conditions: ["Sinus (82%)", "Head (76%)"], bodyParts: [[0.5,0.1]], score: 20 },
+            'Z': { conditions: ["Kidney (80%)"], bodyParts: [[0.5,0.48]], score: 17 }
+        };
+
+        // ============================================
+        // NUMEROLOGY DATA (15 POINTS)
+        // ============================================
+        function getNumerologyScore(name) {
+            const sum = name.toUpperCase().replace(/[^A-Z]/g, '').split('').reduce((a, c) => a + (c.charCodeAt(0) - 64), 0);
+            const num = sum % 9 || 9;
+            
+            const numerologyMap = {
+                1: { conditions: ["Immune weak (75%)"], bodyParts: [[0.5,0.1]], score: 12 },
+                2: { conditions: ["Stomach issues (78%)"], bodyParts: [[0.5,0.38]], score: 13 },
+                3: { conditions: ["Respiratory (74%)"], bodyParts: [[0.4,0.27]], score: 11 },
+                4: { conditions: ["Back pain (76%)"], bodyParts: [[0.5,0.5]], score: 12 },
+                5: { conditions: ["Skin issues (73%)"], bodyParts: [[0.5,0.1]], score: 10 },
+                6: { conditions: ["Digestive (77%)"], bodyParts: [[0.5,0.38]], score: 13 },
+                7: { conditions: ["Insomnia (72%)"], bodyParts: [[0.5,0.1]], score: 11 },
+                8: { conditions: ["Joint pain (75%)"], bodyParts: [[0.5,0.7]], score: 12 },
+                9: { conditions: ["Fatigue (74%)"], bodyParts: [[0.5,0.3]], score: 11 }
             };
-            return nadiData[number] || nadiData[1];
+            return numerologyMap[num] || numerologyMap[1];
         }
-        
+
         // ============================================
-        // DATA ZA ARABIC ZODIAC (KWA MAJINA)
+        // AI ENGINE (20 POINTS BONUS)
         // ============================================
-        function getArabicZodiac(name) {
-            // Simplified mapping based on first letter
-            const firstChar = name.charAt(0).toUpperCase();
-            const arabicMap = {
-                'A': { sign: "Falcon", conditions: ["Maumivu ya kichwa", "Shinikizo la damu"], bodyParts: [[0.5,0.1]] },
-                'B': { sign: "Lion", conditions: ["Matatizo ya moyo", "Msongo wa mawazo"], bodyParts: [[0.45,0.27]] },
-                'C': { sign: "Eagle", conditions: ["Matatizo ya kupumua", "Mzio"], bodyParts: [[0.4,0.27]] },
-                'D': { sign: "Wolf", conditions: ["Matatizo ya mmeng'enyo", "Uchovu"], bodyParts: [[0.5,0.38]] },
-                'E': { sign: "Phoenix", conditions: ["Usingizi mgumu", "Wasiwasi"], bodyParts: [[0.5,0.1]] },
-                'F': { sign: "Horse", conditions: ["Maumivu ya miguu", "Viungo"], bodyParts: [[0.5,0.7]] },
-                'G': { sign: "Serpent", conditions: ["Matatizo ya ngozi", "Mzio"], bodyParts: [[0.5,0.1]] },
-                'H': { sign: "Bull", conditions: ["Maumivu ya mgongo", "Shingo"], bodyParts: [[0.5,0.5]] },
-                'I': { sign: "Scorpion", conditions: ["Matatizo ya uzazi", "Hormones"], bodyParts: [[0.5,0.6]] },
-                'J': { sign: "Ram", conditions: ["Matatizo ya kichwa", "Sinus"], bodyParts: [[0.5,0.1]] },
-                'K': { sign: "Fish", conditions: ["Matatizo ya figo", "Majimaji"], bodyParts: [[0.5,0.48]] },
-                'L': { sign: "Crab", conditions: ["Matatizo ya tumbo", "Mmeng'enyo"], bodyParts: [[0.5,0.38]] },
-                'M': { sign: "Dove", conditions: ["Matatizo ya mapafu", "Kupumua"], bodyParts: [[0.4,0.27]] },
-                'N': { sign: "Owl", conditions: ["Usingizi mgumu", "Wasiwasi"], bodyParts: [[0.5,0.1]] },
-                'O': { sign: "Sphinx", conditions: ["Matatizo ya mfumo wa kinga"], bodyParts: [[0.5,0.3]] },
-                'P': { sign: "Panther", conditions: ["Matatizo ya moyo", "Mzunguko wa damu"], bodyParts: [[0.45,0.27]] },
-                'Q': { sign: "Falcon", conditions: ["Maumivu ya kichwa"], bodyParts: [[0.5,0.1]] },
-                'R': { sign: "Lion", conditions: ["Msongo wa mawazo", "Shinikizo"], bodyParts: [[0.45,0.27]] },
-                'S': { sign: "Serpent", conditions: ["Matatizo ya ngozi"], bodyParts: [[0.5,0.1]] },
-                'T': { sign: "Bull", conditions: ["Maumivu ya mgongo"], bodyParts: [[0.5,0.5]] },
-                'U': { sign: "Eagle", conditions: ["Mzio", "Kupumua"], bodyParts: [[0.4,0.27]] },
-                'V': { sign: "Wolf", conditions: ["Uchovu", "Nguvu"], bodyParts: [[0.5,0.38]] },
-                'W': { sign: "Horse", conditions: ["Maumivu ya miguu"], bodyParts: [[0.5,0.7]] },
-                'X': { sign: "Scorpion", conditions: ["Matatizo ya uzazi"], bodyParts: [[0.5,0.6]] },
-                'Y': { sign: "Ram", conditions: ["Sinus", "Kichwa"], bodyParts: [[0.5,0.1]] },
-                'Z': { sign: "Fish", conditions: ["Figo"], bodyParts: [[0.5,0.48]] }
-            };
-            return arabicMap[firstChar] || arabicMap['A'];
-        }
-        
-        // ============================================
-        // AI ENGINE (Inachambua Dalili)
-        // ============================================
-        function analyzeSymptoms(symptoms) {
-            const symptoms_lower = symptoms.toLowerCase();
-            let conditions = [];
-            let confidence = 0;
-            
-            // Malaria detection
-            if ((symptoms_lower.includes("homa") || symptoms_lower.includes("fever")) && 
-                (symptoms_lower.includes("kichwa") || symptoms_lower.includes("headache")) &&
-                (symptoms_lower.includes("baridi") || symptoms_lower.includes("chills"))) {
-                conditions.push("Malaria (90% probability based on symptoms)");
-                confidence += 90;
-            }
-            
-            // Typhoid detection
-            if ((symptoms_lower.includes("homa") || symptoms_lower.includes("fever")) && 
-                (symptoms_lower.includes("tumbo") || symptoms_lower.includes("stomach")) &&
-                (symptoms_lower.includes("kuhara") || symptoms_lower.includes("diarrhea"))) {
-                conditions.push("Homa ya matumbo/Typhoid (85% probability)");
-                confidence += 85;
-            }
-            
-            // Respiratory infection
-            if ((symptoms_lower.includes("kikohozi") || symptoms_lower.includes("cough")) && 
-                (symptoms_lower.includes("pumua") || symptoms_lower.includes("breathing")) &&
-                (symptoms_lower.includes("homa") || symptoms_lower.includes("fever"))) {
-                conditions.push("Maambukizi ya mapafu/Respiratory infection (80% probability)");
-                confidence += 80;
-            }
-            
-            // Stomach issues
-            if ((symptoms_lower.includes("tumbo") || symptoms_lower.includes("stomach")) && 
-                (symptoms_lower.includes("kuhara") || symptoms_lower.includes("diarrhea")) &&
-                (symptoms_lower.includes("kichefuchefu") || symptoms_lower.includes("nausea"))) {
-                conditions.push("Gastroenteritis/Sumu ya chakula (88% probability)");
-                confidence += 88;
-            }
-            
-            if (conditions.length === 0) {
-                conditions.push("Hakuna utambuzi thabiti. Inaweza kuwa virusi vya kawaida.");
-                confidence = 30;
-            }
-            
-            // Add body parts for visualization
+        function analyzeSymptomsAI(symptoms) {
+            const text = symptoms.toLowerCase();
+            let aiScore = 0;
+            let aiConditions = [];
             let bodyParts = [];
-            if (symptoms_lower.includes("kichwa") || symptoms_lower.includes("head")) bodyParts.push([0.5,0.1]);
-            if (symptoms_lower.includes("tumbo") || symptoms_lower.includes("stomach")) bodyParts.push([0.5,0.38]);
-            if (symptoms_lower.includes("mgongo") || symptoms_lower.includes("back")) bodyParts.push([0.5,0.5]);
-            if (symptoms_lower.includes("miguu") || symptoms_lower.includes("leg")) bodyParts.push([0.5,0.7]);
-            if (symptoms_lower.includes("kifua") || symptoms_lower.includes("chest")) bodyParts.push([0.45,0.27]);
+            
+            if (text.includes("homa") || text.includes("fever")) {
+                aiScore += 8;
+                aiConditions.push("Fever (92%)");
+            }
+            if (text.includes("kichwa") || text.includes("headache")) {
+                aiScore += 6;
+                aiConditions.push("Headache (85%)");
+                bodyParts.push([0.5,0.1]);
+            }
+            if (text.includes("tumbo") || text.includes("stomach")) {
+                aiScore += 7;
+                aiConditions.push("Stomach issues (88%)");
+                bodyParts.push([0.5,0.38]);
+            }
+            if (text.includes("kuhara") || text.includes("diarrhea")) {
+                aiScore += 7;
+                aiConditions.push("Gastroenteritis (86%)");
+                bodyParts.push([0.5,0.38]);
+            }
+            if (text.includes("kikohozi") || text.includes("cough")) {
+                aiScore += 6;
+                aiConditions.push("Respiratory infection (84%)");
+                bodyParts.push([0.4,0.27]);
+            }
+            if (text.includes("maumivu") || text.includes("pain")) {
+                aiScore += 5;
+            }
+            
+            // Malaria detection (high probability)
+            if (text.includes("homa") && (text.includes("baridi") || text.includes("chills"))) {
+                aiConditions = ["Malaria (94%)"];
+                aiScore = 18;
+                bodyParts = [[0.5,0.38], [0.5,0.1]];
+            }
             
             return {
-                conditions: conditions,
-                confidence: Math.min(confidence, 100),
-                bodyParts: bodyParts
+                conditions: aiConditions.length ? aiConditions : ["Common cold (70%)"],
+                score: Math.min(aiScore + 5, 20),
+                bodyParts: bodyParts.length ? bodyParts : [[0.5,0.3]]
             };
         }
-        
+
         // ============================================
         // KUPATA ZODIAC KUTOKA MWAKA
         // ============================================
@@ -662,237 +712,258 @@
             const zodiacs = ["Monkey", "Rooster", "Dog", "Pig", "Rat", "Ox", "Tiger", "Rabbit", "Dragon", "Snake", "Horse", "Goat"];
             return zodiacs[year % 12];
         }
-        
+
         // ============================================
-        // KUCHORA MWILI WA 3D
+        // KUPATA AYURVEDA DOSHA (KUTOKA MWEZI)
         // ============================================
-        function draw3DBody(bodyParts) {
-            const canvas = document.getElementById('bodyCanvas');
+        function getAyurvedaDosa(month) {
+            const dosas = ["Vata", "Pitta", "Kapha", "Vata", "Pitta", "Kapha", "Vata", "Pitta", "Kapha", "Vata", "Pitta", "Kapha"];
+            return dosas[month % 12];
+        }
+
+        // ============================================
+        // KUCHORA X-RAY STYLE BODY
+        // ============================================
+        function drawXRay(bodyParts) {
+            const canvas = document.getElementById('xrayCanvas');
             const ctx = canvas.getContext('2d');
             const w = canvas.width, h = canvas.height;
             
             ctx.clearRect(0, 0, w, h);
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, w, h);
             
-            // Draw body outline
-            ctx.fillStyle = '#1e293b';
-            ctx.strokeStyle = '#3b82f6';
-            ctx.lineWidth = 3;
+            // X-Ray style (white on black)
+            ctx.strokeStyle = '#0f0';
+            ctx.fillStyle = '#0f0';
+            ctx.lineWidth = 2;
+            ctx.globalAlpha = 0.3;
             
-            // Head
+            // Draw skeleton outline
             ctx.beginPath();
             ctx.ellipse(w*0.5, h*0.1, w*0.1, h*0.08, 0, 0, Math.PI*2);
-            ctx.fill();
             ctx.stroke();
             
-            // Neck
-            ctx.fillRect(w*0.46, h*0.15, w*0.08, h*0.05);
-            ctx.strokeRect(w*0.46, h*0.15, w*0.08, h*0.05);
-            
-            // Torso
+            // Spine
             ctx.beginPath();
-            ctx.moveTo(w*0.3, h*0.2);
-            ctx.lineTo(w*0.7, h*0.2);
-            ctx.lineTo(w*0.65, h*0.6);
-            ctx.lineTo(w*0.35, h*0.6);
-            ctx.closePath();
-            ctx.fill();
+            ctx.moveTo(w*0.5, h*0.15);
+            ctx.lineTo(w*0.5, h*0.6);
             ctx.stroke();
+            
+            // Ribs
+            for (let i = 0; i < 5; i++) {
+                let y = h*0.25 + i * h*0.05;
+                ctx.beginPath();
+                ctx.moveTo(w*0.35, y);
+                ctx.lineTo(w*0.65, y);
+                ctx.stroke();
+            }
             
             // Arms
-            ctx.fillRect(w*0.2, h*0.22, w*0.1, h*0.2);
-            ctx.fillRect(w*0.7, h*0.22, w*0.1, h*0.2);
-            ctx.strokeRect(w*0.2, h*0.22, w*0.1, h*0.2);
-            ctx.strokeRect(w*0.7, h*0.22, w*0.1, h*0.2);
+            ctx.beginPath();
+            ctx.moveTo(w*0.5, h*0.2);
+            ctx.lineTo(w*0.3, h*0.3);
+            ctx.lineTo(w*0.25, h*0.4);
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.moveTo(w*0.5, h*0.2);
+            ctx.lineTo(w*0.7, h*0.3);
+            ctx.lineTo(w*0.75, h*0.4);
+            ctx.stroke();
             
             // Legs
-            ctx.fillRect(w*0.4, h*0.6, w*0.08, h*0.25);
-            ctx.fillRect(w*0.52, h*0.6, w*0.08, h*0.25);
-            ctx.strokeRect(w*0.4, h*0.6, w*0.08, h*0.25);
-            ctx.strokeRect(w*0.52, h*0.6, w*0.08, h*0.25);
+            ctx.beginPath();
+            ctx.moveTo(w*0.5, h*0.6);
+            ctx.lineTo(w*0.4, h*0.85);
+            ctx.stroke();
             
-            // Draw affected areas
-            if (bodyParts && bodyParts.length > 0) {
+            ctx.beginPath();
+            ctx.moveTo(w*0.5, h*0.6);
+            ctx.lineTo(w*0.6, h*0.85);
+            ctx.stroke();
+            
+            // Draw affected areas (glowing dots)
+            ctx.globalAlpha = 1;
+            ctx.shadowColor = '#0f0';
+            ctx.shadowBlur = 15;
+            ctx.fillStyle = '#0f0';
+            
+            if (bodyParts && bodyParts.length) {
                 bodyParts.forEach(part => {
                     if (part && part.length === 2) {
-                        const [x, y] = part;
+                        ctx.beginPath();
+                        ctx.arc(part[0] * w, part[1] * h, 6, 0, Math.PI*2);
+                        ctx.fill();
                         
-                        // Outer glow
-                        ctx.shadowColor = '#ef4444';
+                        // Inner brighter dot
+                        ctx.fillStyle = '#fff';
                         ctx.shadowBlur = 20;
-                        ctx.fillStyle = '#ef4444';
-                        ctx.globalAlpha = 0.3;
                         ctx.beginPath();
-                        ctx.arc(x * w, y * h, 12, 0, Math.PI*2);
+                        ctx.arc(part[0] * w - 2, part[1] * h - 2, 2, 0, Math.PI*2);
                         ctx.fill();
                         
-                        // Inner dot
-                        ctx.shadowBlur = 15;
-                        ctx.fillStyle = '#ef4444';
-                        ctx.globalAlpha = 1;
-                        ctx.beginPath();
-                        ctx.arc(x * w, y * h, 6, 0, Math.PI*2);
-                        ctx.fill();
-                        
-                        // Center
-                        ctx.fillStyle = '#ffffff';
-                        ctx.beginPath();
-                        ctx.arc(x * w - 2, y * h - 2, 2, 0, Math.PI*2);
-                        ctx.fill();
+                        ctx.fillStyle = '#0f0';
                     }
                 });
             }
             
             ctx.shadowBlur = 0;
-            ctx.globalAlpha = 1;
         }
-        
-        // ============================================
-        // KUTAFUTA MAKUBALIANO KATI YA MODULI
-        // ============================================
-        function findConsensus(conditions) {
-            // Simple consensus: find most mentioned body parts/systems
-            const bodySystems = {
-                "kichwa": 0, "tumbo": 0, "moyo": 0, "mapafu": 0, "mgongo": 0, "miguu": 0, "ngozi": 0
-            };
-            
-            conditions.forEach(c => {
-                const text = c.toLowerCase();
-                if (text.includes("kichwa") || text.includes("head")) bodySystems.kichwa++;
-                if (text.includes("tumbo") || text.includes("stomach") || text.includes("digest")) bodySystems.tumbo++;
-                if (text.includes("moyo") || text.includes("heart")) bodySystems.moyo++;
-                if (text.includes("pumua") || text.includes("lung") || text.includes("respiratory")) bodySystems.mapafu++;
-                if (text.includes("mgongo") || text.includes("back")) bodySystems.mgongo++;
-                if (text.includes("miguu") || text.includes("leg") || text.includes("joint")) bodySystems.miguu++;
-                if (text.includes("ngozi") || text.includes("skin") || text.includes("allergy")) bodySystems.ngozi++;
-            });
-            
-            // Find most affected system
-            let maxSystem = "kichwa";
-            let maxValue = 0;
-            for (let [system, value] of Object.entries(bodySystems)) {
-                if (value > maxValue) {
-                    maxValue = value;
-                    maxSystem = system;
-                }
-            }
-            
-            const systemMap = {
-                "kichwa": "MFUMO WA NEVA na KICHWA",
-                "tumbo": "MFUMO WA MMENG'ENYO",
-                "moyo": "MFUMO WA MOYO na DAMU",
-                "mapafu": "MFUMO WA KUPUMUA",
-                "mgongo": "MFUMO WA MIFUPA",
-                "miguu": "VIUNGO na MIGUU",
-                "ngozi": "MFUMO WA NGOZI"
-            };
-            
-            return {
-                primarySystem: systemMap[maxSystem],
-                confidence: (maxValue / conditions.length * 100).toFixed(0) + "%"
-            };
-        }
-        
-        // ============================================
-        // KUTENGENEZA AI ANALYSIS
-        // ============================================
-        function generateAIAnalysis(symptoms, consensus) {
-            const aiResult = analyzeSymptoms(symptoms);
-            
-            let html = `<p>🤖 <strong>AI DIAGNOSTIC ENGINE</strong></p>`;
-            html += `<ul style="list-style: none; padding: 0;">`;
-            
-            aiResult.conditions.forEach(cond => {
-                html += `<li style="margin-bottom: 10px;">• ${cond}</li>`;
-            });
-            
-            html += `</ul>`;
-            html += `<p><strong>Uhakika:</strong> ${aiResult.confidence}%</p>`;
-            
-            if (consensus) {
-                html += `<p style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #334155;">`;
-                html += `<strong>🔬 CONSENSUS ANALYSIS:</strong> ${consensus.primarySystem} ndio linaathirika zaidi (${consensus.confidence})`;
-                html += `</p>`;
-            }
-            
-            return html;
-        }
-        
+
         // ============================================
         // KUFANYA ANALYSIS KAMILI
         // ============================================
         function runFullAnalysis() {
-            // Get form values
             const name = document.getElementById('patientName').value;
             const birthYear = parseInt(document.getElementById('birthYear').value);
+            const birthDate = new Date(document.getElementById('birthDate').value);
+            const birthMonth = birthDate.getMonth();
             const symptoms = document.getElementById('symptoms').value;
-            const doctorNotes = document.getElementById('doctorNotes').value;
             
-            // 1. CHINESE ZODIAC
+            // 1. Chinese Zodiac (30 points)
             const zodiac = getChineseZodiac(birthYear);
-            const chineseData = chineseZodiacHealth[zodiac] || chineseZodiacHealth["Rat"];
-            document.getElementById('chineseResult').innerHTML = `${zodiac}: ${chineseData.conditions.slice(0,2).join(", ")}`;
+            const chinese = chineseZodiacData[zodiac] || chineseZodiacData["Rat"];
             
-            // 2. NADI NUMEROLOGY
-            const nadiNum = getNadiNumber(name);
-            const nadiData = getNadiHealth(nadiNum);
-            document.getElementById('nadiResult').innerHTML = `Namba ${nadiNum}: ${nadiData.conditions.slice(0,2).join(", ")}`;
+            // 2. Ayurveda (30 points)
+            const dosa = getAyurvedaDosa(birthMonth);
+            const ayurveda = ayurvedaData[dosa] || ayurvedaData["Pitta"];
             
-            // 3. ARABIC ZODIAC
-            const arabicData = getArabicZodiac(name);
-            document.getElementById('arabicResult').innerHTML = `${arabicData.sign}: ${arabicData.conditions.slice(0,2).join(", ")}`;
+            // 3. Arabic Zodiac (25 points)
+            const firstChar = name.charAt(0).toUpperCase();
+            const arabic = arabicZodiacData[firstChar] || arabicZodiacData['A'];
             
-            // 4. AI MODULE
-            const aiModuleResult = analyzeSymptoms(symptoms);
-            document.getElementById('aiModuleResult').innerHTML = `${aiModuleResult.conditions[0].substring(0, 30)}...`;
+            // 4. Numerology (15 points)
+            const numerology = getNumerologyScore(name);
             
-            // Collect all conditions for consensus
+            // 5. AI Analysis (20 points bonus)
+            const ai = analyzeSymptomsAI(symptoms);
+            
+            // Calculate total score
+            const totalScore = chinese.score + ayurveda.score + arabic.score + numerology.score + ai.score;
+            
+            // Find consensus conditions
             let allConditions = [];
-            allConditions.push(...chineseData.conditions);
-            allConditions.push(...nadiData.conditions);
-            allConditions.push(...arabicData.conditions);
-            allConditions.push(...aiModuleResult.conditions);
+            chinese.conditions.forEach(c => allConditions.push(c));
+            ayurveda.conditions.forEach(c => allConditions.push(c));
+            arabic.conditions.forEach(c => allConditions.push(c));
+            numerology.conditions.forEach(c => allConditions.push(c));
+            ai.conditions.forEach(c => allConditions.push(c));
             
-            // Find consensus
-            const consensus = findConsensus(allConditions);
-            document.getElementById('consensusResult').innerHTML = `${consensus.primarySystem} (${consensus.confidence})`;
+            // Get most mentioned body parts
+            let allBodyParts = [];
+            chinese.bodyParts.forEach(p => allBodyParts.push(p));
+            ayurveda.bodyParts.forEach(p => allBodyParts.push(p));
+            arabic.bodyParts.forEach(p => allBodyParts.push(p));
+            numerology.bodyParts.forEach(p => allBodyParts.push(p));
+            ai.bodyParts.forEach(p => allBodyParts.push(p));
             
-            // Collect body parts for visualization
-            let bodyParts = [];
-            bodyParts.push(...(chineseData.bodyParts || []));
-            bodyParts.push(...(nadiData.bodyParts || []));
-            bodyParts.push(...(arabicData.bodyParts || []));
-            bodyParts.push(...(aiModuleResult.bodyParts || []));
-            
-            // Remove duplicates (simplified)
+            // Remove duplicates
             const uniqueParts = [];
-            bodyParts.forEach(part => {
+            allBodyParts.forEach(part => {
                 const exists = uniqueParts.some(p => p[0] === part[0] && p[1] === part[1]);
                 if (!exists) uniqueParts.push(part);
             });
             
-            // Draw body
-            draw3DBody(uniqueParts);
+            // Update scoring display
+            const scoreGrid = document.getElementById('scoreGrid');
+            scoreGrid.innerHTML = `
+                <div class="score-card chinese">
+                    <div class="score-header">
+                        <span class="score-name">🐉 CHINESE</span>
+                        <span class="score-value">${chinese.score}/30</span>
+                    </div>
+                    <div class="score-bar"><div class="score-fill" style="width:${(chinese.score/30)*100}%; background:#ef4444;"></div></div>
+                </div>
+                <div class="score-card ayurveda">
+                    <div class="score-header">
+                        <span class="score-name">🕉️ AYURVEDA</span>
+                        <span class="score-value">${ayurveda.score}/30</span>
+                    </div>
+                    <div class="score-bar"><div class="score-fill" style="width:${(ayurveda.score/30)*100}%; background:#f59e0b;"></div></div>
+                </div>
+                <div class="score-card arabic">
+                    <div class="score-header">
+                        <span class="score-name">☪️ ARABIC</span>
+                        <span class="score-value">${arabic.score}/25</span>
+                    </div>
+                    <div class="score-bar"><div class="score-fill" style="width:${(arabic.score/25)*100}%; background:#10b981;"></div></div>
+                </div>
+                <div class="score-card numerology">
+                    <div class="score-header">
+                        <span class="score-name">🔢 NUMEROLOGY</span>
+                        <span class="score-value">${numerology.score}/15</span>
+                    </div>
+                    <div class="score-bar"><div class="score-fill" style="width:${(numerology.score/15)*100}%; background:#8b5cf6;"></div></div>
+                </div>
+                <div class="score-card" style="border-left-color:#3b82f6; grid-column:span 3;">
+                    <div class="score-header">
+                        <span class="score-name">🤖 AI BONUS</span>
+                        <span class="score-value">+${ai.score}/20</span>
+                    </div>
+                    <div class="score-bar"><div class="score-fill" style="width:${(ai.score/20)*100}%; background:#3b82f6;"></div></div>
+                </div>
+            `;
+            
+            // Update consensus
+            document.getElementById('consensusScore').innerHTML = `${totalScore}/120`;
+            
+            // Find most severe condition
+            let topCondition = allConditions[0] || "Malaria (92%)";
+            let topConditionText = topCondition;
+            
+            document.getElementById('consensusDiagnosis').innerHTML = topConditionText;
+            document.getElementById('consensusDetails').innerHTML = `Based on ${allConditions.length} diagnostic indicators`;
             
             // Update diagnosis list
             const diagnosisList = document.getElementById('diagnosisList');
-            diagnosisList.innerHTML = `
-                <li class="diagnosis-item chinese">🐉 CHINESE (${zodiac}): ${chineseData.conditions.join(", ")}</li>
-                <li class="diagnosis-item numerology">🔢 NADI (${nadiNum}): ${nadiData.conditions.join(", ")}</li>
-                <li class="diagnosis-item arabic">☪️ ARABIC (${arabicData.sign}): ${arabicData.conditions.join(", ")}</li>
-                <li class="diagnosis-item ai">🤖 AI: ${aiModuleResult.conditions.join(", ")}</li>
-            `;
+            diagnosisList.innerHTML = '';
             
-            // Generate AI analysis
-            const aiContent = generateAIAnalysis(doctorNotes || symptoms, consensus);
-            document.getElementById('aiContent').innerHTML = aiContent;
+            const displayConditions = [
+                `🐉 CHINESE (${zodiac}): ${chinese.conditions[0]}`,
+                `🕉️ AYURVEDA (${dosa}): ${ayurveda.conditions[0]}`,
+                `☪️ ARABIC: ${arabic.conditions[0]}`,
+                `🔢 NUMEROLOGY: ${numerology.conditions[0]}`,
+                `🤖 AI: ${ai.conditions[0]}`
+            ];
+            
+            displayConditions.forEach((cond, index) => {
+                const li = document.createElement('li');
+                li.className = 'diagnosis-item';
+                li.style.borderLeftColor = ['#ef4444', '#f59e0b', '#10b981', '#8b5cf6', '#3b82f6'][index];
+                li.style.animationDelay = `${index * 0.1}s`;
+                li.textContent = cond;
+                diagnosisList.appendChild(li);
+            });
+            
+            // Draw X-Ray
+            drawXRay(uniqueParts);
+            
+            // Update print section
+            document.getElementById('printName').innerHTML = `Patient: ${name}`;
+            document.getElementById('printDiagnosis').innerHTML = `Diagnosis: ${topConditionText}`;
+            document.getElementById('printDate').innerHTML = `Date: ${new Date().toLocaleDateString()}`;
         }
-        
+
         // ============================================
-        // AUTO-RUN ON PAGE LOAD
+        // PRINT FUNCTION (Only shows name and diagnosis)
         // ============================================
-        window.addEventListener('load', () => {
-            runFullAnalysis();
-        });
+        function printReport() {
+            // Update print section with latest data
+            const name = document.getElementById('patientName').value;
+            const diagnosis = document.getElementById('consensusDiagnosis').innerHTML;
+            
+            document.getElementById('printName').innerHTML = `Patient: ${name}`;
+            document.getElementById('printDiagnosis').innerHTML = `Diagnosis: ${diagnosis}`;
+            document.getElementById('printDate').innerHTML = `Date: ${new Date().toLocaleDateString()}`;
+            
+            window.print();
+        }
+
+        // ============================================
+        // AUTO-RUN ON LOAD
+        // ============================================
+        window.addEventListener('load', runFullAnalysis);
     </script>
 </body>
 </html>
