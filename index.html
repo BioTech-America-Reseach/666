@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head> 
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dr Willima Herbal Clinic · Zodiac Health Assessment</title>
@@ -17,7 +17,7 @@
             justify-content: center;
         }
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             width: 100%;
             background: white;
             border-radius: 32px;
@@ -159,11 +159,38 @@
             display: flex;
             flex-wrap: wrap;
             gap: 10px 20px;
+            list-style: none;
+            padding-left: 0;
         }
         .problems-list li {
             width: calc(50% - 10px);
             font-size: 0.95rem;
             color: #2c3e50;
+        }
+        /* human body diagram */
+        .body-diagram {
+            margin: 30px 0;
+            text-align: center;
+            background: #f8fcfd;
+            border-radius: 48px;
+            padding: 20px;
+            border: 2px solid #b0d4ec;
+        }
+        .body-diagram h3 {
+            color: #0b3b5c;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        canvas#bodyCanvas {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            background: #f1f9fc;
+            border-radius: 30px;
+            box-shadow: 0 8px 18px rgba(0,40,30,0.1);
         }
         .doctor-fields {
             display: grid;
@@ -220,12 +247,13 @@
             .input-panel, .print-actions, .btn { display: none; }
             .report-card { border: 1px solid #ccc; }
             .doctor-fields input, .doctor-fields textarea { border: 1px solid #aaa; background: #f9f9f9; }
+            canvas#bodyCanvas { background: #f1f9fc; }
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <h1>🐾 ZODIAC HEALTH • DR WILLIMA HERBAL CLINIC</h1>
+    <h1>🐾 ZODIAC HEALTH • DR WILLIMA HERBAL CLINIC TAWI LA KITUNDA - LUKOLO CENTER</h1>
     <div class="clinic-sub">holistic healing · tradition & care</div>
 
     <!-- input panel -->
@@ -239,20 +267,20 @@
             <input type="number" id="patientAge" placeholder="years" value="42">
         </div>
         <div class="input-group">
-            <label>🐉 ZODIAC (CHINESE)</label>
+            <label>TAARIFA ZA KIAFYA ZAIDI</label>
             <select id="zodiacSelect">
-                <option value="Rat">🐀 Rat</option>
-                <option value="Ox">🐂 Ox</option>
-                <option value="Tiger">🐅 Tiger</option>
-                <option value="Rabbit">🐇 Rabbit</option>
-                <option value="Dragon">🐉 Dragon</option>
-                <option value="Snake">🐍 Snake</option>
-                <option value="Horse">🐎 Horse</option>
-                <option value="Goat">🐐 Goat</option>
-                <option value="Monkey">🐒 Monkey</option>
-                <option value="Rooster">🐓 Rooster</option>
-                <option value="Dog" selected>🐕 Dog</option>
-                <option value="Pig">🐖 Pig</option>
+                <option value="Rat">DATA ZA AFYA</option>
+                <option value="Ox">DATA ZA AFYA</option>
+                <option value="Tiger">DATA ZA AFYA</option>
+                <option value="Rabbit">DATA ZA AFYA</option>
+                <option value="Dragon">DATA ZA AFYA</option>
+                <option value="Snake">DATA ZA AFYA</option>
+                <option value="Horse">DATA ZA AFYA</option>
+                <option value="Goat">DATA ZA AFYA</option>
+                <option value="Monkey">DATA ZA AFYA</option>
+                <option value="Rooster">DATA ZA AFYA</option>
+                <option value="Dog" selected>DATA ZA AFYA</option>
+                <option value="Pig">DATA ZA AFYA</option>
             </select>
         </div>
         <button class="btn" id="generateBtn">⟳ GENERATE REPORT</button>
@@ -269,8 +297,14 @@
         <div class="problems-section">
             <div class="problems-title">⚠️ PATIENT'S HEALTH RISKS & DANGERS (ZODIAC BASED)</div>
             <ul class="problems-list" id="problemsList">
-                <!-- dynamically filled from zodiac data (20+20 points) -->
+                <!-- dynamically filled from zodiac data (20 points) -->
             </ul>
+        </div>
+
+        <!-- HUMAN BODY DIAGRAM WITH DOTS (affected areas) -->
+        <div class="body-diagram">
+            <h3>🔴 BODY AREAS AFFECTED (dots indicate common trouble spots)</h3>
+            <canvas id="bodyCanvas" width="300" height="400"></canvas>
         </div>
 
         <!-- DOCTOR'S FIELDS (to fill) -->
@@ -381,26 +415,135 @@
         }
     };
 
-    // Helper to combine health and danger into a single list of 40 items, then pick 20 for display? 
-    // The requirement: "shida za mgonjwa kulingana na zodic yake" – we'll show a mix of health+danger (each 20 => total 40, we can show top 20 or combine)
-    // To keep it clean and show exactly 20 points (the most relevant dangers + health issues), we'll merge and take 20. But we want exactly 20 displayed.
-    // The user initially wanted 20 points for each category. Here we already have 20 health + 20 danger. For "patient problems" we can show the 20 most critical from both.
-    // We'll create a function that returns an array of 20 strings combining both, without duplicates, trimmed.
+    // ------------------------------------------------------------------
+    // BODY MAPPING: for each zodiac, array of [x, y] coordinates (normalized 0-1)
+    // ------------------------------------------------------------------
+    const zodiacBodyPoints = {
+        Rat:    [[0.5,0.1], [0.45,0.27], [0.5,0.38], [0.4,0.4], [0.6,0.4], [0.3,0.3], [0.7,0.3]], // head, heart, stomach, kidneys, arms
+        Ox:     [[0.5,0.7], [0.5,0.8], [0.45,0.27], [0.5,0.2], [0.5,0.55]], // knees, back, heart, spine, hips
+        Tiger:  [[0.5,0.1], [0.5,0.2], [0.45,0.27], [0.5,0.7], [0.2,0.3], [0.8,0.3]], // head, spine, heart, legs, arms
+        Rabbit: [[0.5,0.1], [0.45,0.08], [0.55,0.08], [0.4,0.27], [0.6,0.27], [0.5,0.18]], // head, eyes, chest, throat
+        Dragon: [[0.45,0.27], [0.6,0.38], [0.5,0.1], [0.5,0.2]], // heart, liver, head, spine
+        Snake:  [[0.5,0.38], [0.6,0.38], [0.4,0.38], [0.5,0.45]], // stomach, liver, spleen, intestines
+        Horse:  [[0.4,0.7], [0.6,0.7], [0.45,0.27], [0.2,0.3], [0.8,0.3]], // legs, heart, arms
+        Goat:   [[0.5,0.38], [0.5,0.1], [0.4,0.27], [0.6,0.27]], // stomach, head, chest/skin
+        Monkey: [[0.5,0.1], [0.5,0.38], [0.45,0.27], [0.5,0.45]], // head, stomach, heart, intestines
+        Rooster:[[0.4,0.27], [0.6,0.27], [0.5,0.18], [0.45,0.08], [0.55,0.08]], // chest/lungs, throat, head/jaw
+        Dog:    [[0.5,0.38], [0.5,0.1], [0.4,0.27], [0.6,0.27], [0.5,0.45]], // stomach, head, chest/skin, intestines
+        Pig:    [[0.5,0.38], [0.45,0.27], [0.5,0.7], [0.5,0.8], [0.5,0.55]] // stomach, heart, knees, hips
+    };
+
+    // Helper to get patient problems (20 points from health+danger)
     function getPatientProblems(zodiac) {
         const data = zodiacData[zodiac];
         if (!data) return [];
-        // Split health and danger strings by commas, clean them
         const healthArr = data.health.split(',').map(s => s.trim()).filter(s => s && !s.includes('(20 health)'));
         const dangerArr = data.danger.split(',').map(s => s.trim()).filter(s => s && !s.includes('(20 danger)'));
-        // Combine and take first 20 (they already have 20 each, so combined 40. we take 20 distinct)
         const combined = [...healthArr, ...dangerArr];
-        // Remove duplicates (some may overlap)
         const unique = [...new Set(combined)];
-        // Return first 20 (if less, pad but unlikely)
         return unique.slice(0, 20);
     }
 
-    // update report
+    // draw human body outline on canvas
+    function drawBodyOutline(ctx, w, h) {
+        ctx.clearRect(0,0,w,h);
+        ctx.strokeStyle = '#2c3e50';
+        ctx.lineWidth = 2;
+        ctx.fillStyle = '#e8f0f7';
+        ctx.fillRect(0,0,w,h);
+        ctx.fillStyle = '#f9e0d0';
+        ctx.strokeStyle = '#1e3c4f';
+        ctx.lineWidth = 2.5;
+
+        // head
+        ctx.beginPath();
+        ctx.arc(w*0.5, h*0.1, h*0.07, 0, 2*Math.PI);
+        ctx.fill();
+        ctx.stroke();
+
+        // neck (two lines)
+        ctx.beginPath();
+        ctx.moveTo(w*0.47, h*0.16);
+        ctx.lineTo(w*0.45, h*0.22);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(w*0.53, h*0.16);
+        ctx.lineTo(w*0.55, h*0.22);
+        ctx.stroke();
+
+        // torso (trapezoid)
+        ctx.beginPath();
+        ctx.moveTo(w*0.3, h*0.22);
+        ctx.lineTo(w*0.7, h*0.22);
+        ctx.lineTo(w*0.65, h*0.55);
+        ctx.lineTo(w*0.35, h*0.55);
+        ctx.closePath();
+        ctx.fillStyle = '#f9e0d0';
+        ctx.fill();
+        ctx.strokeStyle = '#1e3c4f';
+        ctx.stroke();
+
+        // arms
+        ctx.beginPath();
+        ctx.moveTo(w*0.3, h*0.22);
+        ctx.lineTo(w*0.2, h*0.35);
+        ctx.lineTo(w*0.15, h*0.45);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(w*0.7, h*0.22);
+        ctx.lineTo(w*0.8, h*0.35);
+        ctx.lineTo(w*0.85, h*0.45);
+        ctx.stroke();
+
+        // legs
+        ctx.beginPath();
+        ctx.moveTo(w*0.4, h*0.55);
+        ctx.lineTo(w*0.4, h*0.75);
+        ctx.lineTo(w*0.35, h*0.9);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(w*0.6, h*0.55);
+        ctx.lineTo(w*0.6, h*0.75);
+        ctx.lineTo(w*0.65, h*0.9);
+        ctx.stroke();
+
+        // hip line
+        ctx.beginPath();
+        ctx.moveTo(w*0.35, h*0.55);
+        ctx.lineTo(w*0.65, h*0.55);
+        ctx.strokeStyle = '#aaa';
+        ctx.stroke();
+    }
+
+    // draw red dots for given zodiac
+    function drawZodiacDots(zodiac) {
+        const canvas = document.getElementById('bodyCanvas');
+        const ctx = canvas.getContext('2d');
+        const w = canvas.width, h = canvas.height;
+
+        // redraw body first (clears previous dots)
+        drawBodyOutline(ctx, w, h);
+
+        // get points for zodiac
+        const points = zodiacBodyPoints[zodiac] || [];
+        ctx.fillStyle = '#e63946';
+        ctx.shadowColor = '#b0302a';
+        ctx.shadowBlur = 8;
+        points.forEach(([x, y]) => {
+            ctx.beginPath();
+            ctx.arc(x * w, y * h, 7, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.shadowBlur = 12;
+            ctx.fillStyle = '#ff4d4d';
+            ctx.arc(x * w, y * h, 4, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.fillStyle = '#e63946'; // reset
+        });
+        ctx.shadowBlur = 0;
+        ctx.shadowColor = 'transparent';
+    }
+
+    // update entire report
     function updateReport() {
         const name = document.getElementById('patientName').value.trim() || '—';
         const age = document.getElementById('patientAge').value.trim() || '—';
@@ -418,13 +561,16 @@
             li.textContent = '• ' + p;
             listEl.appendChild(li);
         });
-        // if less than 20, fill with empty lines, but we have 20
+        // pad if less than 20 (shouldn't happen)
         for (let i = problems.length; i < 20; i++) {
             const li = document.createElement('li');
             li.textContent = '• ';
             li.style.opacity = '0.3';
             listEl.appendChild(li);
         }
+
+        // update body diagram dots
+        drawZodiacDots(zodiac);
     }
 
     // initial load
@@ -442,7 +588,5 @@
     document.getElementById('clinicName').value = 'DR WILLIMA HERBAL CLINIC';
 })();
 </script>
-<!-- ensure that doctor fields are left for doctor to fill (they are input/textarea) -->
-<!-- everything is in English, points 20 per category, all data visible -->
 </body>
 </html>
