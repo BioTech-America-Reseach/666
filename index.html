@@ -288,9 +288,9 @@
             </ul>
         </div>
 
-        <!-- HUMAN BODY DIAGRAM WITH DOTS (affected areas) -->
+        <!-- HUMAN BODY DIAGRAM WITH DOTS (affected areas) - 3D STYLE -->
         <div class="body-diagram">
-            <h3>🔴 BODY AREAS AFFECTED (dots indicate common trouble spots)</h3>
+            <h3>🔴 BODY AREAS AFFECTED (3D anatomy with highlighted spots)</h3>
             <canvas id="bodyCanvas" width="300" height="400"></canvas>
         </div>
 
@@ -448,75 +448,158 @@
         return unique.slice(0, 20);
     }
 
-    // draw human body outline on canvas
-    function drawBodyOutline(ctx, w, h) {
-        ctx.clearRect(0,0,w,h);
-        ctx.strokeStyle = '#2c3e50';
-        ctx.lineWidth = 2;
-        ctx.fillStyle = '#e8f0f7';
-        ctx.fillRect(0,0,w,h);
-        ctx.fillStyle = '#f9e0d0';
-        ctx.strokeStyle = '#1e3c4f';
-        ctx.lineWidth = 2.5;
+    // ------------------------------------------------------------------
+    // 3D-style human body drawing with gradients and shading
+    // ------------------------------------------------------------------
+    function draw3DBody(ctx, w, h) {
+        ctx.clearRect(0, 0, w, h);
 
-        // head
-        ctx.beginPath();
-        ctx.arc(w*0.5, h*0.1, h*0.07, 0, 2*Math.PI);
-        ctx.fill();
-        ctx.stroke();
+        // soft gradient background
+        const bgGrad = ctx.createLinearGradient(0, 0, w, h);
+        bgGrad.addColorStop(0, '#e8f0f7');
+        bgGrad.addColorStop(1, '#d4e3f0');
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, w, h);
 
-        // neck (two lines)
-        ctx.beginPath();
-        ctx.moveTo(w*0.47, h*0.16);
-        ctx.lineTo(w*0.45, h*0.22);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(w*0.53, h*0.16);
-        ctx.lineTo(w*0.55, h*0.22);
-        ctx.stroke();
+        // ========== TORSO (with 3D shading) ==========
+        // main torso shape (pear-like, more anatomical)
+        ctx.save();
 
-        // torso (trapezoid)
+        // shadow under torso
+        ctx.shadowColor = 'rgba(0,0,0,0.2)';
+        ctx.shadowBlur = 12;
+        ctx.shadowOffsetY = 3;
+
+        // Torso gradient (light from left)
+        const torsoGrad = ctx.createLinearGradient(w*0.2, h*0.2, w*0.8, h*0.6);
+        torsoGrad.addColorStop(0, '#f9d9c0');
+        torsoGrad.addColorStop(0.5, '#e0b89c');
+        torsoGrad.addColorStop(1, '#c49a7c');
+        ctx.fillStyle = torsoGrad;
+
         ctx.beginPath();
-        ctx.moveTo(w*0.3, h*0.22);
-        ctx.lineTo(w*0.7, h*0.22);
-        ctx.lineTo(w*0.65, h*0.55);
-        ctx.lineTo(w*0.35, h*0.55);
+        ctx.moveTo(w*0.3, h*0.22);   // left shoulder
+        ctx.lineTo(w*0.7, h*0.22);   // right shoulder
+        ctx.lineTo(w*0.68, h*0.55);  // right hip
+        ctx.lineTo(w*0.55, h*0.6);   // slight curve
+        ctx.lineTo(w*0.45, h*0.6);
+        ctx.lineTo(w*0.32, h*0.55);  // left hip
         ctx.closePath();
-        ctx.fillStyle = '#f9e0d0';
         ctx.fill();
-        ctx.strokeStyle = '#1e3c4f';
-        ctx.stroke();
 
-        // arms
+        // add subtle highlight on chest
+        ctx.shadowBlur = 0;
+        ctx.shadowOffsetY = 0;
+        ctx.globalAlpha = 0.2;
+        ctx.fillStyle = '#fff7f0';
+        ctx.beginPath();
+        ctx.moveTo(w*0.4, h*0.25);
+        ctx.lineTo(w*0.6, h*0.25);
+        ctx.lineTo(w*0.58, h*0.4);
+        ctx.lineTo(w*0.42, h*0.4);
+        ctx.closePath();
+        ctx.fill();
+        ctx.globalAlpha = 1.0;
+
+        // ========== HEAD (3D sphere) ==========
+        ctx.shadowColor = 'rgba(0,0,0,0.15)';
+        ctx.shadowBlur = 10;
+        ctx.shadowOffsetY = 2;
+
+        const headGrad = ctx.createRadialGradient(w*0.5-5, h*0.1-3, 5, w*0.5, h*0.1, h*0.1);
+        headGrad.addColorStop(0, '#fce6d5');
+        headGrad.addColorStop(0.7, '#d9af91');
+        ctx.fillStyle = headGrad;
+        ctx.beginPath();
+        ctx.ellipse(w*0.5, h*0.1, h*0.06, h*0.07, 0, 0, 2*Math.PI);
+        ctx.fill();
+
+        // neck (shaded)
+        ctx.shadowBlur = 8;
+        ctx.fillStyle = '#c49a7c';
+        ctx.beginPath();
+        ctx.rect(w*0.47, h*0.15, w*0.06, h*0.07);
+        ctx.fill();
+
+        // ========== ARMS ==========
+        ctx.shadowBlur = 8;
+        ctx.fillStyle = '#e0b89c';
+        // left arm
         ctx.beginPath();
         ctx.moveTo(w*0.3, h*0.22);
-        ctx.lineTo(w*0.2, h*0.35);
-        ctx.lineTo(w*0.15, h*0.45);
-        ctx.stroke();
+        ctx.lineTo(w*0.2, h*0.32);
+        ctx.lineTo(w*0.18, h*0.42);
+        ctx.lineTo(w*0.22, h*0.45);
+        ctx.lineTo(w*0.28, h*0.38);
+        ctx.lineTo(w*0.32, h*0.28);
+        ctx.closePath();
+        ctx.fill();
+
+        // right arm
         ctx.beginPath();
         ctx.moveTo(w*0.7, h*0.22);
-        ctx.lineTo(w*0.8, h*0.35);
-        ctx.lineTo(w*0.85, h*0.45);
-        ctx.stroke();
+        ctx.lineTo(w*0.8, h*0.32);
+        ctx.lineTo(w*0.82, h*0.42);
+        ctx.lineTo(w*0.78, h*0.45);
+        ctx.lineTo(w*0.72, h*0.38);
+        ctx.lineTo(w*0.68, h*0.28);
+        ctx.closePath();
+        ctx.fill();
 
-        // legs
+        // ========== LEGS ==========
+        ctx.fillStyle = '#c49a7c';
+        // left leg
         ctx.beginPath();
         ctx.moveTo(w*0.4, h*0.55);
-        ctx.lineTo(w*0.4, h*0.75);
-        ctx.lineTo(w*0.35, h*0.9);
-        ctx.stroke();
+        ctx.lineTo(w*0.38, h*0.72);
+        ctx.lineTo(w*0.35, h*0.85);
+        ctx.lineTo(w*0.4, h*0.88);
+        ctx.lineTo(w*0.42, h*0.75);
+        ctx.lineTo(w*0.44, h*0.58);
+        ctx.closePath();
+        ctx.fill();
+
+        // right leg
         ctx.beginPath();
         ctx.moveTo(w*0.6, h*0.55);
-        ctx.lineTo(w*0.6, h*0.75);
-        ctx.lineTo(w*0.65, h*0.9);
-        ctx.stroke();
+        ctx.lineTo(w*0.62, h*0.72);
+        ctx.lineTo(w*0.65, h*0.85);
+        ctx.lineTo(w*0.6, h*0.88);
+        ctx.lineTo(w*0.58, h*0.75);
+        ctx.lineTo(w*0.56, h*0.58);
+        ctx.closePath();
+        ctx.fill();
 
-        // hip line
+        // waist/hip line (shadow)
+        ctx.shadowBlur = 0;
+        ctx.strokeStyle = '#a47e64';
+        ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.moveTo(w*0.35, h*0.55);
         ctx.lineTo(w*0.65, h*0.55);
-        ctx.strokeStyle = '#aaa';
         ctx.stroke();
+
+        // facial features (simple 3D)
+        ctx.fillStyle = '#3e2b1f';
+        ctx.shadowBlur = 4;
+        // left eye
+        ctx.beginPath();
+        ctx.arc(w*0.47, h*0.08, 2, 0, 2*Math.PI);
+        ctx.fill();
+        // right eye
+        ctx.beginPath();
+        ctx.arc(w*0.53, h*0.08, 2, 0, 2*Math.PI);
+        ctx.fill();
+        // nose
+        ctx.beginPath();
+        ctx.arc(w*0.5, h*0.1, 1.5, 0, 2*Math.PI);
+        ctx.fill();
+
+        ctx.restore();
+
+        // reset shadow
+        ctx.shadowBlur = 0;
+        ctx.shadowOffsetY = 0;
     }
 
     // draw red dots for given zodiac
@@ -525,23 +608,34 @@
         const ctx = canvas.getContext('2d');
         const w = canvas.width, h = canvas.height;
 
-        // redraw body first (clears previous dots)
-        drawBodyOutline(ctx, w, h);
+        // redraw 3D body first
+        draw3DBody(ctx, w, h);
 
         // get points for zodiac
         const points = zodiacBodyPoints[zodiac] || [];
         ctx.fillStyle = '#e63946';
         ctx.shadowColor = '#b0302a';
-        ctx.shadowBlur = 8;
+        ctx.shadowBlur = 12;
+        ctx.shadowOffsetX = 1;
+        ctx.shadowOffsetY = 1;
         points.forEach(([x, y]) => {
+            // outer glow
+            ctx.beginPath();
+            ctx.arc(x * w, y * h, 10, 0, 2 * Math.PI);
+            ctx.fillStyle = 'rgba(230,57,70,0.3)';
+            ctx.fill();
+            // main dot
+            ctx.shadowBlur = 15;
+            ctx.fillStyle = '#e63946';
             ctx.beginPath();
             ctx.arc(x * w, y * h, 7, 0, 2 * Math.PI);
             ctx.fill();
-            ctx.shadowBlur = 12;
-            ctx.fillStyle = '#ff4d4d';
-            ctx.arc(x * w, y * h, 4, 0, 2 * Math.PI);
+            // inner highlight
+            ctx.shadowBlur = 8;
+            ctx.fillStyle = '#ff8a8a';
+            ctx.beginPath();
+            ctx.arc(x * w - 1, y * h - 1, 3, 0, 2 * Math.PI);
             ctx.fill();
-            ctx.fillStyle = '#e63946'; // reset
         });
         ctx.shadowBlur = 0;
         ctx.shadowColor = 'transparent';
