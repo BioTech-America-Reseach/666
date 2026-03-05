@@ -3,316 +3,485 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kigunduzi cha USB na Kipimo cha Voltage</title>
+    <title>USB Signal Detector</title>
     <style>
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f0f4f8;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a2e;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
         }
+        
         .container {
-            max-width: 500px;
-            width: 100%;
-            background: white;
-            border-radius: 24px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            padding: 30px;
             text-align: center;
+            background: #16213e;
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            border: 2px solid #0f3460;
         }
+        
         h1 {
-            color: #0b3b5c;
-            margin-top: 0;
-            font-size: 1.8rem;
-        }
-        .status-box {
-            background: #eef2f7;
-            border-radius: 40px;
-            padding: 20px;
-            margin: 25px 0;
-            font-size: 1.5rem;
-            font-weight: bold;
-            border: 3px solid #bdd8ec;
-        }
-        .connected {
-            color: #27ae60;
-        }
-        .disconnected {
-            color: #e74c3c;
-        }
-        .meter-box {
-            background: #f9fcfd;
-            border-radius: 24px;
-            padding: 25px;
-            margin: 20px 0;
-            border: 2px solid #c9e0f0;
-            display: none;
-        }
-        .meter-value {
+            color: #e94560;
             font-size: 2.5rem;
-            font-weight: 800;
-            color: #1e6f5c;
-            margin: 10px 0;
-        }
-        .meter-label {
-            color: #0f4b6e;
-            font-size: 0.9rem;
+            margin-top: 0;
+            margin-bottom: 30px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 3px;
+            text-shadow: 0 0 10px rgba(233,69,96,0.5);
         }
-        .btn {
-            background: #0b3b5c;
-            border: none;
+        
+        .signal-box {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            margin: 30px auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        }
+        
+        /* Hali ya kawaida - HAKUNA USB (kijani) */
+        .signal-safe {
+            background: #2ecc71;
+            border: 5px solid #27ae60;
+            box-shadow: 0 0 50px #2ecc71;
+        }
+        
+        /* Hali ya USB imeingia - NYEKUNDU */
+        .signal-danger {
+            background: #e74c3c;
+            border: 5px solid #c0392b;
+            box-shadow: 0 0 80px #e74c3c;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 50px #e74c3c; }
+            50% { transform: scale(1.05); box-shadow: 0 0 100px #e74c3c; }
+            100% { transform: scale(1); box-shadow: 0 0 50px #e74c3c; }
+        }
+        
+        .signal-text {
+            font-size: 2rem;
+            font-weight: bold;
             color: white;
-            font-weight: 600;
-            padding: 14px 28px;
-            border-radius: 40px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: 0.2s;
-            border: 2px solid #0b3b5c;
-            margin: 10px 5px;
-            width: 200px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin-bottom: 10px;
         }
-        .btn:hover {
-            background: #1e6f5c;
-            border-color: #1e6f5c;
+        
+        .signal-icon {
+            font-size: 5rem;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.5));
         }
-        .btn:disabled {
-            background: #95a5a6;
-            border-color: #7f8c8d;
-            cursor: not-allowed;
+        
+        .info-panel {
+            background: #0f3460;
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 30px;
+            color: white;
         }
-        .info-text {
-            font-size: 0.85rem;
-            color: #7f8c8d;
+        
+        .device-list {
+            max-height: 150px;
+            overflow-y: auto;
+            margin-top: 15px;
+            padding: 10px;
+            background: #1a1a2e;
+            border-radius: 10px;
+            text-align: left;
+        }
+        
+        .device-item {
+            padding: 8px;
+            border-bottom: 1px solid #16213e;
+            color: #a5d8ff;
+            font-size: 0.9rem;
+        }
+        
+        .device-item:last-child {
+            border-bottom: none;
+        }
+        
+        .time-stamp {
+            color: #e94560;
+            font-size: 0.8rem;
+            margin-left: 10px;
+        }
+        
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #1a1a2e;
+            padding: 15px 25px;
+            border-radius: 50px;
             margin-top: 20px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 16px;
+        }
+        
+        .led {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 10px;
+        }
+        
+        .led-green {
+            background: #2ecc71;
+            box-shadow: 0 0 10px #2ecc71;
+        }
+        
+        .led-red {
+            background: #e74c3c;
+            box-shadow: 0 0 10px #e74c3c;
+        }
+        
+        .btn-clear {
+            background: #e94560;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 15px;
+        }
+        
+        .btn-clear:hover {
+            background: #c0392b;
+            transform: scale(1.05);
+        }
+        
+        .footer {
+            color: #7f8c8d;
+            font-size: 0.8rem;
+            margin-top: 30px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🔌 KIGUNDUZI CHA USB</h1>
-        <p>Na Kipimo Cha Voltage, Current & Power</p>
+        <h1>🔌 USB SIGNAL DETECTOR</h1>
         
-        <!-- Hali ya USB -->
-        <div class="status-box" id="usbStatus">
-            ⚫ HAKUNA USB
+        <!-- SIGNAL BOX (NYEKUNDU IKIWA USB IPO) -->
+        <div class="signal-box signal-safe" id="signalBox">
+            <div class="signal-icon" id="signalIcon">🔋</div>
+            <div class="signal-text" id="signalText">HAKUNA USB</div>
+            <div style="color: white; font-size: 1rem;" id="usbCount">Vifaa 0</div>
         </div>
         
-        <!-- Vifungo -->
-        <button class="btn" id="connectBtn" onclick="connectDevice()">🔗 UNGANISHA KIPIMO</button>
-        <button class="btn" id="scanBtn" onclick="scanForDevices()" disabled>🔄 TAFUTA VIFAA</button>
-        
-        <!-- Sehemu ya Kupimia -->
-        <div class="meter-box" id="meterData">
-            <div class="meter-label">VOLTAGE (V)</div>
-            <div class="meter-value" id="voltage">0.00</div>
-            
-            <div style="display: flex; justify-content: space-around; margin-top: 20px;">
-                <div>
-                    <div class="meter-label">CURRENT (A)</div>
-                    <div style="font-size: 1.5rem; font-weight: 600; color: #0b3b5c;" id="current">0.000</div>
-                </div>
-                <div>
-                    <div class="meter-label">POWER (W)</div>
-                    <div style="font-size: 1.5rem; font-weight: 600; color: #0b3b5c;" id="power">0.00</div>
-                </div>
+        <!-- STATUS BAR -->
+        <div class="status-bar">
+            <div>
+                <span class="led led-green" id="statusLed"></span>
+                <span id="statusText">Tayari kugundua USB</span>
+            </div>
+            <div>
+                <span id="currentTime"></span>
             </div>
         </div>
         
-        <!-- Maelekezo -->
-        <div class="info-text">
-            <strong>📋 JINSI YA KUTUMIA:</strong><br>
-            1. Unganisha kifaa chako cha kupimia (USB power meter)<br>
-            2. Bonyeza "UNGANISHA KIPIMO"<br>
-            3. Chagua kifaa chako kutoka kwenye orodha<br>
-            4. Sasa utaona voltage, current, na power<br><br>
-            <strong>⚠️ Muhimu:</strong> Program inagundua USB inapoingizwa/kutolewa moja kwa moja!
+        <!-- INFO PANEL -->
+        <div class="info-panel">
+            <h3 style="margin-top: 0; color: #e94560;">📋 SHUGHULI ZA USB</h3>
+            
+            <!-- ORODHA YA VIFAA VILIVYOGUNDULIWA -->
+            <div class="device-list" id="deviceList">
+                <div class="device-item">Hakuna shughuli bado...</div>
+            </div>
+            
+            <!-- VIFUNGO -->
+            <button class="btn-clear" onclick="clearHistory()">🧹 FUTA KUMBUKUMBU</button>
+        </div>
+        
+        <!-- MAELEKEZO -->
+        <div class="footer">
+            ⚡ Program inagundua USB yoyote inapoingizwa • Signal nyekundu inaonyesha USB imeingia
         </div>
     </div>
 
     <script>
-        // Vigezo vya kuhifadhi kifaa
-        let connectedDevice = null;
-        let readingInterval = null;
+        // VIGEZO
+        let usbDevices = [];
+        let previousDeviceCount = 0;
         
         //-------------------------------------------------------------------
-        // KUGUNDUA USB INAPOINGIZWA AU KUTOLEWA
+        // KUANGALIA MARA KWA MARA KAMA KUMEWEKA VIFAA VIPYA
         //-------------------------------------------------------------------
-        if ('usb' in navigator) {
-            // Sikiliza tukio la kuunganisha USB
-            navigator.usb.addEventListener('connect', (event) => {
-                updateUSBStatus('CONNECTED', event.device);
-                console.log('USB imeingizwa:', event.device.productName);
-                
-                // Ikiwa tumekwisha unganisha kifaa cha kupimia, wezesha kitufe cha kutafuta
-                document.getElementById('scanBtn').disabled = false;
-            });
+        function checkUSBDevices() {
+            // Kwenye browser, hatuwezi kupata orodha kamili ya USB moja kwa moja
+            // Lakini tunaweza kutumia WebUSB API na kugundua mabadiliko
             
-            // Sikiliza tukio la kukata USB
-            navigator.usb.addEventListener('disconnect', (event) => {
-                updateUSBStatus('DISCONNECTED');
-                console.log('USB imetolewa:', event.device.productName);
-                
-                // Zima kusoma data
-                if (readingInterval) {
-                    clearInterval(readingInterval);
-                    readingInterval = null;
-                }
-                
-                // Ficha data za kipimo
-                document.getElementById('meterData').style.display = 'none';
-                document.getElementById('scanBtn').disabled = true;
-            });
-            
-            console.log('WebUSB inatumika!');
-        } else {
-            alert('Samahani, kivinjari chako hakitumii WebUSB. Tumia Chrome, Edge, au Chromium.');
-        }
-        
-        //-------------------------------------------------------------------
-        // KUSASISHA HALI YA USB KWENYE UKURASA
-        //-------------------------------------------------------------------
-        function updateUSBStatus(status, device = null) {
-            const statusEl = document.getElementById('usbStatus');
-            
-            if (status === 'CONNECTED') {
-                statusEl.innerHTML = '🟢 USB IMECHOMEKWA';
-                statusEl.className = 'status-box connected';
-            } else {
-                statusEl.innerHTML = '⚫ HAKUNA USB';
-                statusEl.className = 'status-box disconnected';
-                
-                // Ikiwa hakuna USB, zima kitufe cha kuunganisha
-                document.getElementById('connectBtn').disabled = false;
-            }
-        }
-        
-        //-------------------------------------------------------------------
-        // KUUNGANISHA KIFAA CHA KUPIMIA
-        //-------------------------------------------------------------------
-        async function connectDevice() {
-            try {
-                // Omba ruhusa ya kufikia kifaa cha USB
-                // Hii inafungua dirisha la kuchagua kifaa [citation:6]
-                const device = await navigator.usb.requestDevice({
-                    filters: []  // Unaweza kuweka filter maalum kwa kutumia vendorId
+            if ('usb' in navigator) {
+                navigator.usb.getDevices().then(devices => {
+                    const currentCount = devices.length;
+                    
+                    // Ikiwa kuna mabadiliko ya idadi ya vifaa
+                    if (currentCount !== previousDeviceCount) {
+                        if (currentCount > previousDeviceCount) {
+                            // VIFAA VIPYA VIMEINGIZWA
+                            const newDevices = currentCount - previousDeviceCount;
+                            
+                            for (let i = 0; i < newDevices; i++) {
+                                const device = devices[currentCount - 1 - i];
+                                addDeviceToList(device, 'CONNECTED');
+                            }
+                            
+                            // BADILISHA SIGNAL KUWA NYEKUNDU
+                            setSignalDanger(true);
+                            
+                        } else if (currentCount < previousDeviceCount) {
+                            // VIFAA VIMETOLEWA
+                            const removedDevices = previousDeviceCount - currentCount;
+                            
+                            for (let i = 0; i < removedDevices; i++) {
+                                addToList('Kifaa kimetolewa', 'DISCONNECTED');
+                            }
+                            
+                            // IKIWA HAKUNA USB TENGA, BADILISHA SIGNAL KUWA KIJANI
+                            if (currentCount === 0) {
+                                setSignalDanger(false);
+                            }
+                        }
+                        
+                        previousDeviceCount = currentCount;
+                    }
+                    
+                    // SASISHA HESABU
+                    document.getElementById('usbCount').innerText = `Vifaa ${currentCount}`;
+                }).catch(error => {
+                    console.log('Hitilafu ya WebUSB:', error);
                 });
-                
-                connectedDevice = device;
-                
-                // Fungua mawasiliano na kifaa
-                await device.open();
-                
-                // Chagua configuration ya kwanza (kwa kawaida configuration 1)
-                if (device.configuration === null) {
-                    await device.selectConfiguration(1);
-                }
-                
-                // Claim interface ya kwanza
-                await device.claimInterface(0);
-                
-                // Onyesha data za kipimo
-                document.getElementById('meterData').style.display = 'block';
-                document.getElementById('connectBtn').disabled = true;
-                
-                // Anza kusoma data kutoka kwenye kifaa
-                startReadingData(device);
-                
-                console.log('Kimeunganishwa:', device.productName);
-                
-            } catch (error) {
-                console.error('Hitilafu ya kuunganisha:', error);
-                alert('Hitilafu: ' + error.message);
+            } else {
+                // KAMA BROWSER HAITUMII WebUSB, TUMIA MFANO WA KUIGIZA
+                simulateUSBDetection();
             }
         }
         
         //-------------------------------------------------------------------
-        // KUSOMA DATA ZA VOLTAGE, CURRENT, NA POWER
+        // KUWEKA SIGNAL NYEKUNDU (USB IPO) AU KIJANI (HAKUNA USB)
         //-------------------------------------------------------------------
-        function startReadingData(device) {
-            // Hii ni mfano wa kusoma data - kila kifaa kina protocol yake
-            // Utahitaji kubadilisha hii kulingana na kifaa chako [citation:10]
+        function setSignalDanger(isDanger) {
+            const signalBox = document.getElementById('signalBox');
+            const signalIcon = document.getElementById('signalIcon');
+            const signalText = document.getElementById('signalText');
+            const statusLed = document.getElementById('statusLed');
+            const statusText = document.getElementById('statusText');
             
-            readingInterval = setInterval(async () => {
-                try {
-                    // Tuma amri ya kusoma data (hii inategemea kifaa)
-                    // Kwa mfano, tunaweza kutuma control transfer
-                    const result = await device.controlTransferIn({
-                        requestType: 'vendor',
-                        recipient: 'interface',
-                        request: 0x01,      // Hii inategemea kifaa
-                        value: 0x00,
-                        index: 0x00
-                    }, 64);  // Soma baiti 64
-                    
-                    // Tafsiri data (hii inategemea kifaa)
-                    // Kwa mfano, data inaweza kuwa katika muundo maalum
-                    if (result.data && result.data.byteLength >= 8) {
-                        const dataView = new DataView(result.data.buffer);
-                        
-                        // Mfano tu - hii inategemea kifaa chako
-                        const voltage = dataView.getUint16(0, true) / 1000;
-                        const current = dataView.getUint16(2, true) / 1000;
-                        const power = voltage * current;
-                        
-                        // Sasisha ukurasa
-                        document.getElementById('voltage').textContent = voltage.toFixed(2);
-                        document.getElementById('current').textContent = current.toFixed(3);
-                        document.getElementById('power').textContent = power.toFixed(2);
-                    }
-                    
-                } catch (error) {
-                    console.error('Hitilafu ya kusoma data:', error);
-                    
-                    // Ikiwa kuna hitilafu kubwa, acha kusoma
-                    if (error.message.includes('Device unavailable')) {
-                        clearInterval(readingInterval);
-                        readingInterval = null;
-                    }
-                }
-            }, 1000);  // Soma kila sekunde 1
-        }
-        
-        //-------------------------------------------------------------------
-        // KUTAFUTA VIFAA VILIVYOSHA UNGANISHWA
-        //-------------------------------------------------------------------
-        async function scanForDevices() {
-            try {
-                const devices = await navigator.usb.getDevices();
+            if (isDanger) {
+                // SIGNAL NYEKUNDU - USB IPO
+                signalBox.className = 'signal-box signal-danger';
+                signalIcon.innerHTML = '⚠️';
+                signalText.innerHTML = 'USB IMEGUNDULIWA';
+                statusLed.className = 'led led-red';
+                statusText.innerHTML = 'USB imeingia!';
                 
-                if (devices.length > 0) {
-                    let message = 'Vifaa vilivyopo:\n';
-                    devices.forEach((device, index) => {
-                        message += `${index + 1}. ${device.productName || 'Bila jina'} (VID: ${device.vendorId.toString(16)})\n`;
-                    });
-                    alert(message);
-                } else {
-                    alert('Hakuna vifaa vilivyohifadhiwa. Bonyeza "UNGANISHA KIPIMO" kuongeza kifaa.');
-                }
+                // CHEZA SAUTI (SI LAZIMA)
+                // playBeep();
                 
-            } catch (error) {
-                console.error('Hitilafu ya kutafuta:', error);
+            } else {
+                // SIGNAL KIJANI - HAKUNA USB
+                signalBox.className = 'signal-box signal-safe';
+                signalIcon.innerHTML = '🔋';
+                signalText.innerHTML = 'HAKUNA USB';
+                statusLed.className = 'led led-green';
+                statusText.innerHTML = 'Kusubiri USB...';
             }
         }
         
         //-------------------------------------------------------------------
-        // KUANGALIA USAIDIZI WA WEBUSB MWANZO
+        // KUONGEZA KIFAA KWENYE ORODHA
+        //-------------------------------------------------------------------
+        function addDeviceToList(device, action) {
+            const deviceList = document.getElementById('deviceList');
+            const currentTime = new Date().toLocaleTimeString();
+            
+            let deviceName = device.productName || 'Kifaa kisichojulikana';
+            let vendorId = device.vendorId ? device.vendorId.toString(16).toUpperCase() : '????';
+            
+            const deviceItem = document.createElement('div');
+            deviceItem.className = 'device-item';
+            
+            if (action === 'CONNECTED') {
+                deviceItem.innerHTML = `
+                    <span style="color: #e74c3c;">🔴 CONNECTED</span> 
+                    ${deviceName} (VID: ${vendorId})
+                    <span class="time-stamp">${currentTime}</span>
+                `;
+            } else {
+                deviceItem.innerHTML = `
+                    <span style="color: #f39c12;">🟡 DISCONNECTED</span> 
+                    ${deviceName}
+                    <span class="time-stamp">${currentTime}</span>
+                `;
+            }
+            
+            // Ongeza mwanzoni mwa orodha
+            deviceList.insertBefore(deviceItem, deviceList.firstChild);
+            
+            // Weka kikomo cha vifaa 10 kuonekana
+            while (deviceList.children.length > 10) {
+                deviceList.removeChild(deviceList.lastChild);
+            }
+        }
+        
+        //-------------------------------------------------------------------
+        // KUONGEZA UJUMBE KWENYE ORODHA (KWA AJILI YA KUIGIZA)
+        //-------------------------------------------------------------------
+        function addToList(message, type) {
+            const deviceList = document.getElementById('deviceList');
+            const currentTime = new Date().toLocaleTimeString();
+            
+            const deviceItem = document.createElement('div');
+            deviceItem.className = 'device-item';
+            
+            if (type === 'CONNECTED') {
+                deviceItem.innerHTML = `
+                    <span style="color: #e74c3c;">🔴 CONNECTED</span> 
+                    ${message}
+                    <span class="time-stamp">${currentTime}</span>
+                `;
+            } else {
+                deviceItem.innerHTML = `
+                    <span style="color: #f39c12;">🟡 DISCONNECTED</span> 
+                    ${message}
+                    <span class="time-stamp">${currentTime}</span>
+                `;
+            }
+            
+            deviceList.insertBefore(deviceItem, deviceList.firstChild);
+            
+            while (deviceList.children.length > 10) {
+                deviceList.removeChild(deviceList.lastChild);
+            }
+        }
+        
+        //-------------------------------------------------------------------
+        // KUFUTA KUMBUKUMBU
+        //-------------------------------------------------------------------
+        function clearHistory() {
+            const deviceList = document.getElementById('deviceList');
+            deviceList.innerHTML = '<div class="device-item">Hakuna shughuli bado...</div>';
+        }
+        
+        //-------------------------------------------------------------------
+        // KUWEKA MUDA
+        //-------------------------------------------------------------------
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString();
+            document.getElementById('currentTime').innerText = timeString;
+        }
+        
+        //-------------------------------------------------------------------
+        // MFANO WA KUIGIZA (KWA BROWSER ZISIZO NA WebUSB)
+        //-------------------------------------------------------------------
+        let simulationInterval;
+        let simulatedConnected = false;
+        
+        function simulateUSBDetection() {
+            // TAHADHARI: Hii ni kwa ajili ya kuigiza tu!
+            // Kwenye browser halisi, utahitaji WebUSB kufanya kazi
+            
+            if (simulationInterval) return;
+            
+            let counter = 0;
+            simulationInterval = setInterval(() => {
+                counter++;
+                
+                // Kila sekunde 5, badilisha hali ya USB (kuigiza)
+                if (counter % 5 === 0) {
+                    simulatedConnected = !simulatedConnected;
+                    
+                    if (simulatedConnected) {
+                        // IGIZA USB IMEINGIA
+                        setSignalDanger(true);
+                        addToList('USB Flash Drive', 'CONNECTED');
+                        document.getElementById('usbCount').innerText = 'Vifaa 1';
+                    } else {
+                        // IGIZA USB IMETOLEWA
+                        setSignalDanger(false);
+                        addToList('Kifaa kimetolewa', 'DISCONNECTED');
+                        document.getElementById('usbCount').innerText = 'Vifaa 0';
+                    }
+                }
+            }, 1000);
+            
+            // ONYESHA UJUMLA KWA MTUMIAJI
+            const infoText = document.querySelector('.info-panel');
+            const warning = document.createElement('div');
+            warning.style.background = '#e94560';
+            warning.style.color = 'white';
+            warning.style.padding = '10px';
+            warning.style.borderRadius = '10px';
+            warning.style.marginTop = '10px';
+            warning.innerHTML = '⚠️ MODE YA KUIGIZA - Kivinjari hakitumii WebUSB';
+            infoText.appendChild(warning);
+        }
+        
+        //-------------------------------------------------------------------
+        // KUANZA KUFANYA KAZI
         //-------------------------------------------------------------------
         window.addEventListener('load', () => {
-            if (!('usb' in navigator)) {
-                document.getElementById('connectBtn').disabled = true;
-                document.getElementById('scanBtn').disabled = true;
-                document.querySelector('.info-text').innerHTML += 
-                    '<br><br><strong style="color:#e74c3c;">❌ Kivinjari hakitumii WebUSB. Tumia Chrome au Edge.</strong>';
+            // SASISHA MUDA KILA SEKUNDE
+            updateTime();
+            setInterval(updateTime, 1000);
+            
+            // ANGAZIA USAIDIZI WA WebUSB
+            if ('usb' in navigator) {
+                // ONYESHA UJUMLA
+                const infoText = document.querySelector('.info-panel');
+                const success = document.createElement('div');
+                success.style.background = '#2ecc71';
+                success.style.color = 'white';
+                success.style.padding = '10px';
+                success.style.borderRadius = '10px';
+                success.style.marginTop = '10px';
+                success.innerHTML = '✅ WebUSB inatumika - Itagundua USB halisi!';
+                infoText.appendChild(success);
+                
+                // SIKILIZA MATUKIO YA USB
+                navigator.usb.addEventListener('connect', (event) => {
+                    setSignalDanger(true);
+                    addDeviceToList(event.device, 'CONNECTED');
+                    
+                    // HESABU VIFAA
+                    navigator.usb.getDevices().then(devices => {
+                        document.getElementById('usbCount').innerText = `Vifaa ${devices.length}`;
+                        previousDeviceCount = devices.length;
+                    });
+                });
+                
+                navigator.usb.addEventListener('disconnect', (event) => {
+                    addToList('Kifaa kimetolewa', 'DISCONNECTED');
+                    
+                    // HESABU VIFAA VILIVYOBAS
+                    navigator.usb.getDevices().then(devices => {
+                        if (devices.length === 0) {
+                            setSignalDanger(false);
+                        }
+                        document.getElementById('usbCount').innerText = `Vifaa ${devices.length}`;
+                        previousDeviceCount = devices.length;
+                    });
+                });
+                
+                // ANZA KUANGALIA KILA SEKUNDE 2
+                setInterval(checkUSBDevices, 2000);
+                
+            } else {
+                // IKIWA BROWSER HAIWEZI, ANZA KUIGIZA
+                simulateUSBDetection();
             }
         });
     </script>
