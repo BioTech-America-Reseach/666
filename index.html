@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr Willima Herbal Clinic · Zodiac Health Assessment</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+        body {
+            background: #e6f0fa;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 40px rgba(0,20,40,0.2);
+            padding: 30px;
+        }
+        h1 {
+            font-size: 2.2rem;
+            color: #0b3b5c;
+            margin-top: 0;
+            margin-bottom: 0.25rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+        .clinic-sub {
+            color: #1e6f5c;
+            font-weight: 500;
+            font-size: 1.2rem;
+            border-left: 5px solid #1e6f5c;
+            padding-left: 15px;
+            margin-bottom: 30px;
+        }
+        .input-panel {
+            background: #f4f9ff;
+            border-radius: 28px;
+            padding: 25px;
+            margin-bottom: 35px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: flex-end;
+            border: 1px solid #c9e0f0;
+        }
+        .input-group {
+            flex: 1 1 200px;
+        }
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            color: #0f4b6e;
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 12px 18px;
+            border: 2px solid #bdd8ec;
+            border-radius: 40px;
+            font-size: 1rem;
+            background: white;
+            transition: 0.2s;
+        }
+        .input-group input:focus, .input-group select:focus {
+            border-color: #1e9f8c;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(30,159,140,0.2);
+        }
+        .btn {
+            background: #0b3b5c;
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 12px 32px;
+            border-radius: 40px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            border: 2px solid #0b3b5c;
+        }
+        .btn:hover {
+            background: #1e6f5c;
+            border-color: #1e6f5c;
+        }
+        .btn-outline {
+            background: white;
+            color: #0b3b5c;
+            border: 2px solid #0b3b5c;
+            margin-left: 10px;
+        }
+        .btn-outline:hover {
+            background: #0b3b5c;
+            color: white;
+        }
+        .report-card {
+            background: #ffffff;
+            border-radius: 32px;
+            border: 2px solid #c9e0f0;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        .report-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            border-bottom: 3px dashed #1e6f5c;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+        .patient-info {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #0b3b5c;
+        }
+        .patient-info span {
+            font-weight: 400;
+            color: #1e6f5c;
+            background: #e1f2ed;
+            padding: 4px 12px;
+            border-radius: 40px;
+            margin-left: 10px;
+        }
+        .zodiac-badge {
+            background: #f4d03f;
+            color: #1e3c4f;
+            padding: 8px 22px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+        .problems-section {
+            background: #fff6e5;
+            border-radius: 24px;
+            padding: 20px 25px;
+            margin: 25px 0;
+            border-left: 10px solid #e67e22;
+        }
+        .problems-title {
+            font-weight: 700;
+            color: #b85b1a;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .problems-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 20px;
+        }
+        .problems-list li {
+            width: calc(50% - 10px);
+            font-size: 0.95rem;
+            color: #2c3e50;
+        }
+        .doctor-fields {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin: 30px 0 20px;
+        }
+        .field {
+            background: #f9fcfd;
+            border-radius: 20px;
+            padding: 15px 20px;
+            border: 1px solid #bdd8ec;
+        }
+        .field label {
+            font-weight: 600;
+            color: #0f4b6e;
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        .field input, .field textarea {
+            width: 100%;
+            padding: 10px 15px;
+            border: 2px solid #d3e4f0;
+            border-radius: 30px;
+            font-size: 1rem;
+            background: white;
+        }
+        .field textarea {
+            resize: vertical;
+            min-height: 70px;
+        }
+        .clinic-name {
+            grid-column: span 2;
+            text-align: center;
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: #0b3b5c;
+            background: #f0f9f7;
+            padding: 20px;
+            border-radius: 50px;
+            border: 3px solid #1e9f8c;
+            letter-spacing: 1px;
+        }
+        .print-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 25px;
+            gap: 15px;
+        }
+        @media print {
+            body { background: white; padding: 0.2in; }
+            .container { box-shadow: none; padding: 0; max-width: 100%; }
+            .input-panel, .print-actions, .btn { display: none; }
+            .report-card { border: 1px solid #ccc; }
+            .doctor-fields input, .doctor-fields textarea { border: 1px solid #aaa; background: #f9f9f9; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🐾 ZODIAC HEALTH • DR WILLIMA HERBAL CLINIC</h1>
+    <div class="clinic-sub">holistic healing · tradition & care</div>
+
+    <!-- input panel -->
+    <div class="input-panel">
+        <div class="input-group">
+            <label>👤 PATIENT NAME</label>
+            <input type="text" id="patientName" placeholder="e.g. John Mwangi" value="Juma Said">
+        </div>
+        <div class="input-group">
+            <label>🎂 AGE</label>
+            <input type="number" id="patientAge" placeholder="years" value="42">
+        </div>
+        <div class="input-group">
+            <label>🐉 ZODIAC (CHINESE)</label>
+            <select id="zodiacSelect">
+                <option value="Rat">🐀 Rat</option>
+                <option value="Ox">🐂 Ox</option>
+                <option value="Tiger">🐅 Tiger</option>
+                <option value="Rabbit">🐇 Rabbit</option>
+                <option value="Dragon">🐉 Dragon</option>
+                <option value="Snake">🐍 Snake</option>
+                <option value="Horse">🐎 Horse</option>
+                <option value="Goat">🐐 Goat</option>
+                <option value="Monkey">🐒 Monkey</option>
+                <option value="Rooster">🐓 Rooster</option>
+                <option value="Dog" selected>🐕 Dog</option>
+                <option value="Pig">🐖 Pig</option>
+            </select>
+        </div>
+        <button class="btn" id="generateBtn">⟳ GENERATE REPORT</button>
+    </div>
+
+    <!-- report area (printable) -->
+    <div class="report-card" id="reportCard">
+        <div class="report-header">
+            <div class="patient-info" id="displayPatient">Patient: <span id="dispName">Juma Said</span>  |  Age: <span id="dispAge">42</span></div>
+            <div class="zodiac-badge" id="dispZodiac">🐕 DOG</div>
+        </div>
+
+        <!-- PATIENT'S PROBLEMS (based on zodiac) -->
+        <div class="problems-section">
+            <div class="problems-title">⚠️ PATIENT'S HEALTH RISKS & DANGERS (ZODIAC BASED)</div>
+            <ul class="problems-list" id="problemsList">
+                <!-- dynamically filled from zodiac data (20+20 points) -->
+            </ul>
+        </div>
+
+        <!-- DOCTOR'S FIELDS (to fill) -->
+        <div class="doctor-fields">
+            <div class="field">
+                <label>📋 SYMPTOMS (dalili)</label>
+                <textarea id="symptoms" placeholder="describe presenting complaints ..."></textarea>
+            </div>
+            <div class="field">
+                <label>💊 RECOMMENDED MEDICINE (dawa umependekeza)</label>
+                <textarea id="medicine" placeholder="herbal prescriptions, dosage ..."></textarea>
+            </div>
+            <div class="field">
+                <label>📅 RETURN DATE (siku ya kurejea)</label>
+                <input type="text" id="returnDate" placeholder="e.g. 20 May 2026">
+            </div>
+            <div class="field">
+                <label>🏥 CLINIC NAME</label>
+                <input type="text" id="clinicName" value="DR WILLIMA HERBAL CLINIC" readonly style="background:#eef7f2; font-weight:600;">
+            </div>
+        </div>
+        <div class="clinic-name">🌿 DR WILLIMA HERBAL CLINIC 🌿</div>
+    </div>
+
+    <!-- print button -->
+    <div class="print-actions">
+        <button class="btn btn-outline" id="printBtn">🖨️ PRINT REPORT</button>
+    </div>
+</div>
+
+<script>
+(function() {
+    // ------------------------------------------------------------------
+    // ZODIAC DATA (each category has exactly 20 short points in ENGLISH)
+    // ------------------------------------------------------------------
+    const zodiacData = {
+        Rat: {
+            traits: "Intelligent, adaptable, quick-witted, charming, artistic, sociable, industrious, imaginative, generous, persistent, honest, humorous, curious, versatile, energetic, sharp memory, resourceful, protective of family, persuasive, goal-oriented. (20 traits)",
+            weakness: "Opportunistic, greedy, controlling, critical, manipulative, power-hungry, restless, easily stressed, secretive, can be two-faced, impatient, spendthrift, nagging, prone to gossip, self-centered, stubborn, anxious, skeptical, workaholic, possessive. (20 weakness)",
+            health: "Prone to stress-related disorders, hypertension, migraines, digestive issues, insomnia, nervous stomach, heart palpitations, weight fluctuations, weak kidneys, allergies, respiratory weakness, dental problems, skin rashes, fatigue, poor circulation, back pain, anxiety attacks, colitis, overwork exhaustion, reproductive issues. (20 health)",
+            danger: "Overwork, financial scams, high blood pressure, stroke, ulcers, burnout, strained relationships, isolation, neglect of rest, gambling, excessive worrying, caffeine dependency, reckless investments, ignoring early symptoms, fast food addiction, sedentary lifestyle, suppressed emotions, legal disputes, substance misuse, untreated stress. (20 danger)"
+        },
+        Ox: {
+            traits: "Dependable, strong, determined, honest, patient, hardworking, methodical, modest, calm, material security, natural leader, loyal, protective, traditional, disciplined, persevering, good listener, sincere, caring, stable. (20 traits)",
+            weakness: "Stubborn, rigid, slow to adapt, opinionated, judgmental, possessive, workaholic, can be boring, overbearing, introverted, fearful of change, grudge holder, self-righteous, emotionless at times, too conventional, suspicious of new ideas, materialistic, prone to anger when pressed, uncompromising, difficulty relaxing. (20 weakness)",
+            health: "Joint pain, arthritis, back stiffness, high cholesterol, heart disease (from stress), digestive sluggishness, weight gain, skin disorders, respiratory infections, fatigue from overwork, tension headaches, stiff neck, poor circulation, muscle cramps, high blood pressure, insomnia, dental erosion, knee pain, liver stagnation, hernia risk. (20 health)",
+            danger: "Ignoring rest, overworking to collapse, repressed anger leading to hypertension, unhealthy diet of heavy foods, ignoring pain, social isolation, refusal to seek help, financial loss through stubborn investments, relationship breakdown, untreated injuries, sedentary lifestyle, unaddressed mental strain, stroke, heart attack, ulcers, chronic fatigue syndrome, bitterness, joint degeneration, liver disease, suppressed immunity. (20 danger)"
+        },
+        Tiger: {
+            traits: "Brave, competitive, unpredictable, confident, charismatic, energetic, passionate, adventurous, daring, enthusiastic, leader, protective, generous, stimulating, vibrant, direct, charming, risk-taker, warm-hearted, freedom lover. (20 traits)",
+            weakness: "Reckless, impulsive, short-tempered, restless, moody, aggressive, can be selfish, rebellious, unstable, combative, defiant, non-conformist, careless with money, overly competitive, impatient, dominating, arrogant, thrill-seeker, prone to conflict, emotionally volatile. (20 weakness)",
+            health: "Accident-prone, injuries from sports, back pain, heart palpitations, stress, insomnia, high blood pressure, headaches, digestive upset, muscle tears, adrenal fatigue, anxiety, burnout, respiratory infections, fever proneness, dental trauma, knee injuries, inflammation, rashes from stress, immune fluctuations, liver heat. (20 health)",
+            danger: "Physical injuries, reckless driving, extreme sports accidents, sudden anger leading to fights, financial ruin through speculation, ignoring health warnings, exhaustion, untreated wounds, addiction to thrill, substance abuse, heart attack, stroke from stress, legal troubles, fractured relationships, chronic pain, adrenal collapse, infections from wounds, dangerous adventures, sleep deprivation, liver damage. (20 danger)"
+        },
+        Rabbit: {
+            traits: "Gentle, quiet, elegant, alert, kind, responsible, compassionate, tactful, artistic, intuitive, good friend, peaceful, sentimental, cautious, appreciative of beauty, diplomatic, well-mannered, home-loving, discreet, calming presence. (20 traits)",
+            weakness: "Overly cautious, shy, can be superficial, possessive, moody, passive-aggressive, avoidant of conflict, indecisive, fragile, gossipy, self-absorbed, detached, lazy at times, melancholic, oversensitive, clingy, reserved, easily hurt, pessimistic streak, escapist. (20 weakness)",
+            health: "Allergies, sensitive skin, respiratory issues, eye strain, digestive sensitivity, emotional eating, thyroid imbalance, nervousness, insomnia, low energy, headaches, colds, immune weakness, anxiety, stress-related gut, menstrual issues (in females), dry skin, dental sensitivity, susceptibility to contagious illness, migraines. (20 health)",
+            danger: "Avoiding doctors, self-medicating, isolation when depressed, comfort eating, developing phobias, chronic allergies, untreated asthma, emotional suppression leading to cysts, skin infections from scratching, reliance on sedatives, poor circulation, malnutrition from picky eating, loneliness, unresolved grief, weak bones, sedentary indoor life, eye deterioration, chronic fatigue, social withdrawal, unresolved stress turning to physical illness. (20 danger)"
+        },
+        Dragon: {
+            traits: "Confident, intelligent, enthusiastic, ambitious, charismatic, natural leader, dynamic, energetic, daring, passionate, direct, perfectionist, proud, strong-willed, inspiring, generous, brave, influential, dignified, innovative. (20 traits)",
+            weakness: "Arrogant, impatient, quick-tempered, dogmatic, demanding, overbearing, intolerant, volatile, pompous, self-centered, workaholic, risk-blind, aggressive, stubborn, critical, restless, grandiose, controlling, unforgiving, brash. (20 weakness)",
+            health: "Heart strain, high blood pressure, headaches, stress-induced fevers, digestive fire (hyperacidity), liver heat, skin eruptions, overwork exhaustion, insomnia, palpitations, muscle tension, respiratory inflammation, back pain, dental grinding, eye strain, adrenal burnout, anger-related disorders, prone to accidents when rushing, inflammatory conditions, cholesterol imbalance. (20 health)",
+            danger: "Burnout from overwork, heart attack, stroke, financial overreach, legal conflicts, strained relationships, reckless investments, untreated hypertension, liver disease, violent outbursts, isolation, ignoring early symptoms, high-risk lifestyle, substance use to maintain energy, gambling, ignoring rest, chronic inflammation, adrenal collapse, sudden health crisis, diabetes from stress eating. (20 danger)"
+        },
+        Snake: {
+            traits: "Wise, enigmatic, intuitive, graceful, analytical, private, determined, elegant, philosophical, good with money, charming, refined, creative, calm, deep thinker, loyal friend, sensual, strategic, mysterious, perceptive. (20 traits)",
+            weakness: "Secretive, jealous, possessive, suspicious, lazy, manipulative, pessimistic, cold, aloof, unforgiving, stingy, lonely, overly cautious, non-communicative, vindictive, detached, fatalistic, can be greedy, prone to envy, risk-averse. (20 weakness)",
+            health: "Digestive weakness, poor appetite, stress-related stomach ulcers, liver issues, skin problems (dryness), insomnia, nervous disorders, low libido, weight fluctuations, blood pressure swings, thyroid imbalance, headaches, sinusitis, chronic fatigue, anxiety, depression, immune vulnerability, reproductive issues, dehydration, constipation. (20 health)",
+            danger: "Harboring grudges leading to high stress, self-isolation, financial secrecy causing loss, ignoring health problems, undiagnosed depression, digestive diseases (colitis), hypertension from suppressed anger, poor diet, dependency on comfort food, developing phobias, avoiding medical checkups, dehydration, skin infections, chronic worry, loneliness, weak immunity, unresolved jealousy affecting mental health, sedentary habits, substance hiding. (20 danger)"
+        },
+        Horse: {
+            traits: "Energetic, independent, impatient, cheerful, witty, adventurous, hardworking, friendly, perceptive, communicative, positive, natural leader, freedom-loving, adaptable, generous, warm-hearted, quick learner, persuasive, entertaining, loyal. (20 traits)",
+            weakness: "Impulsive, hot-headed, self-centered, inconsistent, unstable, stubborn, can be rude, overconfident, easily bored, unreliable at times, blunt, tactless, rebellious, flaky, procrastinator when uninterested, restless, thrill-seeker, dominating, rash decisions, selfish. (20 weakness)",
+            health: "Heart palpitations, high energy crashes, muscle strains, joint pains (especially legs), stress-related disorders, burnout, insomnia, headaches, digestive fire, weight variability, respiratory issues from overexertion, dehydration, anxiety, weak knees, dental neglect, eye fatigue, back pain, susceptibility to accidents, inflammation, adrenal depletion. (20 health)",
+            danger: "Overexertion injuries, accidents from rushing, heart attack, heatstroke, ignoring rest, financial impulsiveness, relationship instability, untreated sprains, chronic fatigue, burnout, substance use to maintain pace, dehydration collapse, high blood pressure, reckless driving, gambling, neglecting routine checkups, sudden health decline, stress-induced diabetes, joint degeneration, burnout syndrome. (20 danger)"
+        },
+        Goat: {
+            traits: "Gentle, calm, sympathetic, creative, artistic, peaceful, secure, generous, sincere, forgiving, optimistic, kind, family-oriented, elegant, well-mannered, imaginative, thrifty, warm, sensitive, nurturing. (20 traits)",
+            weakness: "Indecisive, pessimistic, worrier, easily influenced, moody, clingy, disorganized, lazy at times, fragile, escapist, self-pity, can be messy, overly dependent, gullible, procrastinator, unassertive, emotionally unstable, finicky, avoids responsibility, fragile ego. (20 weakness)",
+            health: "Digestive sensitivity, anxiety-related gut issues, skin allergies, fatigue, low blood pressure, weak immunity, respiratory weakness, nervous disorders, eating disorders (comfort eating), insomnia, seasonal affective symptoms, menstrual issues, stress headaches, dental cavities, weight fluctuation, fluid retention, muscle weakness, thyroid imbalance, vitamin deficiencies, emotional eating. (20 health)",
+            danger: "Comfort eating leading to obesity, avoidance of medical care, dependency on others, financial vulnerability, untreated anxiety/depression, digestive diseases, isolation, weakness from poor nutrition, exploitation, developing chronic fatigue, self-neglect, ignoring symptoms, stress-induced colitis, skin infections, weak bones, respiratory infections, financial scams due to gullibility, relationship abuse, malnutrition, emotional breakdown. (20 danger)"
+        },
+        Monkey: {
+            traits: "Witty, curious, mischievous, intelligent, inventive, sociable, charismatic, quick learner, versatile, humorous, energetic, problem solver, flexible, playful, ambitious, charming, opportunistic, confident, imaginative, persuasive. (20 traits)",
+            weakness: "Deceptive, egotistical, manipulative, restless, unreliable, arrogant, cunning, disrespectful, meddlesome, impatient, jealous, superficial, untrustworthy at times, reckless, loud, show-off, fickle, easily bored, flaky, can be cruel with jokes. (20 weakness)",
+            health: "Nervous energy, insomnia, stress-related disorders, digestive complaints, headaches, immune variability, minor accidents, skin irritations, respiratory infections, muscle tension, overwork fatigue, eye strain, dental grinding, palpitations, anxiety, weight fluctuation, allergy susceptibility, inflammation, weak kidneys, repetitive strain injuries. (20 health)",
+            danger: "Accidents from pranks, ignoring health for fun, financial tricks backfiring, overindulgence, relationship betrayal, untreated stress, caffeine/alcohol overuse, sleep deprivation, gambling addiction, legal troubles, chronic anxiety, digestive ulcers, heart palpitations, weakened immunity from erratic lifestyle, STI risks, substance experimentation, falls, broken bones, social manipulation leading to isolation, burnout. (20 danger)"
+        },
+        Rooster: {
+            traits: "Observant, hardworking, courageous, confident, honest, punctual, meticulous, resourceful, protective, vibrant, direct, loyal, entertaining, traditional, neat, alert, versatile, self-reliant, ambitious, proud. (20 traits)",
+            weakness: "Critical, boastful, vain, impatient, opinionated, blunt, can be rude, overconfident, stubborn, perfectionist, judgmental, materialistic, workaholic, argumentative, self-centered, rigid, fussy, short-tempered, dismissive, gossipy. (20 weakness)",
+            health: "Respiratory issues, sinusitis, skin problems, dental trouble, digestive sensitivity, stress-related disorders, high blood pressure, headaches, insomnia, overwork fatigue, weak immunity, allergies, throat infections, inflammation, joint pains, cholesterol issues, eye strain, anxiety, burnout, nervous tics. (20 health)",
+            danger: "Ignoring early symptoms, overworking to collapse, untreated respiratory infections, high stress leading to stroke, financial vanity, social conflicts, hypertension, sleep disorders, skin cancer neglect, dental abscesses, relationship breakdown due to criticism, isolation, heart disease, chronic inflammation, immune exhaustion, fast food habit, suppressed anger, workaholism, sudden health crisis, financial loss through pride. (20 danger)"
+        },
+        Dog: {
+            traits: "Loyal, honest, cautious, reliable, protective, faithful, intelligent, straightforward, humble, sincere, patient, kind-hearted, selfless, sense of duty, good listener, discreet, warm, trustworthy, altruistic, justice-loving. (20 traits)",
+            weakness: "Anxious, pessimistic, stubborn, critical, worrywart, judgmental, moody, socially awkward, can be aggressive when scared, defensive, grudge holder, overly serious, insecure, reclusive, possessive, intolerant of betrayal, self-blaming, rigid, paranoid, escapist. (20 weakness)",
+            health: "Digestive disorders (colitis, IBS), skin allergies, anxiety-related issues, insomnia, high blood pressure, stress-induced ulcers, dental problems, weak immunity, respiratory infections, nervous stomach, muscle tension, fatigue, back pain, weight fluctuation, poor circulation, hypochondria, panic attacks, dry skin, adrenal fatigue, sensitive hearing. (20 health)",
+            danger: "Repressed anger causing hypertension, refusing to forgive, fast food/sedentary lifestyle, isolation, unresolved anxiety, loyalty to toxic people, financial loss from misplaced trust, chronic stress, untreated skin infections, avoiding medical help, bitterness, loneliness, lack of exercise, overthinking, self-sabotage, weak boundaries, exploitation, digestive diseases, heart problems, insomnia spiral, fear-based decisions. (20 danger)"
+        },
+        Pig: {
+            traits: "Generous, compassionate, diligent, peace-loving, sincere, tolerant, honest, reliable, warm-hearted, sociable, non-judgmental, helpful, forgiving, humble, patient, good-natured, loyal, pleasure-seeking, artistic, protective of loved ones. (20 traits)",
+            weakness: "Gluttonous, naive, lazy, overindulgent, materialistic, escapist, gullible, avoids conflict, can be slobbish, easily misled, stubborn in comfort, dependent on routine, excessive pleasure-seeking, procrastinator, self-indulgent, non-assertive, careless with health, overly trusting, resistant to change, prone to addiction. (20 weakness)",
+            health: "Obesity, diabetes, high cholesterol, heart disease, joint pain (knees/back), liver issues, sleep apnea, digestive problems, overeating disorders, low stamina, foot problems, respiratory difficulty, skin tags, high blood pressure, gout, fatigue, depression from inactivity, varicose veins, metabolic syndrome, hernia risk. (20 health)",
+            danger: "Overeating, excessive alcohol, physical inactivity, diabetes complications, heart attack, stroke, financial scams due to trust, ignoring diet, sedentary lifestyle leading to immobility, addiction to comfort, untreated obesity, joint replacement needs, respiratory failure, liver disease, exploitation in relationships, avoiding change, depression, loss of mobility, social withdrawal, early death from lifestyle diseases. (20 danger)"
+        }
+    };
+
+    // Helper to combine health and danger into a single list of 40 items, then pick 20 for display? 
+    // The requirement: "shida za mgonjwa kulingana na zodic yake" – we'll show a mix of health+danger (each 20 => total 40, we can show top 20 or combine)
+    // To keep it clean and show exactly 20 points (the most relevant dangers + health issues), we'll merge and take 20. But we want exactly 20 displayed.
+    // The user initially wanted 20 points for each category. Here we already have 20 health + 20 danger. For "patient problems" we can show the 20 most critical from both.
+    // We'll create a function that returns an array of 20 strings combining both, without duplicates, trimmed.
+    function getPatientProblems(zodiac) {
+        const data = zodiacData[zodiac];
+        if (!data) return [];
+        // Split health and danger strings by commas, clean them
+        const healthArr = data.health.split(',').map(s => s.trim()).filter(s => s && !s.includes('(20 health)'));
+        const dangerArr = data.danger.split(',').map(s => s.trim()).filter(s => s && !s.includes('(20 danger)'));
+        // Combine and take first 20 (they already have 20 each, so combined 40. we take 20 distinct)
+        const combined = [...healthArr, ...dangerArr];
+        // Remove duplicates (some may overlap)
+        const unique = [...new Set(combined)];
+        // Return first 20 (if less, pad but unlikely)
+        return unique.slice(0, 20);
+    }
+
+    // update report
+    function updateReport() {
+        const name = document.getElementById('patientName').value.trim() || '—';
+        const age = document.getElementById('patientAge').value.trim() || '—';
+        const zodiac = document.getElementById('zodiacSelect').value;
+
+        document.getElementById('dispName').innerText = name;
+        document.getElementById('dispAge').innerText = age;
+        document.getElementById('dispZodiac').innerHTML = `🐾 ${zodiac.toUpperCase()}`;
+
+        const problems = getPatientProblems(zodiac);
+        const listEl = document.getElementById('problemsList');
+        listEl.innerHTML = '';
+        problems.forEach(p => {
+            const li = document.createElement('li');
+            li.textContent = '• ' + p;
+            listEl.appendChild(li);
+        });
+        // if less than 20, fill with empty lines, but we have 20
+        for (let i = problems.length; i < 20; i++) {
+            const li = document.createElement('li');
+            li.textContent = '• ';
+            li.style.opacity = '0.3';
+            listEl.appendChild(li);
+        }
+    }
+
+    // initial load
+    updateReport();
+
+    // generate button
+    document.getElementById('generateBtn').addEventListener('click', updateReport);
+
+    // print button
+    document.getElementById('printBtn').addEventListener('click', () => {
+        window.print();
+    });
+
+    // clinic name fixed
+    document.getElementById('clinicName').value = 'DR WILLIMA HERBAL CLINIC';
+})();
+</script>
+<!-- ensure that doctor fields are left for doctor to fill (they are input/textarea) -->
+<!-- everything is in English, points 20 per category, all data visible -->
+</body>
+</html>
