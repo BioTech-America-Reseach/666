@@ -1,691 +1,320 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sw">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dr Willima Herbal Clinic · Zodiac Health Assessment</title>
+    <title>Kigunduzi cha USB na Kipimo cha Voltage</title>
     <style>
-        * {
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
-        }
         body {
-            background: #e6f0fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f4f8;
             margin: 0;
             padding: 20px;
             display: flex;
             justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
         .container {
-            max-width: 1200px;
+            max-width: 500px;
             width: 100%;
             background: white;
-            border-radius: 32px;
-            box-shadow: 0 20px 40px rgba(0,20,40,0.2);
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             padding: 30px;
+            text-align: center;
         }
         h1 {
-            font-size: 2.2rem;
             color: #0b3b5c;
             margin-top: 0;
-            margin-bottom: 0.25rem;
-            font-weight: 600;
-            letter-spacing: -0.5px;
+            font-size: 1.8rem;
         }
-        .clinic-sub {
-            color: #1e6f5c;
-            font-weight: 500;
-            font-size: 1.2rem;
-            border-left: 5px solid #1e6f5c;
-            padding-left: 15px;
-            margin-bottom: 30px;
+        .status-box {
+            background: #eef2f7;
+            border-radius: 40px;
+            padding: 20px;
+            margin: 25px 0;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border: 3px solid #bdd8ec;
         }
-        .input-panel {
-            background: #f4f9ff;
-            border-radius: 28px;
+        .connected {
+            color: #27ae60;
+        }
+        .disconnected {
+            color: #e74c3c;
+        }
+        .meter-box {
+            background: #f9fcfd;
+            border-radius: 24px;
             padding: 25px;
-            margin-bottom: 35px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            align-items: flex-end;
-            border: 1px solid #c9e0f0;
+            margin: 20px 0;
+            border: 2px solid #c9e0f0;
+            display: none;
         }
-        .input-group {
-            flex: 1 1 200px;
+        .meter-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1e6f5c;
+            margin: 10px 0;
         }
-        .input-group label {
-            display: block;
-            font-weight: 600;
+        .meter-label {
             color: #0f4b6e;
-            margin-bottom: 6px;
             font-size: 0.9rem;
             text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
-        .input-group input {
-            width: 100%;
-            padding: 12px 18px;
-            border: 2px solid #bdd8ec;
-            border-radius: 40px;
-            font-size: 1rem;
-            background: white;
-            transition: 0.2s;
-        }
-        .input-group input:focus {
-            border-color: #1e9f8c;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(30,159,140,0.2);
+            letter-spacing: 1px;
         }
         .btn {
             background: #0b3b5c;
             border: none;
             color: white;
             font-weight: 600;
-            padding: 12px 32px;
+            padding: 14px 28px;
             border-radius: 40px;
             font-size: 1rem;
             cursor: pointer;
             transition: 0.2s;
             border: 2px solid #0b3b5c;
+            margin: 10px 5px;
+            width: 200px;
         }
         .btn:hover {
             background: #1e6f5c;
             border-color: #1e6f5c;
         }
-        .btn-outline {
-            background: white;
-            color: #0b3b5c;
-            border: 2px solid #0b3b5c;
-            margin-left: 10px;
+        .btn:disabled {
+            background: #95a5a6;
+            border-color: #7f8c8d;
+            cursor: not-allowed;
         }
-        .btn-outline:hover {
-            background: #0b3b5c;
-            color: white;
-        }
-        .report-card {
-            background: #ffffff;
-            border-radius: 32px;
-            border: 2px solid #c9e0f0;
-            padding: 30px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-        }
-        .report-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            border-bottom: 3px dashed #1e6f5c;
-            padding-bottom: 15px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-        }
-        .patient-info {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: #0b3b5c;
-        }
-        .patient-info span {
-            font-weight: 400;
-            color: #1e6f5c;
-            background: #e1f2ed;
-            padding: 4px 12px;
-            border-radius: 40px;
-            margin-left: 10px;
-        }
-        .zodiac-badge {
-            background: #f4d03f;
-            color: #1e3c4f;
-            padding: 8px 22px;
-            border-radius: 40px;
-            font-weight: 700;
-            font-size: 1.3rem;
-        }
-        .problems-section {
-            background: #fff6e5;
-            border-radius: 24px;
-            padding: 20px 25px;
-            margin: 25px 0;
-            border-left: 10px solid #e67e22;
-        }
-        .problems-title {
-            font-weight: 700;
-            color: #b85b1a;
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .problems-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px 20px;
-            list-style: none;
-            padding-left: 0;
-        }
-        .problems-list li {
-            width: calc(50% - 10px);
-            font-size: 0.95rem;
-            color: #2c3e50;
-        }
-        /* human body diagram */
-        .body-diagram {
-            margin: 30px 0;
-            text-align: center;
-            background: #f8fcfd;
-            border-radius: 48px;
-            padding: 20px;
-            border: 2px solid #b0d4ec;
-        }
-        .body-diagram h3 {
-            color: #0b3b5c;
-            margin-top: 0;
-            margin-bottom: 15px;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        canvas#bodyCanvas {
-            width: 100%;
-            max-width: 300px;
-            height: auto;
-            background: #f1f9fc;
-            border-radius: 30px;
-            box-shadow: 0 8px 18px rgba(0,40,30,0.1);
-        }
-        .doctor-fields {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 25px;
-            margin: 30px 0 20px;
-        }
-        .field {
-            background: #f9fcfd;
-            border-radius: 20px;
-            padding: 15px 20px;
-            border: 1px solid #bdd8ec;
-        }
-        .field label {
-            font-weight: 600;
-            color: #0f4b6e;
-            display: block;
-            margin-bottom: 8px;
-            font-size: 0.95rem;
-        }
-        .field input, .field textarea {
-            width: 100%;
-            padding: 10px 15px;
-            border: 2px solid #d3e4f0;
-            border-radius: 30px;
-            font-size: 1rem;
-            background: white;
-        }
-        .field textarea {
-            resize: vertical;
-            min-height: 70px;
-        }
-        .clinic-name {
-            grid-column: span 2;
-            text-align: center;
-            font-size: 1.7rem;
-            font-weight: 800;
-            color: #0b3b5c;
-            background: #f0f9f7;
-            padding: 20px;
-            border-radius: 50px;
-            border: 3px solid #1e9f8c;
-            letter-spacing: 1px;
-        }
-        .print-actions {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 25px;
-            gap: 15px;
-        }
-        @media print {
-            body { background: white; padding: 0.2in; }
-            .container { box-shadow: none; padding: 0; max-width: 100%; }
-            .input-panel, .print-actions, .btn { display: none; }
-            .report-card { border: 1px solid #ccc; }
-            .doctor-fields input, .doctor-fields textarea { border: 1px solid #aaa; background: #f9f9f9; }
-            canvas#bodyCanvas { background: #f1f9fc; }
+        .info-text {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 16px;
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>DR WILLIMA HERBAL CLINIC TAWI LA KITUNDA - LUKOLO CENTER</h1>
-    <div class="clinic-sub">holistic healing · tradition & care</div>
-
-    <!-- input panel -->
-    <div class="input-panel">
-        <div class="input-group">
-            <label>👤 PATIENT NAME</label>
-            <input type="text" id="patientName" placeholder="e.g. John Mwangi" value="Juma Said">
+    <div class="container">
+        <h1>🔌 KIGUNDUZI CHA USB</h1>
+        <p>Na Kipimo Cha Voltage, Current & Power</p>
+        
+        <!-- Hali ya USB -->
+        <div class="status-box" id="usbStatus">
+            ⚫ HAKUNA USB
         </div>
-        <div class="input-group">
-            <label>🎂 AGE</label>
-            <input type="number" id="patientAge" placeholder="years" value="42">
+        
+        <!-- Vifungo -->
+        <button class="btn" id="connectBtn" onclick="connectDevice()">🔗 UNGANISHA KIPIMO</button>
+        <button class="btn" id="scanBtn" onclick="scanForDevices()" disabled>🔄 TAFUTA VIFAA</button>
+        
+        <!-- Sehemu ya Kupimia -->
+        <div class="meter-box" id="meterData">
+            <div class="meter-label">VOLTAGE (V)</div>
+            <div class="meter-value" id="voltage">0.00</div>
+            
+            <div style="display: flex; justify-content: space-around; margin-top: 20px;">
+                <div>
+                    <div class="meter-label">CURRENT (A)</div>
+                    <div style="font-size: 1.5rem; font-weight: 600; color: #0b3b5c;" id="current">0.000</div>
+                </div>
+                <div>
+                    <div class="meter-label">POWER (W)</div>
+                    <div style="font-size: 1.5rem; font-weight: 600; color: #0b3b5c;" id="power">0.00</div>
+                </div>
+            </div>
         </div>
-        <div class="input-group">
-            <label>📅 MWAKA WA KUZALIWA (BIRTH YEAR)</label>
-            <input type="number" id="birthYear" placeholder="e.g. 1982" value="1982">
+        
+        <!-- Maelekezo -->
+        <div class="info-text">
+            <strong>📋 JINSI YA KUTUMIA:</strong><br>
+            1. Unganisha kifaa chako cha kupimia (USB power meter)<br>
+            2. Bonyeza "UNGANISHA KIPIMO"<br>
+            3. Chagua kifaa chako kutoka kwenye orodha<br>
+            4. Sasa utaona voltage, current, na power<br><br>
+            <strong>⚠️ Muhimu:</strong> Program inagundua USB inapoingizwa/kutolewa moja kwa moja!
         </div>
-        <button class="btn" id="generateBtn">⟳ GENERATE REPORT</button>
     </div>
 
-    <!-- report area (printable) -->
-    <div class="report-card" id="reportCard">
-        <div class="report-header">
-            <div class="patient-info" id="displayPatient">Patient: <span id="dispName">Juma Said</span>  |  Age: <span id="dispAge">42</span></div>
-            <div class="zodiac-badge" id="dispZodiac">🐕 DOG</div>
-        </div>
-
-        <!-- PATIENT'S PROBLEMS (based on zodiac) -->
-        <div class="problems-section">
-            <div class="problems-title">⚠️ PATIENT'S HEALTH RISKS & DANGERS (ZODIAC BASED)</div>
-            <ul class="problems-list" id="problemsList">
-                <!-- dynamically filled from zodiac data (20 points) -->
-            </ul>
-        </div>
-
-        <!-- HUMAN BODY DIAGRAM WITH DOTS (affected areas) - 3D STYLE -->
-        <div class="body-diagram">
-            <h3>🔴 BODY AREAS AFFECTED (3D anatomy with highlighted spots)</h3>
-            <canvas id="bodyCanvas" width="300" height="400"></canvas>
-        </div>
-
-        <!-- DOCTOR'S FIELDS (to fill) -->
-        <div class="doctor-fields">
-            <div class="field">
-                <label>📋 SYMPTOMS (dalili)</label>
-                <textarea id="symptoms" placeholder="describe presenting complaints ..."></textarea>
-            </div>
-            <div class="field">
-                <label>💊 RECOMMENDED MEDICINE (dawa umependekeza)</label>
-                <textarea id="medicine" placeholder="herbal prescriptions, dosage ..."></textarea>
-            </div>
-            <div class="field">
-                <label>📅 RETURN DATE (siku ya kurejea)</label>
-                <input type="text" id="returnDate" placeholder="e.g. 20 May 2026">
-            </div>
-            <div class="field">
-                <label>🏥 CLINIC NAME</label>
-                <input type="text" id="clinicName" value="DR WILLIMA HERBAL CLINIC" readonly style="background:#eef7f2; font-weight:600;">
-            </div>
-        </div>
-        <div class="clinic-name">🌿 DR WILLIMA HERBAL CLINIC 🌿</div>
-    </div>
-
-    <!-- print button -->
-    <div class="print-actions">
-        <button class="btn btn-outline" id="printBtn">🖨️ PRINT REPORT</button>
-    </div>
-</div>
-
-<script>
-(function() {
-    // ------------------------------------------------------------------
-    // ZODIAC DATA (each category has exactly 20 short points in ENGLISH)
-    // ------------------------------------------------------------------
-    const zodiacData = {
-        Rat: {
-            traits: "Intelligent, adaptable, quick-witted, charming, artistic, sociable, industrious, imaginative, generous, persistent, honest, humorous, curious, versatile, energetic, sharp memory, resourceful, protective of family, persuasive, goal-oriented. (20 traits)",
-            weakness: "Opportunistic, greedy, controlling, critical, manipulative, power-hungry, restless, easily stressed, secretive, can be two-faced, impatient, spendthrift, nagging, prone to gossip, self-centered, stubborn, anxious, skeptical, workaholic, possessive. (20 weakness)",
-            health: "Prone to stress-related disorders, hypertension, migraines, digestive issues, insomnia, nervous stomach, heart palpitations, weight fluctuations, weak kidneys, allergies, respiratory weakness, dental problems, skin rashes, fatigue, poor circulation, back pain, anxiety attacks, colitis, overwork exhaustion, reproductive issues. (20 health)",
-            danger: "Overwork, financial scams, high blood pressure, stroke, ulcers, burnout, strained relationships, isolation, neglect of rest, gambling, excessive worrying, caffeine dependency, reckless investments, ignoring early symptoms, fast food addiction, sedentary lifestyle, suppressed emotions, legal disputes, substance misuse, untreated stress. (20 danger)"
-        },
-        Ox: {
-            traits: "Dependable, strong, determined, honest, patient, hardworking, methodical, modest, calm, material security, natural leader, loyal, protective, traditional, disciplined, persevering, good listener, sincere, caring, stable. (20 traits)",
-            weakness: "Stubborn, rigid, slow to adapt, opinionated, judgmental, possessive, workaholic, can be boring, overbearing, introverted, fearful of change, grudge holder, self-righteous, emotionless at times, too conventional, suspicious of new ideas, materialistic, prone to anger when pressed, uncompromising, difficulty relaxing. (20 weakness)",
-            health: "Joint pain, arthritis, back stiffness, high cholesterol, heart disease (from stress), digestive sluggishness, weight gain, skin disorders, respiratory infections, fatigue from overwork, tension headaches, stiff neck, poor circulation, muscle cramps, high blood pressure, insomnia, dental erosion, knee pain, liver stagnation, hernia risk. (20 health)",
-            danger: "Ignoring rest, overworking to collapse, repressed anger leading to hypertension, unhealthy diet of heavy foods, ignoring pain, social isolation, refusal to seek help, financial loss through stubborn investments, relationship breakdown, untreated injuries, sedentary lifestyle, unaddressed mental strain, stroke, heart attack, ulcers, chronic fatigue syndrome, bitterness, joint degeneration, liver disease, suppressed immunity. (20 danger)"
-        },
-        Tiger: {
-            traits: "Brave, competitive, unpredictable, confident, charismatic, energetic, passionate, adventurous, daring, enthusiastic, leader, protective, generous, stimulating, vibrant, direct, charming, risk-taker, warm-hearted, freedom lover. (20 traits)",
-            weakness: "Reckless, impulsive, short-tempered, restless, moody, aggressive, can be selfish, rebellious, unstable, combative, defiant, non-conformist, careless with money, overly competitive, impatient, dominating, arrogant, thrill-seeker, prone to conflict, emotionally volatile. (20 weakness)",
-            health: "Accident-prone, injuries from sports, back pain, heart palpitations, stress, insomnia, high blood pressure, headaches, digestive upset, muscle tears, adrenal fatigue, anxiety, burnout, respiratory infections, fever proneness, dental trauma, knee injuries, inflammation, rashes from stress, immune fluctuations, liver heat. (20 health)",
-            danger: "Physical injuries, reckless driving, extreme sports accidents, sudden anger leading to fights, financial ruin through speculation, ignoring health warnings, exhaustion, untreated wounds, addiction to thrill, substance abuse, heart attack, stroke from stress, legal troubles, fractured relationships, chronic pain, adrenal collapse, infections from wounds, dangerous adventures, sleep deprivation, liver damage. (20 danger)"
-        },
-        Rabbit: {
-            traits: "Gentle, quiet, elegant, alert, kind, responsible, compassionate, tactful, artistic, intuitive, good friend, peaceful, sentimental, cautious, appreciative of beauty, diplomatic, well-mannered, home-loving, discreet, calming presence. (20 traits)",
-            weakness: "Overly cautious, shy, can be superficial, possessive, moody, passive-aggressive, avoidant of conflict, indecisive, fragile, gossipy, self-absorbed, detached, lazy at times, melancholic, oversensitive, clingy, reserved, easily hurt, pessimistic streak, escapist. (20 weakness)",
-            health: "Allergies, sensitive skin, respiratory issues, eye strain, digestive sensitivity, emotional eating, thyroid imbalance, nervousness, insomnia, low energy, headaches, colds, immune weakness, anxiety, stress-related gut, menstrual issues (in females), dry skin, dental sensitivity, susceptibility to contagious illness, migraines. (20 health)",
-            danger: "Avoiding doctors, self-medicating, isolation when depressed, comfort eating, developing phobias, chronic allergies, untreated asthma, emotional suppression leading to cysts, skin infections from scratching, reliance on sedatives, poor circulation, malnutrition from picky eating, loneliness, unresolved grief, weak bones, sedentary indoor life, eye deterioration, chronic fatigue, social withdrawal, unresolved stress turning to physical illness. (20 danger)"
-        },
-        Dragon: {
-            traits: "Confident, intelligent, enthusiastic, ambitious, charismatic, natural leader, dynamic, energetic, daring, passionate, direct, perfectionist, proud, strong-willed, inspiring, generous, brave, influential, dignified, innovative. (20 traits)",
-            weakness: "Arrogant, impatient, quick-tempered, dogmatic, demanding, overbearing, intolerant, volatile, pompous, self-centered, workaholic, risk-blind, aggressive, stubborn, critical, restless, grandiose, controlling, unforgiving, brash. (20 weakness)",
-            health: "Heart strain, high blood pressure, headaches, stress-induced fevers, digestive fire (hyperacidity), liver heat, skin eruptions, overwork exhaustion, insomnia, palpitations, muscle tension, respiratory inflammation, back pain, dental grinding, eye strain, adrenal burnout, anger-related disorders, prone to accidents when rushing, inflammatory conditions, cholesterol imbalance. (20 health)",
-            danger: "Burnout from overwork, heart attack, stroke, financial overreach, legal conflicts, strained relationships, reckless investments, untreated hypertension, liver disease, violent outbursts, isolation, ignoring early symptoms, high-risk lifestyle, substance use to maintain energy, gambling, ignoring rest, chronic inflammation, adrenal collapse, sudden health crisis, diabetes from stress eating. (20 danger)"
-        },
-        Snake: {
-            traits: "Wise, enigmatic, intuitive, graceful, analytical, private, determined, elegant, philosophical, good with money, charming, refined, creative, calm, deep thinker, loyal friend, sensual, strategic, mysterious, perceptive. (20 traits)",
-            weakness: "Secretive, jealous, possessive, suspicious, lazy, manipulative, pessimistic, cold, aloof, unforgiving, stingy, lonely, overly cautious, non-communicative, vindictive, detached, fatalistic, can be greedy, prone to envy, risk-averse. (20 weakness)",
-            health: "Digestive weakness, poor appetite, stress-related stomach ulcers, liver issues, skin problems (dryness), insomnia, nervous disorders, low libido, weight fluctuations, blood pressure swings, thyroid imbalance, headaches, sinusitis, chronic fatigue, anxiety, depression, immune vulnerability, reproductive issues, dehydration, constipation. (20 health)",
-            danger: "Harboring grudges leading to high stress, self-isolation, financial secrecy causing loss, ignoring health problems, undiagnosed depression, digestive diseases (colitis), hypertension from suppressed anger, poor diet, dependency on comfort food, developing phobias, avoiding medical checkups, dehydration, skin infections, chronic worry, loneliness, weak immunity, unresolved jealousy affecting mental health, sedentary habits, substance hiding. (20 danger)"
-        },
-        Horse: {
-            traits: "Energetic, independent, impatient, cheerful, witty, adventurous, hardworking, friendly, perceptive, communicative, positive, natural leader, freedom-loving, adaptable, generous, warm-hearted, quick learner, persuasive, entertaining, loyal. (20 traits)",
-            weakness: "Impulsive, hot-headed, self-centered, inconsistent, unstable, stubborn, can be rude, overconfident, easily bored, unreliable at times, blunt, tactless, rebellious, flaky, procrastinator when uninterested, restless, thrill-seeker, dominating, rash decisions, selfish. (20 weakness)",
-            health: "Heart palpitations, high energy crashes, muscle strains, joint pains (especially legs), stress-related disorders, burnout, insomnia, headaches, digestive fire, weight variability, respiratory issues from overexertion, dehydration, anxiety, weak knees, dental neglect, eye fatigue, back pain, susceptibility to accidents, inflammation, adrenal depletion. (20 health)",
-            danger: "Overexertion injuries, accidents from rushing, heart attack, heatstroke, ignoring rest, financial impulsiveness, relationship instability, untreated sprains, chronic fatigue, burnout, substance use to maintain pace, dehydration collapse, high blood pressure, reckless driving, gambling, neglecting routine checkups, sudden health decline, stress-induced diabetes, joint degeneration, burnout syndrome. (20 danger)"
-        },
-        Goat: {
-            traits: "Gentle, calm, sympathetic, creative, artistic, peaceful, secure, generous, sincere, forgiving, optimistic, kind, family-oriented, elegant, well-mannered, imaginative, thrifty, warm, sensitive, nurturing. (20 traits)",
-            weakness: "Indecisive, pessimistic, worrier, easily influenced, moody, clingy, disorganized, lazy at times, fragile, escapist, self-pity, can be messy, overly dependent, gullible, procrastinator, unassertive, emotionally unstable, finicky, avoids responsibility, fragile ego. (20 weakness)",
-            health: "Digestive sensitivity, anxiety-related gut issues, skin allergies, fatigue, low blood pressure, weak immunity, respiratory weakness, nervous disorders, eating disorders (comfort eating), insomnia, seasonal affective symptoms, menstrual issues, stress headaches, dental cavities, weight fluctuation, fluid retention, muscle weakness, thyroid imbalance, vitamin deficiencies, emotional eating. (20 health)",
-            danger: "Comfort eating leading to obesity, avoidance of medical care, dependency on others, financial vulnerability, untreated anxiety/depression, digestive diseases, isolation, weakness from poor nutrition, exploitation, developing chronic fatigue, self-neglect, ignoring symptoms, stress-induced colitis, skin infections, weak bones, respiratory infections, financial scams due to gullibility, relationship abuse, malnutrition, emotional breakdown. (20 danger)"
-        },
-        Monkey: {
-            traits: "Witty, curious, mischievous, intelligent, inventive, sociable, charismatic, quick learner, versatile, humorous, energetic, problem solver, flexible, playful, ambitious, charming, opportunistic, confident, imaginative, persuasive. (20 traits)",
-            weakness: "Deceptive, egotistical, manipulative, restless, unreliable, arrogant, cunning, disrespectful, meddlesome, impatient, jealous, superficial, untrustworthy at times, reckless, loud, show-off, fickle, easily bored, flaky, can be cruel with jokes. (20 weakness)",
-            health: "Nervous energy, insomnia, stress-related disorders, digestive complaints, headaches, immune variability, minor accidents, skin irritations, respiratory infections, muscle tension, overwork fatigue, eye strain, dental grinding, palpitations, anxiety, weight fluctuation, allergy susceptibility, inflammation, weak kidneys, repetitive strain injuries. (20 health)",
-            danger: "Accidents from pranks, ignoring health for fun, financial tricks backfiring, overindulgence, relationship betrayal, untreated stress, caffeine/alcohol overuse, sleep deprivation, gambling addiction, legal troubles, chronic anxiety, digestive ulcers, heart palpitations, weakened immunity from erratic lifestyle, STI risks, substance experimentation, falls, broken bones, social manipulation leading to isolation, burnout. (20 danger)"
-        },
-        Rooster: {
-            traits: "Observant, hardworking, courageous, confident, honest, punctual, meticulous, resourceful, protective, vibrant, direct, loyal, entertaining, traditional, neat, alert, versatile, self-reliant, ambitious, proud. (20 traits)",
-            weakness: "Critical, boastful, vain, impatient, opinionated, blunt, can be rude, overconfident, stubborn, perfectionist, judgmental, materialistic, workaholic, argumentative, self-centered, rigid, fussy, short-tempered, dismissive, gossipy. (20 weakness)",
-            health: "Respiratory issues, sinusitis, skin problems, dental trouble, digestive sensitivity, stress-related disorders, high blood pressure, headaches, insomnia, overwork fatigue, weak immunity, allergies, throat infections, inflammation, joint pains, cholesterol issues, eye strain, anxiety, burnout, nervous tics. (20 health)",
-            danger: "Ignoring early symptoms, overworking to collapse, untreated respiratory infections, high stress leading to stroke, financial vanity, social conflicts, hypertension, sleep disorders, skin cancer neglect, dental abscesses, relationship breakdown due to criticism, isolation, heart disease, chronic inflammation, immune exhaustion, fast food habit, suppressed anger, workaholism, sudden health crisis, financial loss through pride. (20 danger)"
-        },
-        Dog: {
-            traits: "Loyal, honest, cautious, reliable, protective, faithful, intelligent, straightforward, humble, sincere, patient, kind-hearted, selfless, sense of duty, good listener, discreet, warm, trustworthy, altruistic, justice-loving. (20 traits)",
-            weakness: "Anxious, pessimistic, stubborn, critical, worrywart, judgmental, moody, socially awkward, can be aggressive when scared, defensive, grudge holder, overly serious, insecure, reclusive, possessive, intolerant of betrayal, self-blaming, rigid, paranoid, escapist. (20 weakness)",
-            health: "Digestive disorders (colitis, IBS), skin allergies, anxiety-related issues, insomnia, high blood pressure, stress-induced ulcers, dental problems, weak immunity, respiratory infections, nervous stomach, muscle tension, fatigue, back pain, weight fluctuation, poor circulation, hypochondria, panic attacks, dry skin, adrenal fatigue, sensitive hearing. (20 health)",
-            danger: "Repressed anger causing hypertension, refusing to forgive, fast food/sedentary lifestyle, isolation, unresolved anxiety, loyalty to toxic people, financial loss from misplaced trust, chronic stress, untreated skin infections, avoiding medical help, bitterness, loneliness, lack of exercise, overthinking, self-sabotage, weak boundaries, exploitation, digestive diseases, heart problems, insomnia spiral, fear-based decisions. (20 danger)"
-        },
-        Pig: {
-            traits: "Generous, compassionate, diligent, peace-loving, sincere, tolerant, honest, reliable, warm-hearted, sociable, non-judgmental, helpful, forgiving, humble, patient, good-natured, loyal, pleasure-seeking, artistic, protective of loved ones. (20 traits)",
-            weakness: "Gluttonous, naive, lazy, overindulgent, materialistic, escapist, gullible, avoids conflict, can be slobbish, easily misled, stubborn in comfort, dependent on routine, excessive pleasure-seeking, procrastinator, self-indulgent, non-assertive, careless with health, overly trusting, resistant to change, prone to addiction. (20 weakness)",
-            health: "Obesity, diabetes, high cholesterol, heart disease, joint pain (knees/back), liver issues, sleep apnea, digestive problems, overeating disorders, low stamina, foot problems, respiratory difficulty, skin tags, high blood pressure, gout, fatigue, depression from inactivity, varicose veins, metabolic syndrome, hernia risk. (20 health)",
-            danger: "Overeating, excessive alcohol, physical inactivity, diabetes complications, heart attack, stroke, financial scams due to trust, ignoring diet, sedentary lifestyle leading to immobility, addiction to comfort, untreated obesity, joint replacement needs, respiratory failure, liver disease, exploitation in relationships, avoiding change, depression, loss of mobility, social withdrawal, early death from lifestyle diseases. (20 danger)"
+    <script>
+        // Vigezo vya kuhifadhi kifaa
+        let connectedDevice = null;
+        let readingInterval = null;
+        
+        //-------------------------------------------------------------------
+        // KUGUNDUA USB INAPOINGIZWA AU KUTOLEWA
+        //-------------------------------------------------------------------
+        if ('usb' in navigator) {
+            // Sikiliza tukio la kuunganisha USB
+            navigator.usb.addEventListener('connect', (event) => {
+                updateUSBStatus('CONNECTED', event.device);
+                console.log('USB imeingizwa:', event.device.productName);
+                
+                // Ikiwa tumekwisha unganisha kifaa cha kupimia, wezesha kitufe cha kutafuta
+                document.getElementById('scanBtn').disabled = false;
+            });
+            
+            // Sikiliza tukio la kukata USB
+            navigator.usb.addEventListener('disconnect', (event) => {
+                updateUSBStatus('DISCONNECTED');
+                console.log('USB imetolewa:', event.device.productName);
+                
+                // Zima kusoma data
+                if (readingInterval) {
+                    clearInterval(readingInterval);
+                    readingInterval = null;
+                }
+                
+                // Ficha data za kipimo
+                document.getElementById('meterData').style.display = 'none';
+                document.getElementById('scanBtn').disabled = true;
+            });
+            
+            console.log('WebUSB inatumika!');
+        } else {
+            alert('Samahani, kivinjari chako hakitumii WebUSB. Tumia Chrome, Edge, au Chromium.');
         }
-    };
-
-    // ------------------------------------------------------------------
-    // BODY MAPPING: for each zodiac, array of [x, y] coordinates (normalized 0-1)
-    // ------------------------------------------------------------------
-    const zodiacBodyPoints = {
-        Rat:    [[0.5,0.1], [0.45,0.27], [0.5,0.38], [0.4,0.4], [0.6,0.4], [0.3,0.3], [0.7,0.3]], // head, heart, stomach, kidneys, arms
-        Ox:     [[0.5,0.7], [0.5,0.8], [0.45,0.27], [0.5,0.2], [0.5,0.55]], // knees, back, heart, spine, hips
-        Tiger:  [[0.5,0.1], [0.5,0.2], [0.45,0.27], [0.5,0.7], [0.2,0.3], [0.8,0.3]], // head, spine, heart, legs, arms
-        Rabbit: [[0.5,0.1], [0.45,0.08], [0.55,0.08], [0.4,0.27], [0.6,0.27], [0.5,0.18]], // head, eyes, chest, throat
-        Dragon: [[0.45,0.27], [0.6,0.38], [0.5,0.1], [0.5,0.2]], // heart, liver, head, spine
-        Snake:  [[0.5,0.38], [0.6,0.38], [0.4,0.38], [0.5,0.45]], // stomach, liver, spleen, intestines
-        Horse:  [[0.4,0.7], [0.6,0.7], [0.45,0.27], [0.2,0.3], [0.8,0.3]], // legs, heart, arms
-        Goat:   [[0.5,0.38], [0.5,0.1], [0.4,0.27], [0.6,0.27]], // stomach, head, chest/skin
-        Monkey: [[0.5,0.1], [0.5,0.38], [0.45,0.27], [0.5,0.45]], // head, stomach, heart, intestines
-        Rooster:[[0.4,0.27], [0.6,0.27], [0.5,0.18], [0.45,0.08], [0.55,0.08]], // chest/lungs, throat, head/jaw
-        Dog:    [[0.5,0.38], [0.5,0.1], [0.4,0.27], [0.6,0.27], [0.5,0.45]], // stomach, head, chest/skin, intestines
-        Pig:    [[0.5,0.38], [0.45,0.27], [0.5,0.7], [0.5,0.8], [0.5,0.55]] // stomach, heart, knees, hips
-    };
-
-    // ----- helper: get zodiac from year (Chinese zodiac, 12-year cycle) -----
-    function getZodiacFromYear(year) {
-        if (isNaN(year) || year < 1900 || year > 2100) year = 2000; // fallback
-        // 2020 is Rat, 2021 Ox, 2022 Tiger, 2023 Rabbit, 2024 Dragon, 2025 Snake,
-        // 2026 Horse, 2027 Goat, 2028 Monkey, 2029 Rooster, 2030 Dog, 2031 Pig
-        const zodiacs = [
-            "Rat", "Ox", "Tiger", "Rabbit", "Dragon", "Snake",
-            "Horse", "Goat", "Monkey", "Rooster", "Dog", "Pig"
-        ];
-        // offset: 2020 -> Rat (index 0)
-        const startYear = 2020;
-        const diff = year - startYear;
-        let index = diff % 12;
-        if (index < 0) index += 12;
-        return zodiacs[index];
-    }
-
-    // Helper to get patient problems (20 points from health+danger)
-    function getPatientProblems(zodiac) {
-        const data = zodiacData[zodiac];
-        if (!data) return [];
-        const healthArr = data.health.split(',').map(s => s.trim()).filter(s => s && !s.includes('(20 health)'));
-        const dangerArr = data.danger.split(',').map(s => s.trim()).filter(s => s && !s.includes('(20 danger)'));
-        const combined = [...healthArr, ...dangerArr];
-        const unique = [...new Set(combined)];
-        return unique.slice(0, 20);
-    }
-
-    // ------------------------------------------------------------------
-    // 3D-style human body drawing with gradients and shading
-    // ------------------------------------------------------------------
-    function draw3DBody(ctx, w, h) {
-        ctx.clearRect(0, 0, w, h);
-
-        // soft gradient background
-        const bgGrad = ctx.createLinearGradient(0, 0, w, h);
-        bgGrad.addColorStop(0, '#e8f0f7');
-        bgGrad.addColorStop(1, '#d4e3f0');
-        ctx.fillStyle = bgGrad;
-        ctx.fillRect(0, 0, w, h);
-
-        // ========== TORSO (with 3D shading) ==========
-        // main torso shape (pear-like, more anatomical)
-        ctx.save();
-
-        // shadow under torso
-        ctx.shadowColor = 'rgba(0,0,0,0.2)';
-        ctx.shadowBlur = 12;
-        ctx.shadowOffsetY = 3;
-
-        // Torso gradient (light from left)
-        const torsoGrad = ctx.createLinearGradient(w*0.2, h*0.2, w*0.8, h*0.6);
-        torsoGrad.addColorStop(0, '#f9d9c0');
-        torsoGrad.addColorStop(0.5, '#e0b89c');
-        torsoGrad.addColorStop(1, '#c49a7c');
-        ctx.fillStyle = torsoGrad;
-
-        ctx.beginPath();
-        ctx.moveTo(w*0.3, h*0.22);   // left shoulder
-        ctx.lineTo(w*0.7, h*0.22);   // right shoulder
-        ctx.lineTo(w*0.68, h*0.55);  // right hip
-        ctx.lineTo(w*0.55, h*0.6);   // slight curve
-        ctx.lineTo(w*0.45, h*0.6);
-        ctx.lineTo(w*0.32, h*0.55);  // left hip
-        ctx.closePath();
-        ctx.fill();
-
-        // add subtle highlight on chest
-        ctx.shadowBlur = 0;
-        ctx.shadowOffsetY = 0;
-        ctx.globalAlpha = 0.2;
-        ctx.fillStyle = '#fff7f0';
-        ctx.beginPath();
-        ctx.moveTo(w*0.4, h*0.25);
-        ctx.lineTo(w*0.6, h*0.25);
-        ctx.lineTo(w*0.58, h*0.4);
-        ctx.lineTo(w*0.42, h*0.4);
-        ctx.closePath();
-        ctx.fill();
-        ctx.globalAlpha = 1.0;
-
-        // ========== HEAD (3D sphere) ==========
-        ctx.shadowColor = 'rgba(0,0,0,0.15)';
-        ctx.shadowBlur = 10;
-        ctx.shadowOffsetY = 2;
-
-        const headGrad = ctx.createRadialGradient(w*0.5-5, h*0.1-3, 5, w*0.5, h*0.1, h*0.1);
-        headGrad.addColorStop(0, '#fce6d5');
-        headGrad.addColorStop(0.7, '#d9af91');
-        ctx.fillStyle = headGrad;
-        ctx.beginPath();
-        ctx.ellipse(w*0.5, h*0.1, h*0.06, h*0.07, 0, 0, 2*Math.PI);
-        ctx.fill();
-
-        // neck (shaded)
-        ctx.shadowBlur = 8;
-        ctx.fillStyle = '#c49a7c';
-        ctx.beginPath();
-        ctx.rect(w*0.47, h*0.15, w*0.06, h*0.07);
-        ctx.fill();
-
-        // ========== ARMS ==========
-        ctx.shadowBlur = 8;
-        ctx.fillStyle = '#e0b89c';
-        // left arm
-        ctx.beginPath();
-        ctx.moveTo(w*0.3, h*0.22);
-        ctx.lineTo(w*0.2, h*0.32);
-        ctx.lineTo(w*0.18, h*0.42);
-        ctx.lineTo(w*0.22, h*0.45);
-        ctx.lineTo(w*0.28, h*0.38);
-        ctx.lineTo(w*0.32, h*0.28);
-        ctx.closePath();
-        ctx.fill();
-
-        // right arm
-        ctx.beginPath();
-        ctx.moveTo(w*0.7, h*0.22);
-        ctx.lineTo(w*0.8, h*0.32);
-        ctx.lineTo(w*0.82, h*0.42);
-        ctx.lineTo(w*0.78, h*0.45);
-        ctx.lineTo(w*0.72, h*0.38);
-        ctx.lineTo(w*0.68, h*0.28);
-        ctx.closePath();
-        ctx.fill();
-
-        // ========== LEGS ==========
-        ctx.fillStyle = '#c49a7c';
-        // left leg
-        ctx.beginPath();
-        ctx.moveTo(w*0.4, h*0.55);
-        ctx.lineTo(w*0.38, h*0.72);
-        ctx.lineTo(w*0.35, h*0.85);
-        ctx.lineTo(w*0.4, h*0.88);
-        ctx.lineTo(w*0.42, h*0.75);
-        ctx.lineTo(w*0.44, h*0.58);
-        ctx.closePath();
-        ctx.fill();
-
-        // right leg
-        ctx.beginPath();
-        ctx.moveTo(w*0.6, h*0.55);
-        ctx.lineTo(w*0.62, h*0.72);
-        ctx.lineTo(w*0.65, h*0.85);
-        ctx.lineTo(w*0.6, h*0.88);
-        ctx.lineTo(w*0.58, h*0.75);
-        ctx.lineTo(w*0.56, h*0.58);
-        ctx.closePath();
-        ctx.fill();
-
-        // waist/hip line (shadow)
-        ctx.shadowBlur = 0;
-        ctx.strokeStyle = '#a47e64';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(w*0.35, h*0.55);
-        ctx.lineTo(w*0.65, h*0.55);
-        ctx.stroke();
-
-        // facial features (simple 3D)
-        ctx.fillStyle = '#3e2b1f';
-        ctx.shadowBlur = 4;
-        // left eye
-        ctx.beginPath();
-        ctx.arc(w*0.47, h*0.08, 2, 0, 2*Math.PI);
-        ctx.fill();
-        // right eye
-        ctx.beginPath();
-        ctx.arc(w*0.53, h*0.08, 2, 0, 2*Math.PI);
-        ctx.fill();
-        // nose
-        ctx.beginPath();
-        ctx.arc(w*0.5, h*0.1, 1.5, 0, 2*Math.PI);
-        ctx.fill();
-
-        ctx.restore();
-
-        // reset shadow
-        ctx.shadowBlur = 0;
-        ctx.shadowOffsetY = 0;
-    }
-
-    // draw red dots for given zodiac
-    function drawZodiacDots(zodiac) {
-        const canvas = document.getElementById('bodyCanvas');
-        const ctx = canvas.getContext('2d');
-        const w = canvas.width, h = canvas.height;
-
-        // redraw 3D body first
-        draw3DBody(ctx, w, h);
-
-        // get points for zodiac
-        const points = zodiacBodyPoints[zodiac] || [];
-        ctx.fillStyle = '#e63946';
-        ctx.shadowColor = '#b0302a';
-        ctx.shadowBlur = 12;
-        ctx.shadowOffsetX = 1;
-        ctx.shadowOffsetY = 1;
-        points.forEach(([x, y]) => {
-            // outer glow
-            ctx.beginPath();
-            ctx.arc(x * w, y * h, 10, 0, 2 * Math.PI);
-            ctx.fillStyle = 'rgba(230,57,70,0.3)';
-            ctx.fill();
-            // main dot
-            ctx.shadowBlur = 15;
-            ctx.fillStyle = '#e63946';
-            ctx.beginPath();
-            ctx.arc(x * w, y * h, 7, 0, 2 * Math.PI);
-            ctx.fill();
-            // inner highlight
-            ctx.shadowBlur = 8;
-            ctx.fillStyle = '#ff8a8a';
-            ctx.beginPath();
-            ctx.arc(x * w - 1, y * h - 1, 3, 0, 2 * Math.PI);
-            ctx.fill();
-        });
-        ctx.shadowBlur = 0;
-        ctx.shadowColor = 'transparent';
-    }
-
-    // update entire report
-    function updateReport() {
-        const name = document.getElementById('patientName').value.trim() || '—';
-        const age = document.getElementById('patientAge').value.trim() || '—';
-        const year = parseInt(document.getElementById('birthYear').value, 10);
-        const zodiac = getZodiacFromYear(year);
-
-        document.getElementById('dispName').innerText = name;
-        document.getElementById('dispAge').innerText = age;
-        document.getElementById('dispZodiac').innerHTML = `🐾 ${zodiac.toUpperCase()}`;
-
-        const problems = getPatientProblems(zodiac);
-        const listEl = document.getElementById('problemsList');
-        listEl.innerHTML = '';
-        problems.forEach(p => {
-            const li = document.createElement('li');
-            li.textContent = '• ' + p;
-            listEl.appendChild(li);
-        });
-        // pad if less than 20 (shouldn't happen)
-        for (let i = problems.length; i < 20; i++) {
-            const li = document.createElement('li');
-            li.textContent = '• ';
-            li.style.opacity = '0.3';
-            listEl.appendChild(li);
+        
+        //-------------------------------------------------------------------
+        // KUSASISHA HALI YA USB KWENYE UKURASA
+        //-------------------------------------------------------------------
+        function updateUSBStatus(status, device = null) {
+            const statusEl = document.getElementById('usbStatus');
+            
+            if (status === 'CONNECTED') {
+                statusEl.innerHTML = '🟢 USB IMECHOMEKWA';
+                statusEl.className = 'status-box connected';
+            } else {
+                statusEl.innerHTML = '⚫ HAKUNA USB';
+                statusEl.className = 'status-box disconnected';
+                
+                // Ikiwa hakuna USB, zima kitufe cha kuunganisha
+                document.getElementById('connectBtn').disabled = false;
+            }
         }
-
-        // update body diagram dots
-        drawZodiacDots(zodiac);
-    }
-
-    // initial load
-    updateReport();
-
-    // generate button
-    document.getElementById('generateBtn').addEventListener('click', updateReport);
-
-    // print button
-    document.getElementById('printBtn').addEventListener('click', () => {
-        window.print();
-    });
-
-    // clinic name fixed
-    document.getElementById('clinicName').value = 'DR WILLIMA HERBAL CLINIC';
-})();
-</script>
+        
+        //-------------------------------------------------------------------
+        // KUUNGANISHA KIFAA CHA KUPIMIA
+        //-------------------------------------------------------------------
+        async function connectDevice() {
+            try {
+                // Omba ruhusa ya kufikia kifaa cha USB
+                // Hii inafungua dirisha la kuchagua kifaa [citation:6]
+                const device = await navigator.usb.requestDevice({
+                    filters: []  // Unaweza kuweka filter maalum kwa kutumia vendorId
+                });
+                
+                connectedDevice = device;
+                
+                // Fungua mawasiliano na kifaa
+                await device.open();
+                
+                // Chagua configuration ya kwanza (kwa kawaida configuration 1)
+                if (device.configuration === null) {
+                    await device.selectConfiguration(1);
+                }
+                
+                // Claim interface ya kwanza
+                await device.claimInterface(0);
+                
+                // Onyesha data za kipimo
+                document.getElementById('meterData').style.display = 'block';
+                document.getElementById('connectBtn').disabled = true;
+                
+                // Anza kusoma data kutoka kwenye kifaa
+                startReadingData(device);
+                
+                console.log('Kimeunganishwa:', device.productName);
+                
+            } catch (error) {
+                console.error('Hitilafu ya kuunganisha:', error);
+                alert('Hitilafu: ' + error.message);
+            }
+        }
+        
+        //-------------------------------------------------------------------
+        // KUSOMA DATA ZA VOLTAGE, CURRENT, NA POWER
+        //-------------------------------------------------------------------
+        function startReadingData(device) {
+            // Hii ni mfano wa kusoma data - kila kifaa kina protocol yake
+            // Utahitaji kubadilisha hii kulingana na kifaa chako [citation:10]
+            
+            readingInterval = setInterval(async () => {
+                try {
+                    // Tuma amri ya kusoma data (hii inategemea kifaa)
+                    // Kwa mfano, tunaweza kutuma control transfer
+                    const result = await device.controlTransferIn({
+                        requestType: 'vendor',
+                        recipient: 'interface',
+                        request: 0x01,      // Hii inategemea kifaa
+                        value: 0x00,
+                        index: 0x00
+                    }, 64);  // Soma baiti 64
+                    
+                    // Tafsiri data (hii inategemea kifaa)
+                    // Kwa mfano, data inaweza kuwa katika muundo maalum
+                    if (result.data && result.data.byteLength >= 8) {
+                        const dataView = new DataView(result.data.buffer);
+                        
+                        // Mfano tu - hii inategemea kifaa chako
+                        const voltage = dataView.getUint16(0, true) / 1000;
+                        const current = dataView.getUint16(2, true) / 1000;
+                        const power = voltage * current;
+                        
+                        // Sasisha ukurasa
+                        document.getElementById('voltage').textContent = voltage.toFixed(2);
+                        document.getElementById('current').textContent = current.toFixed(3);
+                        document.getElementById('power').textContent = power.toFixed(2);
+                    }
+                    
+                } catch (error) {
+                    console.error('Hitilafu ya kusoma data:', error);
+                    
+                    // Ikiwa kuna hitilafu kubwa, acha kusoma
+                    if (error.message.includes('Device unavailable')) {
+                        clearInterval(readingInterval);
+                        readingInterval = null;
+                    }
+                }
+            }, 1000);  // Soma kila sekunde 1
+        }
+        
+        //-------------------------------------------------------------------
+        // KUTAFUTA VIFAA VILIVYOSHA UNGANISHWA
+        //-------------------------------------------------------------------
+        async function scanForDevices() {
+            try {
+                const devices = await navigator.usb.getDevices();
+                
+                if (devices.length > 0) {
+                    let message = 'Vifaa vilivyopo:\n';
+                    devices.forEach((device, index) => {
+                        message += `${index + 1}. ${device.productName || 'Bila jina'} (VID: ${device.vendorId.toString(16)})\n`;
+                    });
+                    alert(message);
+                } else {
+                    alert('Hakuna vifaa vilivyohifadhiwa. Bonyeza "UNGANISHA KIPIMO" kuongeza kifaa.');
+                }
+                
+            } catch (error) {
+                console.error('Hitilafu ya kutafuta:', error);
+            }
+        }
+        
+        //-------------------------------------------------------------------
+        // KUANGALIA USAIDIZI WA WEBUSB MWANZO
+        //-------------------------------------------------------------------
+        window.addEventListener('load', () => {
+            if (!('usb' in navigator)) {
+                document.getElementById('connectBtn').disabled = true;
+                document.getElementById('scanBtn').disabled = true;
+                document.querySelector('.info-text').innerHTML += 
+                    '<br><br><strong style="color:#e74c3c;">❌ Kivinjari hakitumii WebUSB. Tumia Chrome au Edge.</strong>';
+            }
+        });
+    </script>
 </body>
 </html>
