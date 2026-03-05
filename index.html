@@ -63,7 +63,7 @@
             text-transform: uppercase;
             letter-spacing: 0.3px;
         }
-        .input-group input, .input-group select {
+        .input-group input {
             width: 100%;
             padding: 12px 18px;
             border: 2px solid #bdd8ec;
@@ -72,7 +72,7 @@
             background: white;
             transition: 0.2s;
         }
-        .input-group input:focus, .input-group select:focus {
+        .input-group input:focus {
             border-color: #1e9f8c;
             outline: none;
             box-shadow: 0 0 0 3px rgba(30,159,140,0.2);
@@ -253,7 +253,7 @@
 </head>
 <body>
 <div class="container">
-    <h1>🐾 ZODIAC HEALTH • DR WILLIMA HERBAL CLINIC TAWI LA KITUNDA - LUKOLO CENTER</h1>
+    <h1>DR WILLIMA HERBAL CLINIC TAWI LA KITUNDA - LUKOLO CENTER</h1>
     <div class="clinic-sub">holistic healing · tradition & care</div>
 
     <!-- input panel -->
@@ -267,21 +267,8 @@
             <input type="number" id="patientAge" placeholder="years" value="42">
         </div>
         <div class="input-group">
-            <label>TAARIFA ZA KIAFYA ZAIDI</label>
-            <select id="zodiacSelect">
-                <option value="Rat">DATA ZA AFYA</option>
-                <option value="Ox">DATA ZA AFYA</option>
-                <option value="Tiger">DATA ZA AFYA</option>
-                <option value="Rabbit">DATA ZA AFYA</option>
-                <option value="Dragon">DATA ZA AFYA</option>
-                <option value="Snake">DATA ZA AFYA</option>
-                <option value="Horse">DATA ZA AFYA</option>
-                <option value="Goat">DATA ZA AFYA</option>
-                <option value="Monkey">DATA ZA AFYA</option>
-                <option value="Rooster">DATA ZA AFYA</option>
-                <option value="Dog" selected>DATA ZA AFYA</option>
-                <option value="Pig">DATA ZA AFYA</option>
-            </select>
+            <label>📅 MWAKA WA KUZALIWA (BIRTH YEAR)</label>
+            <input type="number" id="birthYear" placeholder="e.g. 1982" value="1982">
         </div>
         <button class="btn" id="generateBtn">⟳ GENERATE REPORT</button>
     </div>
@@ -433,6 +420,23 @@
         Pig:    [[0.5,0.38], [0.45,0.27], [0.5,0.7], [0.5,0.8], [0.5,0.55]] // stomach, heart, knees, hips
     };
 
+    // ----- helper: get zodiac from year (Chinese zodiac, 12-year cycle) -----
+    function getZodiacFromYear(year) {
+        if (isNaN(year) || year < 1900 || year > 2100) year = 2000; // fallback
+        // 2020 is Rat, 2021 Ox, 2022 Tiger, 2023 Rabbit, 2024 Dragon, 2025 Snake,
+        // 2026 Horse, 2027 Goat, 2028 Monkey, 2029 Rooster, 2030 Dog, 2031 Pig
+        const zodiacs = [
+            "Rat", "Ox", "Tiger", "Rabbit", "Dragon", "Snake",
+            "Horse", "Goat", "Monkey", "Rooster", "Dog", "Pig"
+        ];
+        // offset: 2020 -> Rat (index 0)
+        const startYear = 2020;
+        const diff = year - startYear;
+        let index = diff % 12;
+        if (index < 0) index += 12;
+        return zodiacs[index];
+    }
+
     // Helper to get patient problems (20 points from health+danger)
     function getPatientProblems(zodiac) {
         const data = zodiacData[zodiac];
@@ -547,7 +551,8 @@
     function updateReport() {
         const name = document.getElementById('patientName').value.trim() || '—';
         const age = document.getElementById('patientAge').value.trim() || '—';
-        const zodiac = document.getElementById('zodiacSelect').value;
+        const year = parseInt(document.getElementById('birthYear').value, 10);
+        const zodiac = getZodiacFromYear(year);
 
         document.getElementById('dispName').innerText = name;
         document.getElementById('dispAge').innerText = age;
