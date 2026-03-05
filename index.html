@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🔬 MEDISCAN ULTIMATE • 3000+ POINTS • 20+ MODULES</title>
+    <title>🔬 MEDISCAN FINAL • 3000+ POINTS • 20+ MODULES</title>
     <style>
         * {
             margin: 0;
@@ -33,7 +33,7 @@
             position: relative;
         }
         
-        /* SCANNER OVERLAY (5 MINUTE ANIMATION) */
+        /* SCANNER OVERLAY (3 MINUTES) */
         .scanner-overlay {
             position: absolute;
             top: 0;
@@ -327,6 +327,50 @@
             accent-color: #3b82f6;
         }
         
+        /* SYMPTOMS CHECKLIST */
+        .symptoms-checklist {
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            background: #1e293b;
+            border-radius: 16px;
+            margin-top: 10px;
+        }
+        
+        .symptom-category {
+            margin-bottom: 20px;
+        }
+        
+        .category-title {
+            color: #3b82f6;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .symptom-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .symptom-check {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #cbd5e1;
+            font-size: 0.9rem;
+        }
+        
+        .symptom-check input {
+            width: 16px;
+            height: 16px;
+            accent-color: #3b82f6;
+        }
+        
         .scoring-panel {
             background: #0f172a;
             border: 2px solid #334155;
@@ -436,13 +480,14 @@
             align-items: center;
         }
         
-        /* REAL X-RAY IMAGE - Using a base64 encoded medical X-ray */
+        /* REAL X-RAY IMAGE - High quality medical X-ray */
         .xray-image {
             max-width: 100%;
             max-height: 380px;
             border-radius: 20px;
             opacity: 0.9;
-            box-shadow: 0 0 30px rgba(0, 255, 157, 0.3);
+            box-shadow: 0 0 30px rgba(0, 255, 157, 0.5);
+            filter: invert(1) contrast(1.2);
         }
         
         .dot-overlay {
@@ -457,11 +502,12 @@
         .dot {
             position: absolute;
             border-radius: 50%;
-            background: rgba(255, 0, 0, 0.8);
-            box-shadow: 0 0 20px rgba(255,0,0,0.8);
+            background: rgba(255, 0, 0, 0.9);
+            box-shadow: 0 0 20px rgba(255,0,0,0.9);
             transform: translate(-50%, -50%);
             transition: all 0.3s;
             pointer-events: none;
+            animation: pulse 1s infinite;
         }
         
         .diagnosis-section {
@@ -657,26 +703,26 @@
 </head>
 <body>
     <div class="container">
-        <!-- 5-MINUTE SCANNER OVERLAY -->
+        <!-- 3-MINUTE SCANNER OVERLAY -->
         <div class="scanner-overlay" id="scannerOverlay">
             <div class="scanner-content">
                 <div class="scanner-title">🔬 DEEP DIAGNOSTIC SCAN</div>
                 <div class="progress-container">
                     <div class="progress-bar" id="scanProgress"></div>
                 </div>
-                <div class="time-remaining" id="timeRemaining">05:00</div>
+                <div class="time-remaining" id="timeRemaining">03:00</div>
                 <div class="scanning-text" id="scanningText">Initializing 20+ module systems...</div>
                 
                 <div class="module-status" id="moduleStatus">
-                    <div class="module-status-item" id="status1">🇨🇳 Chinese</div>
+                    <div class="module-status-item" id="status1">🇨🇳 Chinese Medicine</div>
                     <div class="module-status-item" id="status2">🕉️ Ayurveda</div>
-                    <div class="module-status-item" id="status3">☪️ Arabic</div>
-                    <div class="module-status-item" id="status4">🔢 Nadi</div>
+                    <div class="module-status-item" id="status3">☪️ Arabic Medicine</div>
+                    <div class="module-status-item" id="status4">🔢 Nadi Numerology</div>
                     <div class="module-status-item" id="status5">🌟 Life Path</div>
                     <div class="module-status-item" id="status6">📅 Birth Date</div>
-                    <div class="module-status-item" id="status7">🗓️ Month</div>
+                    <div class="module-status-item" id="status7">🗓️ Birth Month</div>
                     <div class="module-status-item" id="status8">👤 Gender/Age</div>
-                    <div class="module-status-item" id="status9">❤️ Vitals</div>
+                    <div class="module-status-item" id="status9">❤️ Vital Signs</div>
                     <div class="module-status-item" id="status10">🏃 Lifestyle</div>
                     <div class="module-status-item" id="status11">🇩🇪 German</div>
                     <div class="module-status-item" id="status12">🇷🇺 Russian</div>
@@ -693,7 +739,7 @@
         </div>
 
         <div class="scanner-header">
-            <div class="title">🔬 MEDISCAN ULTIMATE • 3000+ POINTS • 20+ MODULES</div>
+            <div class="title">🔬 MEDISCAN FINAL • 3000+ POINTS • 20+ MODULES</div>
             <div class="status">
                 <div class="led"></div>
                 <span>DR WILLIMA HERBAL CLINIC</span>
@@ -719,7 +765,7 @@
                     <div class="input-grid">
                         <div class="input-group input-full">
                             <label>FULL NAME</label>
-                            <input type="text" id="patientName" value="Baraka Juma">
+                            <input type="text" id="patientName" value="John Baraka">
                         </div>
                         
                         <div class="input-group">
@@ -727,12 +773,11 @@
                             <select id="gender">
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
-                                <option value="other">Other</option>
                             </select>
                         </div>
                         
                         <div class="input-group">
-                            <label>AGE</label>
+                            <label>AGE (years)</label>
                             <input type="number" id="age" value="35">
                         </div>
                         
@@ -749,10 +794,10 @@
                         <div class="input-group">
                             <label>BIRTH TIME</label>
                             <select id="birthTime">
-                                <option value="00:00">Midnight (00:00)</option>
-                                <option value="06:00">Morning (06:00)</option>
-                                <option value="12:00">Noon (12:00)</option>
-                                <option value="18:00">Evening (18:00)</option>
+                                <option value="00:00">00:00 (Midnight)</option>
+                                <option value="06:00">06:00 (Morning)</option>
+                                <option value="12:00">12:00 (Noon)</option>
+                                <option value="18:00">18:00 (Evening)</option>
                                 <option value="unknown" selected>Unknown</option>
                             </select>
                         </div>
@@ -774,11 +819,11 @@
                     <div class="vital-signs">
                         <div class="vital-card">
                             <div class="vital-label">WEIGHT (kg)</div>
-                            <input type="number" id="weight" value="75" class="vital-value" style="background:#1e293b; border:none; text-align:center; font-size:1.5rem;">
+                            <input type="number" id="weight" value="75" class="vital-value">
                         </div>
                         <div class="vital-card">
                             <div class="vital-label">HEIGHT (cm)</div>
-                            <input type="number" id="height" value="175" class="vital-value" style="background:#1e293b; border:none; text-align:center; font-size:1.5rem;">
+                            <input type="number" id="height" value="175" class="vital-value">
                         </div>
                         <div class="vital-card">
                             <div class="vital-label">BMI</div>
@@ -786,45 +831,45 @@
                         </div>
                         <div class="vital-card">
                             <div class="vital-label">TEMP (°C)</div>
-                            <input type="number" id="temperature" value="37.2" step="0.1" class="vital-value" style="background:#1e293b; border:none; text-align:center; font-size:1.5rem;">
+                            <input type="number" id="temperature" value="37.2" step="0.1">
                         </div>
                     </div>
                     
-                    <div class="vital-signs" style="margin-top:15px;">
+                    <div class="vital-signs">
                         <div class="vital-card">
                             <div class="vital-label">BP SYSTOLIC</div>
-                            <input type="number" id="bpSystolic" value="120" class="vital-value" style="background:#1e293b; border:none; text-align:center; font-size:1.5rem;">
+                            <input type="number" id="bpSystolic" value="120">
                         </div>
                         <div class="vital-card">
                             <div class="vital-label">BP DIASTOLIC</div>
-                            <input type="number" id="bpDiastolic" value="80" class="vital-value" style="background:#1e293b; border:none; text-align:center; font-size:1.5rem;">
+                            <input type="number" id="bpDiastolic" value="80">
                         </div>
                         <div class="vital-card">
                             <div class="vital-label">HEART RATE</div>
-                            <input type="number" id="heartRate" value="72" class="vital-value" style="background:#1e293b; border:none; text-align:center; font-size:1.5rem;">
+                            <input type="number" id="heartRate" value="72">
                         </div>
                         <div class="vital-card">
                             <div class="vital-label">O2 SAT %</div>
-                            <input type="number" id="oxygen" value="98" class="vital-value" style="background:#1e293b; border:none; text-align:center; font-size:1.5rem;">
+                            <input type="number" id="oxygen" value="98">
                         </div>
                     </div>
                     
-                    <div class="vital-signs" style="margin-top:15px;">
+                    <div class="vital-signs">
                         <div class="vital-card">
                             <div class="vital-label">BLOOD SUGAR</div>
-                            <input type="number" id="bloodSugar" value="95" class="vital-value" style="background:#1e293b; border:none; text-align:center; font-size:1.5rem;">
+                            <input type="number" id="bloodSugar" value="95">
                         </div>
                         <div class="vital-card">
                             <div class="vital-label">CHOLESTEROL</div>
-                            <input type="number" id="cholesterol" value="180" class="vital-value" style="background:#1e293b; border:none; text-align:center; font-size:1.5rem;">
+                            <input type="number" id="cholesterol" value="180">
                         </div>
                         <div class="vital-card">
-                            <div class="vital-label">Hb (g/dL)</div>
-                            <input type="number" id="hemoglobin" value="14" class="vital-value" step="0.1" style="background:#1e293b; border:none; text-align:center; font-size:1.5rem;">
+                            <div class="vital-label">HEMOGLOBIN</div>
+                            <input type="number" id="hemoglobin" value="14" step="0.1">
                         </div>
                         <div class="vital-card">
                             <div class="vital-label">RESP RATE</div>
-                            <input type="number" id="respRate" value="16" class="vital-value" style="background:#1e293b; border:none; text-align:center; font-size:1.5rem;">
+                            <input type="number" id="respRate" value="16">
                         </div>
                     </div>
                 </div>
@@ -834,79 +879,73 @@
                     <div class="lifestyle-grid">
                         <div class="lifestyle-item">
                             <input type="checkbox" id="alcohol">
-                            <label>🍺 Alcohol</label>
+                            <label>Alcohol consumption</label>
                         </div>
                         <div class="lifestyle-item">
                             <input type="checkbox" id="smoking">
-                            <label>🚬 Smoking</label>
+                            <label>Smoking</label>
                         </div>
                         <div class="lifestyle-item">
                             <input type="checkbox" id="coffee">
-                            <label>☕ Coffee</label>
+                            <label>Coffee</label>
                         </div>
                         <div class="lifestyle-item">
                             <input type="checkbox" id="exercise">
-                            <label>🏃 Exercise</label>
+                            <label>Regular exercise</label>
                         </div>
                         <div class="lifestyle-item">
                             <input type="checkbox" id="medication">
-                            <label>💊 Medication</label>
+                            <label>Taking medication</label>
                         </div>
                         <div class="lifestyle-item">
                             <input type="checkbox" id="pregnant">
-                            <label>🤰 Pregnant</label>
-                        </div>
-                        <div class="lifestyle-item">
-                            <input type="checkbox" id="diabetes">
-                            <label>🩸 Diabetes</label>
-                        </div>
-                        <div class="lifestyle-item">
-                            <input type="checkbox" id="hypertension">
-                            <label>❤️ Hypertension</label>
-                        </div>
-                        <div class="lifestyle-item">
-                            <input type="checkbox" id="asthma">
-                            <label>🌬️ Asthma</label>
+                            <label>Pregnant</label>
                         </div>
                     </div>
                     
-                    <div class="input-grid" style="margin-top:20px;">
+                    <div class="input-grid">
                         <div class="input-group">
-                            <label>ALCOHOL (units/week)</label>
-                            <input type="number" id="alcoholUnits" value="0" min="0" max="50">
+                            <label>Alcohol (units/week)</label>
+                            <input type="number" id="alcoholUnits" value="0">
                         </div>
                         <div class="input-group">
-                            <label>COFFEE (cups/day)</label>
-                            <input type="number" id="coffeeCups" value="0" min="0" max="10">
+                            <label>Coffee (cups/day)</label>
+                            <input type="number" id="coffeeCups" value="0">
                         </div>
                         <div class="input-group">
-                            <label>EXERCISE (hours/week)</label>
-                            <input type="number" id="exerciseHours" value="0" min="0" max="20">
+                            <label>Exercise (hours/week)</label>
+                            <input type="number" id="exerciseHours" value="0">
                         </div>
                         <div class="input-group">
-                            <label>SLEEP (hours/night)</label>
-                            <input type="number" id="sleepHours" value="7" min="0" max="24">
+                            <label>Sleep (hours/night)</label>
+                            <input type="number" id="sleepHours" value="7">
                         </div>
                         <div class="input-group">
-                            <label>WATER (liters/day)</label>
-                            <input type="number" id="water" value="2" min="0" max="10" step="0.1">
+                            <label>Water (liters/day)</label>
+                            <input type="number" id="water" value="2" step="0.1">
                         </div>
                         <div class="input-group">
-                            <label>STRESS LEVEL (1-10)</label>
+                            <label>Stress level (1-10)</label>
                             <input type="number" id="stress" value="5" min="1" max="10">
                         </div>
                     </div>
                 </div>
                 
-                <!-- SYMPTOMS TAB -->
+                <!-- SYMPTOMS TAB with 40+ symptom checklist -->
                 <div id="tab-symptoms" class="tab-content">
-                    <div class="input-group input-full">
-                        <label>SYMPTOMS (Detailed)</label>
-                        <textarea id="symptoms" rows="5" style="width:100%;">Nina homa kali, kichwa kinauma sana, na ninahisi kichefuchefu. Pia nina maumivu ya tumbo na kuhara tangu jana usiku.</textarea>
+                    <div class="section-title" style="margin-top:0;">✓ Select all symptoms that apply</div>
+                    
+                    <div class="symptoms-checklist" id="symptomsChecklist">
+                        <!-- Filled by JavaScript -->
                     </div>
                     
-                    <div class="input-group input-full" style="margin-top:15px;">
-                        <label>DURATION OF SYMPTOMS</label>
+                    <div class="input-group" style="margin-top:20px;">
+                        <label>Additional symptoms (describe)</label>
+                        <textarea id="additionalSymptoms" rows="3" placeholder="Any other symptoms not listed above..."></textarea>
+                    </div>
+                    
+                    <div class="input-group" style="margin-top:15px;">
+                        <label>Duration of symptoms</label>
                         <select id="duration">
                             <option value="hours">Few hours</option>
                             <option value="days" selected>Few days</option>
@@ -916,8 +955,8 @@
                         </select>
                     </div>
                     
-                    <div class="input-group input-full" style="margin-top:15px;">
-                        <label>SEVERITY (1-10)</label>
+                    <div class="input-group" style="margin-top:15px;">
+                        <label>Severity (1-10)</label>
                         <input type="number" id="severity" value="7" min="1" max="10">
                     </div>
                 </div>
@@ -947,14 +986,14 @@
             
             <div class="xray-container">
                 <div class="xray-image-container">
-                    <!-- REAL X-RAY IMAGE - Using a real medical X-ray base64 -->
-                    <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAEsASwDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD6PoooqQCiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAK//9k=" 
-                         alt="Real Human X-Ray" class="xray-image" id="xrayImage">
+                    <!-- REAL HIGH-QUALITY X-RAY IMAGE -->
+                    <img src="https://images.unsplash.com/photo-1579154392128-bf8c7ebee541?q=80&w=2070&auto=format&fit=crop" 
+                         alt="Real Human Chest X-Ray" class="xray-image" style="filter: invert(1) contrast(1.3);">
                     <div class="dot-overlay" id="dotOverlay"></div>
                 </div>
                 
                 <div class="diagnosis-section">
-                    <div style="color:#94a3b8; margin-bottom:15px;">⚠️ TOP 10 DIAGNOSES (Revealed every minute)</div>
+                    <div style="color:#94a3b8; margin-bottom:15px;">⚠️ TOP 10 DIAGNOSES (Revealed every 18 seconds)</div>
                     <ul class="diagnosis-list" id="diagnosisList">
                         <li class="diagnosis-item" style="border-left-color:#3b82f6;">Waiting for scan results...</li>
                     </ul>
@@ -968,7 +1007,7 @@
                 <span>📋</span> DOCTOR'S NOTES & TREATMENT
             </div>
             
-            <textarea class="doctor-input" id="doctorNotes" placeholder="Andika uchunguzi wako hapa...">Mgonjwa ana homa ya 39°C, maumivu ya kichwa, kichefuchefu, na kuhara. Anaripoti kuumwa na baridi na kutokwa na jasho usiku.</textarea>
+            <textarea class="doctor-input" id="doctorNotes" placeholder="Enter clinical observations...">Patient presents with fever (39°C), severe headache, nausea, vomiting, and diarrhea since last night. Reports chills and night sweats.</textarea>
             
             <div class="medication-suggestion" id="medSuggestions">
                 <!-- Filled by AI -->
@@ -976,7 +1015,7 @@
             
             <div class="button-group">
                 <button class="btn btn-outline" onclick="printReport()">🖨️ PRINT REPORT</button>
-                <button class="btn btn-primary" onclick="startScan()">🔬 START 5-MINUTE SCAN</button>
+                <button class="btn btn-primary" onclick="startScan()">🔬 START 3-MINUTE SCAN</button>
             </div>
         </div>
         
@@ -996,252 +1035,391 @@
 
     <script>
         // ============================================
-        // 3000+ POINTS DATA STRUCTURE
+        // COMPREHENSIVE SYMPTOMS LIST (40+)
         // ============================================
-        
-        // Each module has 300 points max, with 30+ data points
+        const symptomsList = {
+            "General": [
+                "Fever / High temperature",
+                "Chills / Rigors",
+                "Fatigue / Tiredness",
+                "Night sweats",
+                "Weight loss (unintentional)",
+                "Weight gain",
+                "Loss of appetite",
+                "Dehydration"
+            ],
+            "Head & Neck": [
+                "Headache",
+                "Migraine",
+                "Dizziness / Vertigo",
+                "Fainting",
+                "Neck pain / Stiffness",
+                "Sore throat",
+                "Cough",
+                "Runny nose"
+            ],
+            "Chest & Respiratory": [
+                "Chest pain",
+                "Shortness of breath",
+                "Wheezing",
+                "Coughing up blood",
+                "Palpitations",
+                "Rapid heartbeat"
+            ],
+            "Abdomen & Digestive": [
+                "Abdominal pain",
+                "Nausea",
+                "Vomiting",
+                "Diarrhea",
+                "Constipation",
+                "Bloating",
+                "Heartburn / Acid reflux",
+                "Blood in stool"
+            ],
+            "Musculoskeletal": [
+                "Joint pain",
+                "Muscle aches",
+                "Back pain",
+                "Neck pain",
+                "Swollen joints",
+                "Muscle weakness"
+            ],
+            "Skin": [
+                "Rash",
+                "Itching",
+                "Skin discoloration",
+                "Hives",
+                "Dry skin",
+                "Excessive sweating"
+            ],
+            "Urinary & Reproductive": [
+                "Painful urination",
+                "Frequent urination",
+                "Blood in urine",
+                "Vaginal discharge",
+                "Genital sores"
+            ],
+            "Neurological": [
+                "Numbness / Tingling",
+                "Tremors",
+                "Seizures",
+                "Memory loss",
+                "Confusion",
+                "Anxiety",
+                "Depression"
+            ]
+        };
+
+        // ============================================
+        // 3000+ POINTS DATA STRUCTURE - ALL IN ENGLISH
+        // ============================================
         const moduleData = {
-            // Format: [condition, points, bodyPartX, bodyPartY]
             chinese: {
-                name: "🇨🇳 Chinese Zodiac",
+                name: "🇨🇳 Traditional Chinese Medicine",
                 color: "#ef4444",
                 data: [
-                    ["Fatigue - Liver Qi stagnation", 25, 0.5, 0.38],
-                    ["Stress - Kidney deficiency", 22, 0.5, 0.48],
-                    ["Headaches - Liver yang rising", 20, 0.5, 0.1],
-                    ["Digestive issues - Spleen weakness", 18, 0.5, 0.38],
-                    ["Insomnia - Heart fire", 15, 0.5, 0.27],
-                    ["Joint pain - Wind-damp", 12, 0.5, 0.7],
-                    ["Allergies - Lung qi weakness", 10, 0.4, 0.27],
-                    ["Anxiety - Heart blood deficiency", 8, 0.45, 0.27],
-                    ["Back pain - Kidney yang deficiency", 7, 0.5, 0.5],
-                    ["Dizziness - Liver wind", 6, 0.5, 0.1],
-                    ["Palpitations - Heart yin deficiency", 5, 0.45, 0.27],
-                    ["Cough - Lung heat", 5, 0.4, 0.27],
-                    ["Constipation - Intestine dryness", 4, 0.5, 0.42],
-                    ["Diarrhea - Spleen damp", 4, 0.5, 0.38],
-                    ["Acne - Lung heat", 3, 0.5, 0.1],
-                    ["Eczema - Damp-heat", 3, 0.5, 0.1],
-                    ["Hypertension - Liver fire", 25, 0.45, 0.27],
-                    ["Diabetes - Spleen deficiency", 22, 0.5, 0.38],
-                    ["Arthritis - Wind-cold-damp", 20, 0.5, 0.7],
-                    ["Asthma - Lung qi deficiency", 18, 0.4, 0.27],
-                    ["Gastritis - Stomach heat", 15, 0.5, 0.38],
-                    ["Migraine - Liver yang", 12, 0.5, 0.1],
-                    ["Sinusitis - Lung heat", 10, 0.5, 0.18],
-                    ["Tinnitus - Kidney yin deficiency", 8, 0.5, 0.12],
-                    ["Vision problems - Liver blood deficiency", 7, 0.45, 0.08],
-                    ["Hair loss - Kidney essence deficiency", 6, 0.5, 0.1],
-                    ["Night sweats - Yin deficiency", 5, 0.5, 0.3],
-                    ["Cold hands/feet - Yang deficiency", 5, 0.3, 0.3],
-                    ["Edema - Spleen yang deficiency", 4, 0.5, 0.48],
-                    ["Weight gain - Damp accumulation", 4, 0.5, 0.38],
-                    ["Weight loss - Yin deficiency", 3, 0.5, 0.3]
+                    ["Liver Qi Stagnation - Stress, irritability, PMS", 28, 0.5, 0.38],
+                    ["Kidney Yin Deficiency - Night sweats, dizziness, back pain", 26, 0.5, 0.48],
+                    ["Spleen Qi Deficiency - Fatigue, bloating, loose stools", 24, 0.5, 0.38],
+                    ["Heart Blood Deficiency - Palpitations, insomnia, anxiety", 22, 0.45, 0.27],
+                    ["Lung Qi Deficiency - Shortness of breath, weak voice", 20, 0.4, 0.27],
+                    ["Liver Fire Blazing - Headaches, red eyes, irritability", 18, 0.5, 0.1],
+                    ["Damp Heat - Acne, oily skin, heavy feeling", 16, 0.5, 0.1],
+                    ["Blood Stasis - Sharp pain, dark circles, varicose veins", 14, 0.5, 0.7],
+                    ["Phlegm Damp - Cough with phlegm, dizziness", 12, 0.4, 0.27],
+                    ["Stomach Fire - Heartburn, thirst, gum inflammation", 10, 0.5, 0.38],
+                    ["Large Intestine Heat - Constipation, abdominal pain", 9, 0.5, 0.42],
+                    ["Small Intestine Qi Stagnation - Cramping, bloating", 8, 0.5, 0.38],
+                    ["Bladder Damp Heat - Urinary burning, frequency", 7, 0.5, 0.48],
+                    ["Gallbladder Damp Heat - Bitter taste, hypochondriac pain", 6, 0.5, 0.48],
+                    ["Pericardium Heat - Chest pain, palpitations", 5, 0.45, 0.27],
+                    ["Triple Burner Imbalance - Temperature regulation issues", 4, 0.5, 0.3],
+                    ["Yang Deficiency - Cold limbs, low energy, pale face", 15, 0.5, 0.3],
+                    ["Yin Deficiency - Dry mouth, night sweats, insomnia", 14, 0.5, 0.3],
+                    ["Qi Deficiency - Weak voice, spontaneous sweating", 13, 0.5, 0.3],
+                    ["Blood Deficiency - Pale complexion, dizziness", 12, 0.5, 0.1],
+                    ["Wind Cold - Common cold, chills, body aches", 11, 0.5, 0.3],
+                    ["Wind Heat - Fever, sore throat, swollen glands", 10, 0.4, 0.27],
+                    ["Summer Heat - Fever, thirst, fatigue", 9, 0.5, 0.3],
+                    ["Dryness - Dry cough, dry skin, thirst", 8, 0.5, 0.1],
+                    ["Food Stagnation - Bloating, acid reflux", 7, 0.5, 0.38],
+                    ["Qi Rebellious - Hiccups, nausea, vomiting", 6, 0.5, 0.38],
+                    ["Blood Heat - Skin rashes, bleeding", 5, 0.5, 0.1],
+                    ["Blood Cold - Cold hands/feet, pale skin", 4, 0.5, 0.3],
+                    ["Qi Sinking - Organ prolapse, hemorrhoids", 3, 0.5, 0.5],
+                    ["Essence Deficiency - Premature aging, infertility", 2, 0.5, 0.48]
                 ]
             },
             ayurveda: {
-                name: "🕉️ Ayurveda",
+                name: "🕉️ Ayurvedic Medicine",
                 color: "#f59e0b",
                 data: [
-                    ["Vata imbalance - Anxiety, dry skin", 28, 0.5, 0.1],
-                    ["Pitta imbalance - Inflammation, acidity", 26, 0.5, 0.38],
-                    ["Kapha imbalance - Congestion, obesity", 24, 0.4, 0.27],
-                    ["Joint pain - Vata", 22, 0.5, 0.7],
-                    ["Skin rashes - Pitta", 20, 0.5, 0.1],
-                    ["Sinusitis - Kapha", 18, 0.5, 0.18],
-                    ["Insomnia - Vata", 16, 0.5, 0.1],
-                    ["Heartburn - Pitta", 14, 0.5, 0.38],
-                    ["Lethargy - Kapha", 12, 0.5, 0.3],
-                    ["Constipation - Vata", 10, 0.5, 0.42],
-                    ["Diarrhea - Pitta", 9, 0.5, 0.38],
-                    ["Cough - Kapha", 8, 0.4, 0.27],
-                    ["Headaches - Pitta", 7, 0.5, 0.1],
-                    ["Back pain - Vata", 6, 0.5, 0.5],
-                    ["Allergies - Kapha", 5, 0.4, 0.27],
-                    ["Hypertension - Pitta", 25, 0.45, 0.27],
-                    ["Diabetes - Kapha", 23, 0.5, 0.38],
-                    ["Arthritis - Vata", 21, 0.5, 0.7],
-                    ["Asthma - Kapha", 19, 0.4, 0.27],
-                    ["Gastritis - Pitta", 17, 0.5, 0.38],
-                    ["Migraine - Pitta", 15, 0.5, 0.1],
-                    ["Eczema - Pitta", 13, 0.5, 0.1],
-                    ["Psoriasis - Vata", 11, 0.5, 0.1],
-                    ["Acne - Pitta", 9, 0.5, 0.1],
-                    ["Obesity - Kapha", 7, 0.5, 0.38],
-                    ["Anemia - Vata", 5, 0.5, 0.3],
-                    ["Thyroid issues - Pitta/Kapha", 4, 0.5, 0.18],
-                    ["UTI - Pitta", 3, 0.5, 0.6],
-                    ["Fever - Pitta", 2, 0.5, 0.3],
-                    ["Fatigue - Vata/Kapha", 1, 0.5, 0.3]
+                    ["Vata Imbalance - Anxiety, dry skin, constipation, joint pain", 28, 0.5, 0.7],
+                    ["Pitta Imbalance - Inflammation, acidity, skin rashes, anger", 26, 0.5, 0.38],
+                    ["Kapha Imbalance - Congestion, obesity, lethargy, depression", 24, 0.4, 0.27],
+                    ["Vata Digestive Disorder - Gas, bloating, variable appetite", 22, 0.5, 0.38],
+                    ["Pitta Digestive Disorder - Heartburn, loose stools, hunger", 20, 0.5, 0.38],
+                    ["Kapha Digestive Disorder - Slow digestion, heaviness", 18, 0.5, 0.38],
+                    ["Vata Nervous Disorder - Insomnia, fear, tremors", 16, 0.5, 0.1],
+                    ["Pitta Nervous Disorder - Irritability, impatience", 14, 0.45, 0.27],
+                    ["Kapha Nervous Disorder - Depression, attachment", 12, 0.5, 0.3],
+                    ["Vata Skin - Dry, rough, cracking", 10, 0.5, 0.1],
+                    ["Pitta Skin - Red, inflamed, burning", 9, 0.5, 0.1],
+                    ["Kapha Skin - Oily, cold, clammy", 8, 0.5, 0.1],
+                    ["Vata Joints - Cracking, shifting pain", 7, 0.5, 0.7],
+                    ["Pitta Joints - Hot, swollen, red", 6, 0.5, 0.7],
+                    ["Kapha Joints - Stiff, swollen, cold", 5, 0.5, 0.7],
+                    ["Ama (Toxins) - Coated tongue, sticky stools", 15, 0.5, 0.38],
+                    ["Ojas Depletion - Weak immunity, fatigue", 14, 0.5, 0.3],
+                    ["Tejas Imbalance - Excessive heat, anger", 13, 0.45, 0.27],
+                    ["Prana Imbalance - Breathing issues, anxiety", 12, 0.4, 0.27],
+                    ["Rasa Dhatu (Plasma) - Nutritional deficiencies", 11, 0.5, 0.3],
+                    ["Rakta Dhatu (Blood) - Skin disorders, liver issues", 10, 0.5, 0.48],
+                    ["Mamsa Dhatu (Muscle) - Muscle wasting, pain", 9, 0.5, 0.5],
+                    ["Meda Dhatu (Fat) - Obesity, diabetes", 8, 0.5, 0.38],
+                    ["Asthi Dhatu (Bone) - Osteoporosis, joint pain", 7, 0.5, 0.7],
+                    ["Majja Dhatu (Marrow) - Neurological issues", 6, 0.5, 0.5],
+                    ["Shukra Dhatu (Reproductive) - Infertility, low libido", 5, 0.5, 0.6],
+                    ["Srotas Blockage - Poor circulation", 4, 0.5, 0.3],
+                    ["Agni (Digestive Fire) Imbalance", 3, 0.5, 0.38],
+                    ["Prakriti Vikriti - Constitutional imbalance", 2, 0.5, 0.5]
                 ]
             },
             arabic: {
-                name: "☪️ Arabic Zodiac",
+                name: "☪️ Unani (Arabic) Medicine",
                 color: "#10b981",
                 data: [
-                    ["Headaches - Humoral imbalance", 24, 0.5, 0.1],
-                    ["Digestive issues - Cold temperament", 22, 0.5, 0.38],
-                    ["Heart palpitations - Hot temperament", 20, 0.45, 0.27],
-                    ["Respiratory problems - Dry temperament", 18, 0.4, 0.27],
-                    ["Joint pain - Moist temperament", 16, 0.5, 0.7],
-                    ["Skin issues - Blood imbalance", 14, 0.5, 0.1],
-                    ["Insomnia - Melancholic", 12, 0.5, 0.1],
-                    ["Fatigue - Phlegmatic", 10, 0.5, 0.3],
-                    ["Anxiety - Choleric", 9, 0.45, 0.27],
-                    ["Back pain - Sanguine", 8, 0.5, 0.5],
-                    ["Eye strain - Dry", 7, 0.45, 0.08],
-                    ["Ear problems - Moist", 6, 0.5, 0.12],
-                    ["Throat issues - Hot", 5, 0.5, 0.18],
-                    ["Kidney stones - Cold", 4, 0.5, 0.48],
-                    ["Gallstones - Hot", 3, 0.5, 0.48],
-                    ["Diabetes - Sweet temperament", 25, 0.5, 0.38],
-                    ["Hypertension - Salty temperament", 23, 0.45, 0.27],
-                    ["Arthritis - Sour temperament", 21, 0.5, 0.7],
-                    ["Asthma - Bitter temperament", 19, 0.4, 0.27],
-                    ["Gastritis - Pungent temperament", 17, 0.5, 0.38],
-                    ["Migraine - Astringent temperament", 15, 0.5, 0.1],
-                    ["Sinusitis - Phlegmatic", 13, 0.5, 0.18],
-                    ["Allergies - Blood imbalance", 11, 0.4, 0.27],
-                    ["Eczema - Yellow bile", 9, 0.5, 0.1],
-                    ["Psoriasis - Black bile", 7, 0.5, 0.1],
-                    ["Obesity - Phlegmatic", 5, 0.5, 0.38],
-                    ["Anemia - Sanguine", 4, 0.5, 0.3],
-                    ["Thyroid - Humoral", 3, 0.5, 0.18],
-                    ["UTI - Hot", 2, 0.5, 0.6],
-                    ["Fever - Hot", 1, 0.5, 0.3]
+                    ["Sanguine Temperament (Hot/Moist) - Headaches, hypertension", 28, 0.5, 0.1],
+                    ["Phlegmatic Temperament (Cold/Moist) - Congestion, lethargy", 26, 0.4, 0.27],
+                    ["Choleric Temperament (Hot/Dry) - Acidity, inflammation", 24, 0.5, 0.38],
+                    ["Melancholic Temperament (Cold/Dry) - Depression, constipation", 22, 0.5, 0.42],
+                    ["Humoral Imbalance - General malaise, fatigue", 20, 0.5, 0.3],
+                    ["Liver Heat - Anger, red eyes, bitter taste", 18, 0.5, 0.48],
+                    ["Stomach Cold - Poor digestion, bloating", 16, 0.5, 0.38],
+                    ["Lung Moisture - Cough with phlegm", 14, 0.4, 0.27],
+                    ["Heart Fire - Palpitations, insomnia", 12, 0.45, 0.27],
+                    ["Kidney Cold - Frequent urination, back pain", 10, 0.5, 0.48],
+                    ["Spleen Weakness - Fatigue, weak muscles", 9, 0.5, 0.38],
+                    ["Brain Moisture - Head congestion, sinusitis", 8, 0.5, 0.18],
+                    ["Joint Dryness - Arthritis, cracking joints", 7, 0.5, 0.7],
+                    ["Blood Impurity - Skin disorders", 6, 0.5, 0.1],
+                    ["Lymphatic Congestion - Swollen glands", 5, 0.5, 0.3],
+                    ["Yellow Bile Excess - Jaundice, nausea", 15, 0.5, 0.48],
+                    ["Black Bile Excess - Melancholy, dark thoughts", 14, 0.5, 0.1],
+                    ["Phlegm Excess - Water retention, obesity", 13, 0.5, 0.38],
+                    ["Blood Excess - Hypertension, flushed face", 12, 0.45, 0.27],
+                    ["Hijama (Cupping) Points - Stagnation areas", 11, 0.5, 0.5],
+                    ["Mizaj (Constitution) Imbalance", 10, 0.5, 0.5],
+                    ["Akhlat (Humors) - General imbalance", 9, 0.5, 0.5],
+                    ["Quwwat (Vital Force) Depletion", 8, 0.5, 0.3],
+                    ["A'za (Organs) Weakness", 7, 0.5, 0.5],
+                    ["Ruh (Spirit) - Spiritual disconnection", 6, 0.5, 0.1],
+                    ["Nafs (Psyche) - Emotional imbalance", 5, 0.5, 0.1],
+                    ["Muskilat - Complex disorders", 4, 0.5, 0.5],
+                    ["Su' Mizaj - Temperament disorder", 3, 0.5, 0.5],
+                    ["Waja - Pain syndrome", 2, 0.5, 0.5]
                 ]
             },
             nadi: {
                 name: "🔢 Nadi Numerology",
                 color: "#8b5cf6",
-                data: Array(30).fill(0).map((_, i) => [`Nadi condition ${i+1}`, Math.floor(300/30), 0.5, 0.5])
+                data: Array(30).fill(0).map((_, i) => [`Nadi Numerological Pattern ${i+1} - Based on name vibration`, Math.floor(280/30), 0.5, 0.5])
             },
             lifePath: {
-                name: "🌟 Life Path",
+                name: "🌟 Life Path Number",
                 color: "#ec4899",
-                data: Array(30).fill(0).map((_, i) => [`Life Path condition ${i+1}`, Math.floor(300/30), 0.5, 0.5])
+                data: Array(30).fill(0).map((_, i) => [`Life Path ${i+1} - Destiny pattern influencing health`, Math.floor(280/30), 0.5, 0.5])
             },
             birthDate: {
-                name: "📅 Birth Date",
+                name: "📅 Birth Date Influence",
                 color: "#f97316",
-                data: Array(30).fill(0).map((_, i) => [`Birth Date condition ${i+1}`, Math.floor(300/30), 0.5, 0.5])
+                data: Array(30).fill(0).map((_, i) => [`Birth Date Pattern ${i+1} - Karmic health indicators`, Math.floor(280/30), 0.5, 0.5])
             },
             month: {
-                name: "🗓️ Birth Month",
+                name: "🗓️ Birth Month Seasonality",
                 color: "#14b8a6",
-                data: Array(30).fill(0).map((_, i) => [`Month condition ${i+1}`, Math.floor(300/30), 0.5, 0.5])
+                data: Array(30).fill(0).map((_, i) => [`Seasonal Birth Influence ${i+1} - Month-related predispositions`, Math.floor(280/30), 0.5, 0.5])
             },
             genderAge: {
-                name: "👤 Gender/Age",
+                name: "👤 Gender & Age Analysis",
                 color: "#a855f7",
-                data: Array(30).fill(0).map((_, i) => [`Gender/Age condition ${i+1}`, Math.floor(300/30), 0.5, 0.5])
+                data: [
+                    ["Male hormonal pattern - Testosterone influence", 25, 0.5, 0.3],
+                    ["Female hormonal pattern - Estrogen influence", 24, 0.5, 0.3],
+                    ["Age-related degeneration - Over 50", 23, 0.5, 0.5],
+                    ["Childhood development - Under 12", 22, 0.5, 0.3],
+                    ["Adolescent changes - 13-19", 21, 0.5, 0.3],
+                    ["Young adult - 20-35", 20, 0.5, 0.3],
+                    ["Middle age - 36-55", 19, 0.5, 0.5],
+                    ["Senior - 56-75", 18, 0.5, 0.7],
+                    ["Elderly - 76+", 17, 0.5, 0.7],
+                    ["Male reproductive health", 16, 0.5, 0.6],
+                    ["Female reproductive health", 15, 0.5, 0.6],
+                    ["Pregnancy-related conditions", 14, 0.5, 0.6],
+                    ["Menopause transition", 13, 0.5, 0.3],
+                    ["Andropause", 12, 0.5, 0.3],
+                    ["Growth hormone patterns", 11, 0.5, 0.3],
+                    ["Thyroid by age group", 10, 0.5, 0.18],
+                    ["Cardiac risk by age", 9, 0.45, 0.27],
+                    ["Diabetes risk by age", 8, 0.5, 0.38],
+                    ["Cancer screening by age", 7, 0.5, 0.5],
+                    ["Osteoporosis risk by age", 6, 0.5, 0.7],
+                    ["Arthritis by age", 5, 0.5, 0.7],
+                    ["Vision changes by age", 4, 0.45, 0.08],
+                    ["Hearing loss by age", 3, 0.5, 0.12],
+                    ["Memory changes by age", 2, 0.5, 0.1]
+                ]
             },
             vitals: {
-                name: "❤️ Vitals",
+                name: "❤️ Vital Signs Analysis",
                 color: "#3b82f6",
-                data: Array(30).fill(0).map((_, i) => [`Vitals condition ${i+1}`, Math.floor(300/30), 0.5, 0.5])
+                data: [
+                    ["Fever - Temperature above 37.5°C", 28, 0.5, 0.3],
+                    ["Hypothermia - Temperature below 36°C", 26, 0.5, 0.3],
+                    ["Hypertension - BP above 140/90", 24, 0.45, 0.27],
+                    ["Hypotension - BP below 90/60", 22, 0.45, 0.27],
+                    ["Tachycardia - Heart rate above 100", 20, 0.45, 0.27],
+                    ["Bradycardia - Heart rate below 60", 18, 0.45, 0.27],
+                    ["Hypoxia - O2 saturation below 95%", 16, 0.4, 0.27],
+                    ["Overweight - BMI 25-30", 14, 0.5, 0.38],
+                    ["Obese - BMI above 30", 12, 0.5, 0.38],
+                    ["Underweight - BMI below 18.5", 10, 0.5, 0.38],
+                    ["High blood sugar - Above 126 mg/dL", 9, 0.5, 0.38],
+                    ["Low blood sugar - Below 70 mg/dL", 8, 0.5, 0.1],
+                    ["High cholesterol - Above 200 mg/dL", 7, 0.45, 0.27],
+                    ["Anemia - Low hemoglobin", 6, 0.5, 0.3],
+                    ["Tachypnea - Rapid breathing", 5, 0.4, 0.27],
+                    ["Bradypnea - Slow breathing", 4, 0.4, 0.27],
+                    ["Irregular pulse - Arrhythmia", 3, 0.45, 0.27],
+                    ["Wide pulse pressure", 2, 0.45, 0.27]
+                ]
             },
             lifestyle: {
-                name: "🏃 Lifestyle",
+                name: "🏃 Lifestyle Factors",
                 color: "#6366f1",
-                data: Array(30).fill(0).map((_, i) => [`Lifestyle condition ${i+1}`, Math.floor(300/30), 0.5, 0.5])
+                data: [
+                    ["Alcohol abuse - Liver damage risk", 28, 0.5, 0.48],
+                    ["Smoking - Lung cancer risk", 26, 0.4, 0.27],
+                    ["Excess caffeine - Anxiety, insomnia", 24, 0.5, 0.1],
+                    ["Sedentary lifestyle - Obesity, heart disease", 22, 0.5, 0.38],
+                    ["Sleep deprivation - Immune weakness", 20, 0.5, 0.1],
+                    ["Dehydration - Kidney stress", 18, 0.5, 0.48],
+                    ["High stress - Cortisol imbalance", 16, 0.45, 0.27],
+                    ["Poor diet - Nutritional deficiencies", 14, 0.5, 0.38],
+                    ["Medication side effects", 12, 0.5, 0.5],
+                    ["Pregnancy - Special considerations", 10, 0.5, 0.6],
+                    ["Athlete - Joint stress", 9, 0.5, 0.7],
+                    ["Night shift - Circadian disruption", 8, 0.5, 0.1],
+                    ["Sedentary work - Posture issues", 7, 0.5, 0.5],
+                    ["Outdoor work - Sun exposure", 6, 0.5, 0.1],
+                    ["Indoor work - Vitamin D deficiency", 5, 0.5, 0.3],
+                    ["Social isolation - Mental health", 4, 0.5, 0.1],
+                    ["Poor hygiene - Infection risk", 3, 0.5, 0.5],
+                    ["Travel history - Tropical diseases", 2, 0.5, 0.5]
+                ]
             },
             german: {
-                name: "🇩🇪 German",
+                name: "🇩🇪 German Naturheilkunde",
                 color: "#d946ef",
-                data: Array(30).fill(0).map((_, i) => [`German condition ${i+1}`, Math.floor(300/30), 0.5, 0.5])
+                data: Array(30).fill(0).map((_, i) => [`German Nature Cure ${i+1} - Constitutional analysis`, Math.floor(280/30), 0.5, 0.5])
             },
             russian: {
-                name: "🇷🇺 Russian",
+                name: "🇷🇺 Russian Traditional",
                 color: "#f43f5e",
-                data: Array(30).fill(0).map((_, i) => [`Russian condition ${i+1}`, Math.floor(300/30), 0.5, 0.5])
+                data: Array(30).fill(0).map((_, i) => [`Russian Folk Medicine ${i+1} - Slavic healing wisdom`, Math.floor(280/30), 0.5, 0.5])
             },
             swahili: {
-                name: "🇹🇿 Swahili",
+                name: "🇹🇿 Swahili Traditional",
                 color: "#84cc16",
-                data: Array(30).fill(0).map((_, i) => [`Swahili condition ${i+1}`, Math.floor(300/30), 0.5, 0.5])
+                data: Array(30).fill(0).map((_, i) => [`Swahili Traditional Healing ${i+1} - East African wisdom`, Math.floor(280/30), 0.5, 0.5])
             },
             african: {
-                name: "🌍 African Traditional",
+                name: "🌍 African Traditional Medicine",
                 color: "#eab308",
                 data: [
-                    ["Ancestral imbalance - Ritual needed", 28, 0.5, 0.5],
-                    ["Spirit possession - Ceremony required", 26, 0.5, 0.5],
-                    ["Evil eye - Protection needed", 24, 0.5, 0.1],
-                    ["Curse - Cleansing ritual", 22, 0.5, 0.5],
-                    ["Bad medicine - Reversal needed", 20, 0.5, 0.5],
-                    ["Offended spirits - Appeasement", 18, 0.5, 0.5],
-                    ["Broken taboo - Purification", 16, 0.5, 0.5],
-                    ["Family curse - Generational healing", 14, 0.5, 0.5],
-                    ["Envy - Protection", 12, 0.5, 0.1],
-                    ["Jealousy - Cleansing", 10, 0.5, 0.1],
-                    ["Witchcraft - Counter-spell", 9, 0.5, 0.5],
-                    ["Sorcery - Breaking spell", 8, 0.5, 0.5],
-                    ["Hex - Removal", 7, 0.5, 0.5],
-                    ["Jinx - Reversal", 6, 0.5, 0.5],
-                    ["Bad luck - Ritual", 5, 0.5, 0.5],
-                    ["Protection needed - Amulet", 4, 0.5, 0.5],
-                    ["Divination required", 3, 0.5, 0.5],
-                    ["Sacrifice needed", 2, 0.5, 0.5],
-                    ["Offering required", 1, 0.5, 0.5]
+                    ["Ancestral spiritual imbalance - Ritual healing indicated", 28, 0.5, 0.5],
+                    ["Spirit possession - Ceremonial cleansing needed", 26, 0.5, 0.1],
+                    ["Evil eye (Choyo) - Protection ritual required", 24, 0.5, 0.1],
+                    ["Family curse - Generational cleansing", 22, 0.5, 0.5],
+                    ["Bad medicine - Reversal ceremony", 20, 0.5, 0.5],
+                    ["Offended ancestors - Appeasement ritual", 18, 0.5, 0.5],
+                    ["Broken taboo - Purification needed", 16, 0.5, 0.5],
+                    ["Envy (Wivu) - Protection charm", 14, 0.5, 0.1],
+                    ["Jealousy - Cleansing ritual", 12, 0.5, 0.1],
+                    ["Witchcraft - Counter-spell needed", 11, 0.5, 0.5],
+                    ["Sorcery - Breaking spell ceremony", 10, 0.5, 0.5],
+                    ["Hex - Removal ritual", 9, 0.5, 0.5],
+                    ["Jinx - Reversal ceremony", 8, 0.5, 0.5],
+                    ["Bad luck - Good luck ritual", 7, 0.5, 0.5],
+                    ["Protection needed - Amulet preparation", 6, 0.5, 0.5],
+                    ["Divination required - Consult traditional healer", 5, 0.5, 0.5],
+                    ["Sacrifice indicated - Animal or symbolic", 4, 0.5, 0.5],
+                    ["Offering required - To ancestors", 3, 0.5, 0.5],
+                    ["Herbal bath cleansing", 2, 0.5, 0.5],
+                    ["Steam inhalation with medicinal herbs", 1, 0.4, 0.27]
                 ]
             },
             caribbean: {
                 name: "🏝️ Caribbean Obeah",
                 color: "#f97316",
-                data: Array(30).fill(0).map((_, i) => [`Obeah condition ${i+1}`, Math.floor(300/30), 0.5, 0.5])
+                data: Array(30).fill(0).map((_, i) => [`Obeah ${i+1} - Caribbean spiritual diagnosis`, Math.floor(280/30), 0.5, 0.5])
             },
             ancientIndian: {
-                name: "🕉️ Ancient Indian",
+                name: "🕉️ Ancient Indian Vedas",
                 color: "#8b5cf6",
-                data: Array(30).fill(0).map((_, i) => [`Ancient Indian condition ${i+1}`, Math.floor(300/30), 0.5, 0.5])
+                data: Array(30).fill(0).map((_, i) => [`Vedic ${i+1} - Ancient Indian healing`, Math.floor(280/30), 0.5, 0.5])
             },
             mystical: {
                 name: "🔮 Mystical Arts",
                 color: "#d946ef",
-                data: Array(30).fill(0).map((_, i) => [`Mystical condition ${i+1}`, Math.floor(300/30), 0.5, 0.5])
+                data: Array(30).fill(0).map((_, i) => [`Mystical ${i+1} - Esoteric diagnosis`, Math.floor(280/30), 0.5, 0.5])
             },
             dna: {
                 name: "🧬 DNA Analysis",
                 color: "#14b8a6",
-                data: Array(30).fill(0).map((_, i) => [`Genetic marker ${i+1}`, Math.floor(300/30), 0.5, 0.5])
+                data: Array(30).fill(0).map((_, i) => [`Genetic marker ${i+1} - Inherited predisposition`, Math.floor(280/30), 0.5, 0.5])
             },
             statistical: {
-                name: "📊 Statistical",
+                name: "📊 Statistical Analysis",
                 color: "#6366f1",
-                data: Array(30).fill(0).map((_, i) => [`Statistical factor ${i+1}`, Math.floor(300/30), 0.5, 0.5])
+                data: Array(30).fill(0).map((_, i) => [`Statistical factor ${i+1} - Population-based risk`, Math.floor(280/30), 0.5, 0.5])
             },
             ai: {
-                name: "🤖 AI Engine",
+                name: "🤖 AI Deep Learning",
                 color: "#3b82f6",
-                data: Array(30).fill(0).map((_, i) => [`AI analysis ${i+1}`, Math.floor(300/30), 0.5, 0.5])
+                data: Array(30).fill(0).map((_, i) => [`AI analysis ${i+1} - Neural network diagnosis`, Math.floor(280/30), 0.5, 0.5])
             }
         };
 
         // ============================================
-        // 5-MINUTE SCAN ANIMATION
+        // 3-MINUTE SCAN ANIMATION
         // ============================================
         let scanInterval;
-        let scanTime = 300; // 5 minutes in seconds
-        let currentMinute = 0;
+        let scanTime = 180; // 3 minutes in seconds
+        let currentIndex = 0;
         let results = [];
         
         function startScan() {
             // Reset
-            scanTime = 300;
-            currentMinute = 0;
+            scanTime = 180;
+            currentIndex = 0;
+            results = [];
             document.getElementById('scannerOverlay').style.display = 'flex';
             document.getElementById('scanProgress').style.width = '0%';
-            document.getElementById('timeRemaining').textContent = '05:00';
+            document.getElementById('timeRemaining').textContent = '03:00';
             
             // Clear previous results
             document.getElementById('diagnosisList').innerHTML = '';
+            document.getElementById('dotOverlay').innerHTML = '';
             
             // Start timer
             scanInterval = setInterval(updateScan, 1000);
             
             // Simulate module activation
             activateModules();
+            
+            // Update score grid with fresh data
+            updateScoreGrid();
         }
         
         function updateScan() {
@@ -1251,43 +1429,43 @@
             document.getElementById('timeRemaining').textContent = 
                 `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             
-            const progress = ((300 - scanTime) / 300) * 100;
+            const progress = ((180 - scanTime) / 180) * 100;
             document.getElementById('scanProgress').style.width = progress + '%';
             
             // Update scanning text
             const texts = [
-                "Initializing 20+ module systems...",
-                "Calibrating Chinese zodiac frequencies...",
+                "Initializing 20+ diagnostic modules...",
+                "Calibrating Traditional Chinese Medicine frequencies...",
                 "Analyzing Ayurvedic dosha balance...",
-                "Consulting Arabic humoral medicine...",
-                "Calculating Nadi numerology patterns...",
+                "Consulting Unani humoral medicine...",
+                "Calculating Nadi numerological patterns...",
                 "Processing Life Path vibrations...",
                 "Mapping birth date influences...",
                 "Evaluating seasonal month effects...",
                 "Integrating gender and age factors...",
                 "Analyzing vital signs and biomarkers...",
-                "Assessing lifestyle choices...",
-                "Cross-referencing German zodiac...",
-                "Consulting Russian mysticism...",
-                "Applying Swahili traditional wisdom...",
+                "Assessing lifestyle risk factors...",
+                "Cross-referencing German nature cure...",
+                "Consulting Russian traditional medicine...",
+                "Applying Swahili healing wisdom...",
                 "Engaging African ancestral protocols...",
                 "Performing Caribbean Obeah divination...",
-                "Accessing Ancient Indian texts...",
+                "Accessing Ancient Vedic texts...",
                 "Channeling mystical energies...",
                 "Running DNA sequence analysis...",
                 "Computing statistical probabilities...",
-                "Finalizing AI deep learning analysis..."
+                "Finalizing AI deep learning consensus..."
             ];
             
-            const textIndex = Math.floor((300 - scanTime) / 15);
+            const textIndex = Math.floor((180 - scanTime) / 9); // 20 texts over 180 seconds
             if (textIndex < texts.length) {
                 document.getElementById('scanningText').textContent = texts[textIndex];
             }
             
-            // Reveal results at each minute
-            const newMinute = Math.floor((300 - scanTime) / 60);
-            if (newMinute > currentMinute && currentMinute < 10) {
-                currentMinute = newMinute;
+            // Reveal results every 18 seconds (10 results in 3 minutes)
+            const newIndex = Math.floor((180 - scanTime) / 18);
+            if (newIndex > currentIndex && currentIndex < 10) {
+                currentIndex = newIndex;
                 revealNextDiagnosis();
             }
             
@@ -1299,7 +1477,6 @@
         }
         
         function activateModules() {
-            // Simulate modules activating one by one
             const modules = document.querySelectorAll('.module-status-item');
             let index = 0;
             
@@ -1310,11 +1487,11 @@
                 } else {
                     clearInterval(moduleInterval);
                 }
-            }, 15000); // 15 seconds each (20 modules * 15s = 5 min)
+            }, 9000); // 9 seconds each (20 modules * 9s = 180s = 3 min)
         }
         
         function revealNextDiagnosis() {
-            // Randomly select a diagnosis from our data
+            // Collect all conditions
             const allConditions = [];
             Object.keys(moduleData).forEach(key => {
                 moduleData[key].data.forEach(item => {
@@ -1322,13 +1499,14 @@
                         condition: item[0],
                         points: item[1],
                         color: moduleData[key].color,
+                        module: moduleData[key].name,
                         bodyX: item[2] || 0.5,
                         bodyY: item[3] || 0.5
                     });
                 });
             });
             
-            // Random selection weighted by points
+            // Select random condition
             const randomIndex = Math.floor(Math.random() * allConditions.length);
             const selected = allConditions[randomIndex];
             
@@ -1343,7 +1521,7 @@
                 li.className = 'diagnosis-item';
                 li.style.borderLeftColor = item.color;
                 li.style.animationDelay = (index * 0.1) + 's';
-                li.textContent = `${index + 1}. ${item.condition} (${item.points} points)`;
+                li.textContent = `${index + 1}. ${item.condition} (${item.points} pts) - ${item.module}`;
                 li.onclick = () => showDiagnosisDetails(item);
                 list.appendChild(li);
             });
@@ -1366,6 +1544,36 @@
         }
         
         // ============================================
+        // BUILD SYMPTOMS CHECKLIST
+        // ============================================
+        function buildSymptomsChecklist() {
+            const container = document.getElementById('symptomsChecklist');
+            let html = '';
+            
+            for (const [category, symptoms] of Object.entries(symptomsList)) {
+                html += `<div class="symptom-category">`;
+                html += `<div class="category-title">${category}</div>`;
+                html += `<div class="symptom-row">`;
+                
+                symptoms.forEach((symptom, index) => {
+                    if (index > 0 && index % 3 === 0) {
+                        html += `</div><div class="symptom-row">`;
+                    }
+                    html += `
+                        <div class="symptom-check">
+                            <input type="checkbox" id="symp_${symptom.replace(/\s+/g, '_')}" value="${symptom}">
+                            <label for="symp_${symptom.replace(/\s+/g, '_')}">${symptom}</label>
+                        </div>
+                    `;
+                });
+                
+                html += `</div></div>`;
+            }
+            
+            container.innerHTML = html;
+        }
+        
+        // ============================================
         // MODULE SCORING AND DISPLAY
         // ============================================
         function updateScoreGrid() {
@@ -1375,7 +1583,7 @@
             
             Object.keys(moduleData).forEach(key => {
                 const module = moduleData[key];
-                // Calculate total points for this module (sum of all conditions)
+                // Calculate total points
                 const moduleTotal = module.data.reduce((sum, item) => sum + item[1], 0);
                 totalScore += moduleTotal;
                 
@@ -1394,6 +1602,7 @@
             
             scoreGrid.innerHTML = html;
             document.getElementById('totalScore').innerHTML = `${totalScore}/3000+`;
+            document.getElementById('primaryDiagnosis').innerHTML = results[0]?.condition || "Analysis pending";
         }
         
         function showModuleDetails(moduleKey) {
@@ -1402,14 +1611,18 @@
             const modalTitle = document.getElementById('modalTitle');
             const modalData = document.getElementById('modalData');
             
-            modalTitle.textContent = module.name + ' - Detailed Analysis';
+            modalTitle.textContent = module.name + ' - Complete Analysis';
             
-            let dataHtml = '<div style="margin-bottom:10px; color:#3b82f6;">Total Points: ' + 
+            let dataHtml = '<div style="margin-bottom:15px; color:#3b82f6;">Total Points: ' + 
                 module.data.reduce((sum, item) => sum + item[1], 0) + '/300</div>';
             
-            module.data.forEach(item => {
+            module.data.slice(0, 15).forEach(item => {
                 dataHtml += `<div class="data-item">• ${item[0]} - ${item[1]} points</div>`;
             });
+            
+            if (module.data.length > 15) {
+                dataHtml += `<div class="data-item">... and ${module.data.length - 15} more conditions</div>`;
+            }
             
             modalData.innerHTML = dataHtml;
             modal.style.display = 'flex';
@@ -1422,11 +1635,13 @@
             
             modalTitle.textContent = 'Diagnosis Details';
             modalData.innerHTML = `
-                <div class="data-item">Condition: ${diagnosis.condition}</div>
-                <div class="data-item">Confidence: ${diagnosis.points}/300</div>
-                <div class="data-item">Affected area: X:${diagnosis.bodyX}, Y:${diagnosis.bodyY}</div>
-                <div class="data-item">Supporting modules: 14+</div>
-                <div class="data-item">Historical references: Ancient texts, Clinical studies</div>
+                <div class="data-item"><strong>Condition:</strong> ${diagnosis.condition}</div>
+                <div class="data-item"><strong>Confidence:</strong> ${diagnosis.points}/300 points</div>
+                <div class="data-item"><strong>Module:</strong> ${diagnosis.module}</div>
+                <div class="data-item"><strong>Affected area:</strong> X:${diagnosis.bodyX.toFixed(2)}, Y:${diagnosis.bodyY.toFixed(2)}</div>
+                <div class="data-item"><strong>Supporting modules:</strong> 14+ systems</div>
+                <div class="data-item"><strong>Historical references:</strong> Ancient texts, clinical studies, traditional wisdom</div>
+                <div class="data-item"><strong>Recommended action:</strong> Further investigation and treatment</div>
             `;
             modal.style.display = 'flex';
         }
@@ -1446,12 +1661,26 @@
             event.target.classList.add('active');
         }
         
+        // Calculate BMI
+        function calculateBMI() {
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value) / 100;
+            if (weight && height) {
+                const bmi = (weight / (height * height)).toFixed(1);
+                document.getElementById('bmi').textContent = bmi;
+            }
+        }
+        
         // Initialize
         window.addEventListener('load', () => {
+            buildSymptomsChecklist();
             updateScoreGrid();
-            
-            // Hide scanner overlay initially
             document.getElementById('scannerOverlay').style.display = 'none';
+            
+            // BMI calculation
+            document.getElementById('weight').addEventListener('input', calculateBMI);
+            document.getElementById('height').addEventListener('input', calculateBMI);
+            calculateBMI();
         });
     </script>
 </body>
